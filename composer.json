@@ -1,0 +1,19 @@
+{
+  "name": "bbn/appui-menu",
+  "description": "Menu management interface for APPUI",
+  "keywords": ["menu","permissions","appui"],
+  "homepage": "https://github.com/nabab/appui-menu",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Thomas Nabet",
+      "email": "thomas.nabet@gmail.com",
+      "homepage": "http://bbn.solutions",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "bbn/bbn": "dev-master"
+  }
+}
