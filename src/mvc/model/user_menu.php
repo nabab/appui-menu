@@ -8,8 +8,8 @@
 
 $menu = new \bbn\appui\menu($this->inc->options);
 if ( isset($this->inc->pref) ){
-  return $menu->custom_tree('default', $this->inc->pref);
+  return $menu->custom_tree('default', $this->inc->pref, isset($this->data['prepath']) ? $this->data['prepath'] : false);
 }
 else{
-  return $menu->tree('default');
+  return $menu->tree('default', isset($this->data['prepath']) ? $this->data['prepath'] : false);
 }
