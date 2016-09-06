@@ -4,8 +4,8 @@
  *
  **/
 
-/** @var $this \bbn\mvc\controller */
-if ( isset($this->post['id']) ){
-  $menu = new \bbn\appui\menu($this->inc->options);
-  $this->obj->success = $menu->remove_shortcut($this->post['id'], $this->inc->pref);
+/** @var $ctrl \bbn\mvc\controller */
+if ( isset($ctrl->post['id']) ){
+  $menu = new \bbn\appui\menu($ctrl->inc->options);
+  $ctrl->obj->success = $menu->remove_shortcut($ctrl->post['id'], $ctrl->inc->pref);
 }

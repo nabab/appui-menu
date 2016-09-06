@@ -1,0 +1,15 @@
+<?php
+/*
+ * Describe what it does or you're a pussy
+ *
+ **/
+
+/** @var $model \bbn\mvc\model*/
+
+$menu = new \bbn\appui\menu($model->inc->options);
+if ( isset($model->inc->pref) ){
+  return $menu->custom_tree('default', $model->inc->pref, isset($model->data['prepath']) ? $model->data['prepath'] : false);
+}
+else{
+  return $menu->tree('default', isset($model->data['prepath']) ? $model->data['prepath'] : false);
+}

@@ -4,12 +4,11 @@
  *
  **/
 
-/** @var $this \bbn\mvc\model*/
-
-$menu = new \bbn\appui\menu($this->inc->options);
-if ( isset($this->inc->pref) ){
-  return $menu->custom_tree('default', $this->inc->pref, isset($this->data['prepath']) ? $this->data['prepath'] : false);
+/** @var $model \bbn\mvc\model*/
+$menu = new \bbn\appui\menu($model->inc->options,  $model->data['prepath'] ?: false);
+if ( isset($model->inc->pref) ){
+  return $menu->custom_tree('default', $model->inc->pref, $model->data['prepath'] ?: false);
 }
 else{
-  return $menu->tree('default', isset($this->data['prepath']) ? $this->data['prepath'] : false);
+  return $menu->tree('default', $model->data['prepath'] ?: false);
 }
