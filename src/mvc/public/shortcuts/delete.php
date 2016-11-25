@@ -6,6 +6,6 @@
 
 /** @var $ctrl \bbn\mvc\controller */
 if ( isset($ctrl->post['id']) ){
-  $menu = new \bbn\appui\menu($ctrl->inc->options);
+  $menu = new \bbn\appui\menus($ctrl->inc->options);
   $ctrl->obj->success = $menu->remove_shortcut($ctrl->post['id'], $ctrl->inc->pref);
 }

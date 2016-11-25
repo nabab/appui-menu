@@ -5,7 +5,7 @@
  **/
 
 /** @var $model \bbn\mvc\model*/
-$menu = new \bbn\appui\menu($model->inc->options, $model->inc->pref);
+$menu = new \bbn\appui\menus($model->inc->options, $model->inc->pref);
 $shortcuts = $menu->shortcuts($model->inc->pref);
 $prepath = $model->get_prepath();
 if ( !empty($prepath) ){
