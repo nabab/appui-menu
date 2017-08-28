@@ -1,0 +1,22 @@
+<bbn-splitter orientation="horizontal" style="height:100%">
+  <div class="appui-w-50 appui-h-100">
+    <bbn-tree
+      name="test"
+      :draggable="true"
+      :source="root + 'build'"
+      :root="cat"
+      :drag-start="dragStart"
+      :drag-enter="dragEnter"
+      :drag-drop="dragDropCopy"
+    >
+    </bbn-tree>
+  </div>
+  <div class="appui-w-50 appui-h-100">
+    <bbn-tree
+      name = "test2"
+      :target = "true"
+      :source="root + 'build/' + cat"
+      :extensions="['filter', 'dnd']">
+    </bbn-tree>
+  </div>
+</bbn-splitter>
