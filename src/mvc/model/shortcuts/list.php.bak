@@ -11,7 +11,7 @@ $prepath = $model->get_prepath();
 if ( !empty($prepath) ){
   return array_map(function($a) use($prepath){
     if ( strpos($a['link'], $prepath) === 0 ){
-      $a['link'] = substr($a['link'], strlen($prepath)+1);
+      $a['link'] = substr($a['link'], \strlen($prepath)+1);
     }
     return $a;
   }, $shortcuts);

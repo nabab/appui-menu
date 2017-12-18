@@ -5,7 +5,4 @@
  **/
 
 /** @var $ctrl \bbn\mvc\controller */
-if ( isset($ctrl->post['id']) ){
-  $menu = new \bbn\appui\menus($ctrl->inc->options);
-  $ctrl->obj->success = $menu->add_shortcut($ctrl->post['id'], $ctrl->inc->pref);
-}
+$ctrl->obj = $ctrl->get_object_model($ctrl->post);
