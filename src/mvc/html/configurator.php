@@ -1,7 +1,6 @@
 <bbn-splitter :orientation="orientation"
-              class="appui-menu-constructor-tree"
->
-  <div resizable="true">
+              class="appui-menu-constructor-tree">
+  <bbn-pane :resizable="true">
     <div class="bbn-flex-height">
       <div class="top k-header">
         <div style="float: left; width:60%">
@@ -68,8 +67,8 @@
         ></bbn-tree>
       </template>
     </div>
-  </div>
-  <div resizable="true">
+  </bbn-pane>
+  <bbn-pane :resizable="true">
     <bbn-form v-if="selected"
               :source="selected"
               :data="formData"
@@ -128,5 +127,5 @@
     <h1 v-else
         class="bbn-padded bbn-c"
         v-text="_('Select or create a menu element to see the form here')"></h1>
-  </div>
+  </bbn-pane>
 </bbn-splitter>
