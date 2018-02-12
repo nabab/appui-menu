@@ -1,50 +1,53 @@
 <bbn-splitter :orientation="orientation"
               class="appui-menu-constructor-tree">
   <bbn-pane :resizable="true">
-    <div class="bbn-flex-height">
-      <div class="top k-header">
-        <div style="float: left; width:60%">
-          <!--<bbn-button @click="clickOrientation" title="<?=_('Change orientation')?>">
-            <i :class="classOrientation"></i>
-          </bbn-button>-->
-          <bbn-dropdown
-            style="width:200px"
-            ref="listMenus"
-            :source="listMenu"
-            v-model="currentMenu"
-          ></bbn-dropdown>
-          <bbn-button @click="clickPrev" title="<?=_('Back menu')?>" v-if="showArrows">
-            <i class="fa fa-arrow-left"></i>
-          </bbn-button>
-          <bbn-button @click="clickNext" title="<?=_('Next menu')?>" v-if="showArrows">
-            <i class="fa fa-arrow-right"></i>
-          </bbn-button>
-        </div>
-        <div class="bbn-middle" style="float: right;">
-          <div>
-            <bbn-button @click="clickCreateMenu" title="<?=_('Create menu')?>">
-              <i class='fa fa-folder-o'></i>
-            </bbn-button>
-            <bbn-button @click="clickCreateLink" title="<?=_('Create link')?>">
-              <i class="fa fa-link"></i>
-            </bbn-button>
-            <bbn-button @click="clickCreateSection" title="<?=_('Create section')?>">
-              <i class="fa fa-thumb-tack"></i>
-            </bbn-button>
-            <bbn-button @click="clickDeleteMenu" title="<?=_('Delete menu')?>">
-              <i class='fa fa-trash-o'></i>
-            </bbn-button>
-            <bbn-button @click="clickRenameMenu" title="<?=_('Rename menu')?>">
-              <i class='fa fa-pencil-square-o'></i>
-            </bbn-button>
-            <bbn-button @click="clickCopyMenu" title="<?=_('Copy menu')?>">
-              <i class='fa fa-clone'></i>
-            </bbn-button>
+    <div class="bbn-flex-height" style="border-right: 1px dotted #CCC">
+      <div class="bbn-w-100 k-header" style="height:60px">
+        <div class="bbn-full-screen bbn-middle">
+          <div class="bbn-flex-width">
+            <div style="width: 350px; padding-left: 20px">
+              <bbn-dropdown
+                style="width:200px"
+                ref="listMenus"
+                :source="listMenu"
+                v-model="currentMenu"
+              ></bbn-dropdown>
+              <bbn-button @click="clickPrev" title="<?=_('Back menu')?>" v-if="showArrows">
+                <i class="fa fa-arrow-left"></i>
+              </bbn-button>
+              <bbn-button @click="clickNext" title="<?=_('Next menu')?>" v-if="showArrows">
+                <i class="fa fa-arrow-right"></i>
+              </bbn-button>
+            </div>
+            <div class="bbn-flex-fill">
+              &nbsp;
+            </div>
+            <div style="width: 230px; padding-right: 20px" class="bbn-r">
+              <bbn-button @click="clickCreateMenu" title="<?=_('Create menu')?>">
+                <i class='fa fa-folder-o'></i>
+              </bbn-button>
+              <bbn-button @click="clickCreateLink" title="<?=_('Create link')?>">
+                <i class="fa fa-link"></i>
+              </bbn-button>
+              <bbn-button @click="clickCreateSection" title="<?=_('Create section')?>">
+                <i class="fa fa-thumb-tack"></i>
+              </bbn-button>
+              <bbn-button @click="clickDeleteMenu" title="<?=_('Delete menu')?>">
+                <i class='fa fa-trash-o'></i>
+              </bbn-button>
+              <bbn-button @click="clickRenameMenu" title="<?=_('Rename menu')?>">
+                <i class='fa fa-pencil-square-o'></i>
+              </bbn-button>
+              <bbn-button @click="clickCopyMenu" title="<?=_('Copy menu')?>">
+                <i class='fa fa-clone'></i>
+              </bbn-button>
+            </div>
           </div>
         </div>
       </div>
-      <template v-if="emptyMenuCurrent && currentMenu != ''">
-        <div class="bbn-flex-height">
+      <div class="bbn-flex-fill">
+        <div v-if="emptyMenuCurrent && (currentMenu != '')"
+             class="bbn-flex-height">
           <div class="bbn-flex-fill bbn-middle">
             <div class="bbn-middle">
               <div class="bbn-c">
@@ -55,17 +58,19 @@
             </div>
           </div>
         </div>
-      </template>
-      <template v-if="currentMenu">
-        <bbn-tree :source="root + 'configurator'"
-                  :map="mapMenu"
-                  uid="id"
-                  :root="currentMenu"
-                  :menu="contextMenu"
-                  @select="selectMenu"
-                  ref="menus"
-        ></bbn-tree>
-      </template>
+        <div class="bbn-full-screen bbn-padded" v-if="currentMenu">
+          <bbn-tree :source="root + 'configurator'"
+                    :map="mapMenu"
+                    uid="id"
+                    :root="currentMenu"
+                    :menu="contextMenu"
+                    @select="selectMenu"
+                    ref="menus"
+                    :draggable="true"
+                    @dragEnd="moveNode"
+          ></bbn-tree>
+        </div>
+      </div>
     </div>
   </bbn-pane>
   <bbn-pane :resizable="true">
@@ -124,8 +129,9 @@
         </div>
       </div>
     </bbn-form>
-    <h1 v-else
-        class="bbn-padded bbn-c"
-        v-text="_('Select or create a menu element to see the form here')"></h1>
+    <div v-else
+         class="bbn-full-screen bbn-middle bbn-c">
+      <h1 v-html="_('Select or create<br>a menu element<br>to see the form<br>HERE')" style="line-height: 1.4em"></h1>
+    </div>
   </bbn-pane>
 </bbn-splitter>

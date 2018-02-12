@@ -7,7 +7,7 @@ if ( !isset($ctrl->post['id']) ){
 
   $ctrl->add_data([
     'cat' => $ctrl->inc->options->from_code(false),
-    'is_admin' => $ctrl->inc->user->is_admin(),
+    'is_dev' => $ctrl->inc->user->is_dev(),
     'id_permission' => $permission,
     //'permRoot' => $ctrl->inc->perm->get_option_root(),
     'id_parent' => $id_menus,

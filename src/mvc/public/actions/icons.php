@@ -6,7 +6,5 @@
  * Time: 15.11
  */
 if ( isset($ctrl->post['index']) && $ctrl->post['index'] === true  ){
-  $ctrl->obj = $ctrl->get_cached_model('iconology', 3000);
+  $ctrl->obj = $ctrl->get_cached_model(30000);
 }
-
-

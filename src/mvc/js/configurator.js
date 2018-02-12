@@ -217,7 +217,7 @@
       rename(ctx, current, text, id_parent, icon= false){
         let dim = {
           width: 300,
-          height: 180
+          height: 220
         };
         if ( this.currentMenu !== "" ){
           let cfg = {
@@ -237,7 +237,7 @@
       createMenu(id){
         let dim = {
           width: 300,
-          height: 130
+          height: 180
         };
         //source for create menu
         let cfg = {
@@ -313,31 +313,13 @@
         }
       },
       addTempNode(node, cfg){
-
         node.isExpanded = true;
-
-        if ( node.numChildren ){
-          setTimeout(() => {
-            let tree = bbn.vue.find(node, "bbn-tree");
-
-            if ( tree ){
-              tree.items.push(cfg);
-              tree.$parent.numChildren++;
-
-              this.formData.create = true;
-
-              this.$nextTick(() => {
-                tree.$children[tree.items.length - 1].isSelected = true;
-              })
-            }
-
-          }, 1000)
-        }
-        else{
-
-          this.$nextTick(() =>{
-            node.numChildren = node.numChildren + 1;
-          });
+        if ( node ){
+          if( !node.numChildren ){
+            this.$nextTick(() =>{
+              node.numChildren = node.numChildren + 1;
+            });
+          }
           setTimeout(()=>{
             this.$nextTick(() => {
               node.$refs.tree[0].isLoaded= true;
@@ -349,22 +331,19 @@
             }, 150);
           }, 600);
         }
-
       },
       addTempNodeInRoot(cfg){
-
-          let tree = this.$refs.menus;
-          if ( tree ){
-            tree.items.push(cfg);
-            tree.$forceUpdate();
-            this.emptyMenuCurrent = false;
-            this.formData.create = true;
-            this.$nextTick(() =>{
-              tree.$children[0].$children[tree.$children[0].$children.length - 1].isSelected = true;
-            });
-          }
+        let tree = this.$refs.menus;
+        if ( tree ){
+          tree.items.push(cfg);
+          tree.$forceUpdate();
+          this.emptyMenuCurrent = false;
+          this.formData.create = true;
+          this.$nextTick(() =>{
+            tree.$children[0].$children[tree.$children[0].$children.length - 1].isSelected = true;
+          });
+        }
         this.node = tree
-
       },
       //for form left
       openListIcons(){
@@ -387,6 +366,23 @@
             appui.$refs.menu.$refs.tree.isLoaded = false
           });
         }
+      },
+      moveNode(e, node, dest){
+        bbn.fn.post(this.root + 'actions/move', {
+          id: node.data.id,
+          id_parent: dest.data.id
+        }, d => {
+          if( d.success ){
+            appui.success(bbn._('Successfully moved!!'));
+          }
+          else{
+            appui.error(bbn._('Error moved!!'));
+          }
+          dest.$refs.tree[0].reload();
+          if ( dest.$refs.tree[0] !== node.parent ){
+            node.parent.reload();
+          }
+        });
       },
       //reload sub tree
       reloadTreeOfNode(){
@@ -431,34 +427,35 @@
 
         }
         else{
-          
+
           this.reloadTreeOfNode();
         }
       },
       selectMenu(tree){
-        //bbn.fn.log('fffdfd' , tree);
+
         //alert("ffffff");
         /*if ( tree.data.id_alias === null ){
           this.viewButtonAlias = true;
         }*/
         this.node = tree;
-        this.selected = {
-          level: tree.level,
-          text: tree.text,
-          icon: tree.icon,
-          num: tree.num,
-          numChildren: tree.numChildren,
-          id: tree.data.id,
-          id_parent: tree.data.id_parent,
-          id_alias: tree.data.id_alias,
-          path: tree.data.path,
-          isExpanded: tree.isExpanded,
-          isActive: tree.isActive,
-          isMounted: tree.isMounted,
-          isSelected: tree.isSelected,
-          parentIsRoot: tree.parent.level === 0
-        };
+        this.selected = false;
         this.$nextTick(() => {
+          this.selected = {
+            level: tree.level,
+            text: tree.text,
+            icon: tree.icon,
+            num: tree.num,
+            numChildren: tree.numChildren,
+            id: tree.data.id,
+            id_parent: tree.data.id_parent,
+            id_alias: tree.data.id_alias,
+            path: tree.data.path !== undefined ? tree.data.path : [],
+            isExpanded: tree.isExpanded,
+            isActive: tree.isActive,
+            isMounted: tree.isMounted,
+            isSelected: tree.isSelected,
+            parentIsRoot: tree.parent.level === 0
+          };
           if ( this.$refs.form ){
             this.$refs.form.reinit();
           }
@@ -558,9 +555,6 @@
       //activates when the node to be moved is released, it performs checks and, if necessary, performs the displacement action
       ctrlEndDragMenus(node, ev, destination){
         //The node shifts can do so all except the default menu that reside in the right splitter.
-
-        bbn.fn.warning("ssssssss");
-        bbn.fn.log("lalalalala", node ,node.data.id, destination.data.id);
 
         if ( this.currentMenu !== this.id_default ){
           //acquire the id of the node that will contain that one we want to move

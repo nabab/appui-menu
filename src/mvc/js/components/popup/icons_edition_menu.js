@@ -12,47 +12,52 @@ Vue.component('appui-menu-popup-icons_edition_menu', {
   data(){
     return {
       root:this.source.root,
-      icons:{
+      dataIcons:{
         faicons: [],
         material: [],
         mficons: []
       },
-      totIcons: []
+      totIcons: [],
+      search:"",
+      totNumberIcon: bbn._('Count icons ...')
     }
   },
   methods: {
     selectIcon(icon){
       appui.menu.selected.icon = icon;
+      this.search = "";
       bbn.vue.closest(this, ".bbn-popup").close();
     }
   },
   created(){
     bbn.fn.post(this.root + "actions/icons", {
       index: true
-    }, (d) =>{
-      if ( d ){
-        if ( d.faicons.length ){
-          for ( let nameFaicons of d.faicons ){
-            this.icons.faicons.push("fa fa-" + nameFaicons);
-            this.totIcons.push("fa fa-" + nameFaicons);
-          }
-        }
-        if ( d.material.length ){
-          $.each(d.material, (i, v) =>{
-            this.totIcons.push("zmdi zmdi-" + v);
-            this.icons.material.push("zmdi zmdi-" + v)
-          });
-        }
-        if ( d.mficons.length ){
-          let ele = [];
-          $.each(d.mficons, (i, v) =>{
-            $.each(v.icons, (j, value) =>{
-              this.totIcons.push("icon-" + value);
-              this.icons.mficons.push("icon-" + value);
-            });
-          });
+    }, d =>{
+      if ( d.icons ){
+        this.dataIcons.faicons = d.icons.faicons;
+        this.dataIcons.material = d.icons.material;
+        this.dataIcons.mficons = d.icons.mficons;
+        this.totIcons = d.list
+        if ( d.total ){
+          this.totNumberIcon = bbn._('Search in') + ' ' + d.total.toString() + ' ' + bbn._('icons');
         }
       }
     });
+  },
+  computed:{
+    icons(){
+      if ( this.search.length ){
+        let  arr = [];
+        for ( let ele of this.totIcons ){
+          if( ele.search(this.search.toLowerCase()) > - 1 ){
+            arr.push(ele);
+          }
+        }
+        return arr
+      }
+      else{
+        return this.totIcons
+      }
+    }
   }
 });
