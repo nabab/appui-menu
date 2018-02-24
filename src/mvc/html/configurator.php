@@ -2,10 +2,10 @@
               class="appui-menu-constructor-tree">
   <bbn-pane :resizable="true">
     <div class="bbn-flex-height" style="border-right: 1px dotted #CCC">
-      <div class="bbn-w-100 k-header" style="height:60px">
+      <div class="bbn-w-100 k-header" style="height:40px">
         <div class="bbn-full-screen bbn-middle">
           <div class="bbn-flex-width">
-            <div style="width: 350px; padding-left: 20px">
+            <div style="width: 350px; padding-left: 2px">
               <bbn-dropdown
                 style="width:200px"
                 ref="listMenus"
@@ -22,7 +22,7 @@
             <div class="bbn-flex-fill">
               &nbsp;
             </div>
-            <div style="width: 230px; padding-right: 20px" class="bbn-r">
+            <div>
               <bbn-button @click="clickCreateMenu" title="<?=_('Create menu')?>">
                 <i class='fa fa-folder-o'></i>
               </bbn-button>

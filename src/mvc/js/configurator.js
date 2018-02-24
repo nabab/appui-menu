@@ -6,8 +6,6 @@
       bbn.vue.addComponent('popup/new_menu');
       bbn.vue.addComponent('popup/copy_menu');
       bbn.vue.addComponent('popup/rename');
-      bbn.vue.addComponent('popup/icons');
-      bbn.vue.addComponent('popup/icons_edition_menu');
       bbn.vue.unsetComponentRule();
     },
     data(){
@@ -57,7 +55,7 @@
             text: bbn._('Rename'),
             command: node => {
               this.node = node;
-              this.rename(true, node.data.id, node.text, false, node.icon );
+              this.renameElement(true, node.data.id, node.text, false, node.icon );
             }
           }
         ];
@@ -139,7 +137,7 @@
         this.deleteElement(this.currentMenu, this.nameMenu);
       },
       clickRenameMenu(){
-        this.rename(false, this.currentMenu, this.nameMenu, this.id_parent);
+        this.renameElement(false, this.currentMenu, this.nameMenu, this.id_parent);
       },
       clickCreateLink(){
         this.addTempNodeInRoot({
@@ -214,7 +212,7 @@
           this.actionedPopUp('appui-menu-popup-copy_menu', bbn._('Copy menu'), cfg, dim);
         }
       },
-      rename(ctx, current, text, id_parent, icon= false){
+      renameElement(ctx, current, text, id_parent, icon= false){
         let dim = {
           width: 300,
           height: 220
@@ -347,13 +345,14 @@
       },
       //for form left
       openListIcons(){
-        bbn.vue.closest(this, ".bbn-tab").$refs.popup[0].open({
-          width: 750,
-          height: 680,
+        appui.$refs.tabnav.activeTab.getPopup().open({
+          width: '80%',
+          height: '80%',
           title: bbn._('Select icons'),
-          component: 'appui-menu-popup-icons_edition_menu',
+          component: 'appui-popup-iconpicker',
           source: {
-            root: this.source.root
+            obj: appui.menu.selected,
+            field: 'icon'
           }
         });
       },
@@ -432,7 +431,6 @@
         }
       },
       selectMenu(tree){
-
         //alert("ffffff");
         /*if ( tree.data.id_alias === null ){
           this.viewButtonAlias = true;
