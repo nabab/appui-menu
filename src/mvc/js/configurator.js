@@ -251,7 +251,7 @@
         //checks if it has an id to make sure that you perform the delete action and that anyway this id is not that of the default menu
         if ( idDelete !== "" ){
           if ( idDelete !== this.id_default ){
-            bbn.fn.confirm(
+            appui.confirm(
               bbn._('Secure to delete: "') + text + '" ?',
               () =>{
                 bbn.fn.post(
