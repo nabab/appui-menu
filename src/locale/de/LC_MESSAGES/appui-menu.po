@@ -3,15 +3,15 @@ msgstr ""
 "Project-Id-Version: 1\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: BBN Solutions <support@bbn.solutions>\n"
-"Language-Team: FR <FR@li.org>\n"
+"Language-Team: DE <DE@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2018-04-18 10:42+0200\n"
 "PO-Revision-Date: 2018-04-18 10:42+0200\n"
-"Language: fr\n"
+"Language: de\n"
 "X-Domain: appui-menu\n"
-"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/html/configurator.php:1
 msgid "Back menu"
@@ -100,7 +100,7 @@ msgstr ""
 
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
 msgid "Successfully moved!!"
-msgstr "test"
+msgstr ""
 
 #: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
 msgid "Error moved!!"

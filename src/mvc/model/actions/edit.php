@@ -63,7 +63,7 @@ if ( !empty($model->data['text']) &&  !empty($model->data['icon']) && !empty($mo
       'icon' => $model->data['icon'],
       'id_alias' => $model->data['id_alias']
     ];
-    if ( !empty($model->data['argument']) && !empty($model->data['argument']) ){
+    if ( !empty($model->data['argument']) ){
       array_push($cfg, 'value', $model->data['argument'] );
     }
     // if ( $id_set = $model->inc->options->set($model->data['id'], $cfg) ){
@@ -81,4 +81,3 @@ if ( !empty($model->data['text']) &&  !empty($model->data['icon']) && !empty($mo
 }
 //die(var_dump("entaro", $res));
 return $res;
-

@@ -2,11 +2,6 @@
   return {
     created(){
       appui.menu = this;
-      bbn.vue.setComponentRule(this.source.root +'components/', 'appui-menu');
-      bbn.vue.addComponent('popup/new_menu');
-      bbn.vue.addComponent('popup/copy_menu');
-      bbn.vue.addComponent('popup/rename');
-      bbn.vue.unsetComponentRule();
     },
     data(){
       return {
@@ -42,7 +37,7 @@
         let ctx =  [
           //for delete
           {
-            icon: 'fa fa-trash-o',
+            icon: 'far fa-trash-alt',
             text: bbn._('Delete'),
             command: node => {
               this.node = node;
@@ -188,7 +183,7 @@
 
       //this method is invoked when you have to open an action popup, which one is receiving the information of the requested action.
       actionedPopUp(component, title, cfg , popup){
-        bbn.vue.closest(this, ".bbn-tab").$refs.popup[0].open({
+        bbn.vue.closest(this, ".bbns-tab").$refs.popup[0].open({
           width: popup.width,
           height: popup.height,
           title: title,
@@ -248,7 +243,7 @@
       //function that asks for confirmation of cancellation of menu or sub-menu in case of successful outcome of confirm
       // it performs the action, the ctx parameter is used to understand if the request has occurred at the click of the context menu.
       deleteElement(idDelete, text, ctx = false, ele){
-        //checks if it has an id to make sure that you perform the delete action and that anyway this id is not that of the default menu
+        //checks if it has an id to make sure that you perform the delete action and that anyway this id is not that of the default menu        
         if ( idDelete !== "" ){
           if ( idDelete !== this.id_default ){
             appui.confirm(
@@ -498,7 +493,7 @@
         if ( node.icon === 'fa fa-file' ){
           res.push({
             text: 'Go',
-            icon: 'fa fa-hand-o-right',
+            icon: 'far fa-hand-right',
             command(node){
               let path = node.getPath();
               bbn.fn.post('options/permissions', {

@@ -24,22 +24,22 @@
             </div>
             <div>
               <bbn-button @click="clickCreateMenu" title="<?=_('Create menu')?>">
-                <i class='fa fa-folder-o'></i>
+                <i class='far fa-folder'></i>
               </bbn-button>
               <bbn-button @click="clickCreateLink" title="<?=_('Create link')?>">
-                <i class="fa fa-link"></i>
+                <i class="fas fa-link"></i>
               </bbn-button>
               <bbn-button @click="clickCreateSection" title="<?=_('Create section')?>">
-                <i class="fa fa-thumb-tack"></i>
+                <i class="fas fa-thumbtack"></i>
               </bbn-button>
               <bbn-button @click="clickDeleteMenu" title="<?=_('Delete menu')?>">
-                <i class='fa fa-trash-o'></i>
+                <i class='far fa-trash-alt'></i>
               </bbn-button>
               <bbn-button @click="clickRenameMenu" title="<?=_('Rename menu')?>">
-                <i class='fa fa-pencil-square-o'></i>
+                <i class='far fa-edit'></i>
               </bbn-button>
               <bbn-button @click="clickCopyMenu" title="<?=_('Copy menu')?>">
-                <i class='fa fa-clone'></i>
+                <i class='far fa-clone'></i>
               </bbn-button>
             </div>
           </div>
