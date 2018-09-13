@@ -243,7 +243,7 @@
       //function that asks for confirmation of cancellation of menu or sub-menu in case of successful outcome of confirm
       // it performs the action, the ctx parameter is used to understand if the request has occurred at the click of the context menu.
       deleteElement(idDelete, text, ctx = false, ele){
-        //checks if it has an id to make sure that you perform the delete action and that anyway this id is not that of the default menu        
+        //checks if it has an id to make sure that you perform the delete action and that anyway this id is not that of the default menu
         if ( idDelete !== "" ){
           if ( idDelete !== this.id_default ){
             appui.confirm(
@@ -344,7 +344,7 @@
           width: '80%',
           height: '80%',
           title: bbn._('Select icons'),
-          component: 'appui-popup-iconpicker',
+          component: 'appui-core-popup-iconpicker',
           source: {
             obj: appui.menu.selected,
             field: 'icon'
@@ -426,7 +426,6 @@
         }
       },
       selectMenu(tree){
-        //alert("ffffff");
         /*if ( tree.data.id_alias === null ){
           this.viewButtonAlias = true;
         }*/
@@ -449,6 +448,9 @@
             isSelected: tree.isSelected,
             parentIsRoot: tree.parent.level === 0
           };
+          if( tree.data.argument !== undefined ){
+            this.selected.argument = tree.data.argument;
+          }
           if ( this.$refs.form ){
             this.$refs.form.reinit();
           }
@@ -485,6 +487,7 @@
           path: a.path || [],
           icon: a.icon,
           text: a.text,
+          argument: a.argument,
           num: a.num_children || 0
         }
       },
