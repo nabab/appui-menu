@@ -6,7 +6,7 @@
     data(){
       return {
         orientation: 'horizontal',
-        classOrientation: 'fa fa-arrows-v',
+        classOrientation: 'fas fa-arrows-v',
         selected: false,
         currentMenu:'',
         oldRootMenu:'',
@@ -24,7 +24,7 @@
         formData:{
           create: false
         },
-        iconDefault: 'fa fa-cog'
+        iconDefault: 'fas fa-cog'
       }
     },
     methods: {
@@ -46,7 +46,7 @@
           },
           //for rename sub-section
           {
-            icon: 'fa fa-pencil',
+            icon: 'fas fa-pencil-alt',
             text: bbn._('Rename'),
             command: node => {
               this.node = node;
@@ -57,7 +57,7 @@
         if ( arguments[0].data.id_alias === null ){
           //for create sub-section
           ctx.unshift({
-              icon: 'fa fa-level-down',
+              icon: 'fas fa-level-down-alt',
               text: bbn._('Sub-section'),
               command: node => {
                 this.node = node;
@@ -73,7 +73,7 @@
             });
           //for create a link
           ctx.unshift({
-            icon: 'fa fa-link',
+            icon: 'fas fa-link',
             text: bbn._('New link'),
             command: node => {
               this.node = node;
@@ -103,14 +103,14 @@
 
           console.log(this.orientation);
 
-          this.classOrientation = 'fa fa-arrows-h';
+          this.classOrientation = 'fas fa-arrows-h';
         }
         if( this.$data.orientation === 'vertical' ){
           this.$nextTick(() =>{
             this.$data.orientation = "horizontal";
           });
 
-          this.classOrientation = 'fa fa-arrows-v';
+          this.classOrientation = 'fas fa-arrows-v';
         }
       },*/
       clickCreateMenu(){
@@ -124,7 +124,7 @@
          text: 'New Section',
          id_parent: this.currentMenu,
          id_alias: null,
-         icon: 'fa fa-cogs',
+         icon: 'fas fa-cogs',
          numChildren: 0
        });
       },
@@ -493,7 +493,7 @@
       },
       getPermissionsContext(node){
         let res = [];
-        if ( node.icon === 'fa fa-file' ){
+        if ( node.icon === 'fas fa-file' ){
           res.push({
             text: 'Go',
             icon: 'far fa-hand-right',
@@ -513,7 +513,7 @@
       //Permitted tree mapper
       mapPermissions(a){
         a.text += ' &nbsp; <span class="bbn-grey">' +  "(" + a.code +  ")" + '</span>';
-        return $.extend({selectable: a.icon === 'fa fa-file'}, a);
+        return $.extend({selectable: a.icon === 'fas fa-file'}, a);
       },
       /** ##DRAG & DROP  **/
 
@@ -525,7 +525,7 @@
         bbn.fn.log("STArt DRAG", this, arguments);
         /* let node = arguments[0],
          event = arguments[1];
-         if( (node.items.length) && (node.numChildren > 0) || (node.icon === 'fa fa-key') ){
+         if( (node.items.length) && (node.numChildren > 0) || (node.icon === 'fas fa-key') ){
          event.preventDefault();
          }*/
       },
@@ -534,7 +534,7 @@
         let node = arguments[0],
             event = arguments[1];
         /*
-         if( (!node.items.length) && (node.numChildren === 0) && (node.icon !== 'fa fa-key') ){
+         if( (!node.items.length) && (node.numChildren === 0) && (node.icon !== 'fas fa-key') ){
          event.preventDefault();
          }
          */

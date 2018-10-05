@@ -13,34 +13,40 @@
                 v-model="currentMenu"
               ></bbn-dropdown>
               <bbn-button @click="clickPrev" title="<?=_('Back menu')?>" v-if="showArrows">
-                <i class="fa fa-arrow-left"></i>
+                <i class="fas fa-arrow-left"></i>
               </bbn-button>
               <bbn-button @click="clickNext" title="<?=_('Next menu')?>" v-if="showArrows">
-                <i class="fa fa-arrow-right"></i>
+                <i class="fas fa-arrow-right"></i>
               </bbn-button>
             </div>
             <div class="bbn-flex-fill">
               &nbsp;
             </div>
             <div>
-              <bbn-button @click="clickCreateMenu" title="<?=_('Create menu')?>">
-                <i class='far fa-folder'></i>
-              </bbn-button>
-              <bbn-button @click="clickCreateLink" title="<?=_('Create link')?>">
-                <i class="fas fa-link"></i>
-              </bbn-button>
-              <bbn-button @click="clickCreateSection" title="<?=_('Create section')?>">
-                <i class="fas fa-thumbtack"></i>
-              </bbn-button>
-              <bbn-button @click="clickDeleteMenu" title="<?=_('Delete menu')?>">
-                <i class='far fa-trash-alt'></i>
-              </bbn-button>
-              <bbn-button @click="clickRenameMenu" title="<?=_('Rename menu')?>">
-                <i class='far fa-edit'></i>
-              </bbn-button>
-              <bbn-button @click="clickCopyMenu" title="<?=_('Copy menu')?>">
-                <i class='far fa-clone'></i>
-              </bbn-button>
+              <bbn-button @click="clickCreateMenu"
+                          title="<?=_('Create menu')?>"
+                          icon='far fa-folder'
+              ></bbn-button>
+              <bbn-button @click="clickCreateLink"
+                          title="<?=_('Create link')?>"
+                          icon="fas fa-link"
+              ></bbn-button>
+              <bbn-button @click="clickCreateSection"
+                          title="<?=_('Create section')?>"
+                          icon='fas fa-thumbtack'
+              ></bbn-button>
+              <bbn-button @click="clickDeleteMenu"
+                          title="<?=_('Delete menu')?>"
+                          icon='far fa-trash-alt'
+              ></bbn-button>
+              <bbn-button @click="clickRenameMenu"
+                          title="<?=_('Rename menu')?>"
+                          icon='far fa-edit'
+              ></bbn-button>
+              <bbn-button @click="clickCopyMenu"
+                          title="<?=_('Copy menu')?>"
+                          icon='far fa-clone'
+              ></bbn-button>
             </div>
           </div>
         </div>

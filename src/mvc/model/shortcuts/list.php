@@ -6,7 +6,7 @@
 
 /** @var $model \bbn\mvc\model*/
 $menu = new \bbn\appui\menus();
-$shortcuts = $menu->shortcuts($model->inc->pref);
+$shortcuts = $menu->shortcuts();
 if ( !empty($model->data['prepath']) ){
   $prepath = $model->data['prepath'];
   return array_map(function($a) use($prepath){

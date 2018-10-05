@@ -14,7 +14,7 @@
       >
       </bbn-input>
       <div class="bbn-w-100 bbn-c" style="margin-top: 1%">
-        <i class="fa fa-arrow-down"></i>
+        <i class="fas fa-arrow-down"></i>
       </div>
       <bbn-input style="margin-top: 1%"
                  class="bbn-w-100"
