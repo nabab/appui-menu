@@ -3,7 +3,7 @@
 if ( !isset($ctrl->post['id']) ){
   $permission = $ctrl->inc->options->from_code('page', 'permissions', 'appui' );
   $id_menus = $ctrl->inc->options->from_code('menus', 'menus', 'appui');
-  $id_default = $ctrl->inc->options->from_code('default', 'menus', 'appui');
+  $id_default = $ctrl->inc->options->from_code('default', 'menus', 'menus', 'appui');
 
   $ctrl->add_data([
     'cat' => $ctrl->inc->options->from_code(false),

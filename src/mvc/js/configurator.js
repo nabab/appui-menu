@@ -1,8 +1,6 @@
 (() => {
   return {
-    created(){
-      appui.menu = this;
-    },
+
     data(){
       return {
         orientation: 'horizontal',
@@ -11,10 +9,12 @@
         currentMenu:'',
         oldRootMenu:'',
         rootPermission: this.source.id_permission,
+        //id options menus conteiner
         id_parent: this.source.id_parent,
         id_default: this.source.id_default,
         list: this.source.listMenu,
         root: this.source.root,
+        //info node at click for context menu
         node: null,
         droppables: [],
         idxListMenu: -1,
@@ -27,10 +27,46 @@
         iconDefault: 'fas fa-cog'
       }
     },
-    methods: {
-      changePermission(){
-        bbn.fn.log(arguments);
+    computed: {
+      //Always updated list of menus visible on the dropdown
+      listMenu(){
+        let menus = [];
+        if ( this.list && this.list.length ){
+          for ( let ele of this.$data.list ){
+            if ( (ele.code !== "shortcuts")  ){
+              menus.push({
+                text: ele.text,
+                value: ele.id
+              });
+            }
+          };
+        }
+        return menus
       },
+      showArrows(){
+        if( this.listMenu.length > 2 ){
+          return true
+        }
+        return false
+      },
+      //Current name of the selected menu from the dprodown list
+      nameMenu(){
+        let name = "";
+        if ( this.currentMenu !== "" ){
+          for ( let ele of this.listMenu ){
+            if ( ele.value === this.currentMenu ){
+              name = ele.text;
+            }
+          }
+        }
+        return name
+      }
+    },
+    methods: {
+      /*changePermission(){
+        bbn.fn.log(arguments);
+      },*/
+
       /** CONTEXTMENU **/
       // Returns an array for the context menu of the menu tree (right splitter)
       contextMenu(){
@@ -41,16 +77,17 @@
             text: bbn._('Delete'),
             command: node => {
               this.node = node;
-              this.deleteElement(node.data.id , node.text, true, node);
+              //params: id node , text node, false for define that is not menu
+              this.deleteElement(node.data.id , node.text, false);
             }
           },
-          //for rename sub-section
+          //for rename section
           {
             icon: 'fas fa-pencil-alt',
             text: bbn._('Rename'),
             command: node => {
               this.node = node;
-              this.renameElement(true, node.data.id, node.text, false, node.icon );
+              this.renameElement(true, node.data.id, node.text, false, node.icon);
             }
           }
         ];
@@ -129,7 +166,7 @@
        });
       },
       clickDeleteMenu(){
-        this.deleteElement(this.currentMenu, this.nameMenu);
+        this.deleteElement(this.currentMenu, this.nameMenu, true);
       },
       clickRenameMenu(){
         this.renameElement(false, this.currentMenu, this.nameMenu, this.id_parent);
@@ -207,6 +244,7 @@
           this.actionedPopUp('appui-menu-popup-copy_menu', bbn._('Copy menu'), cfg, dim);
         }
       },
+      //(true, node.data.id, node.text, false, node.icon
       renameElement(ctx, current, text, id_parent, icon= false){
         let dim = {
           width: 300,
@@ -242,67 +280,79 @@
 
       //function that asks for confirmation of cancellation of menu or sub-menu in case of successful outcome of confirm
       // it performs the action, the ctx parameter is used to understand if the request has occurred at the click of the context menu.
-      deleteElement(idDelete, text, ctx = false, ele){
+      deleteElement(idDelete, text, menu){
         //checks if it has an id to make sure that you perform the delete action and that anyway this id is not that of the default menu
-        if ( idDelete !== "" ){
-          if ( idDelete !== this.id_default ){
-            appui.confirm(
-              bbn._('Secure to delete: "') + text + '" ?',
-              () =>{
-                bbn.fn.post(
-                  this.root + "actions/delete_element",
-                  {
-                    id: idDelete,
-                    id_default: this.id_default,
-                    id_parent: this.id_parent
-                  },
-                  (d)=>{
-                    if ( d.success ){
-                      //If ctx is set to true then you are deleting a node and not a parent menu selected from the list then you are
-                      // doing a refresh with complete action to give the free of the updated menu.
-                      if ( ctx ){
-                        //case level at 0, modify items whitout reload
-                        if ( this.node.level === 0 ){
-                          for ( let i in this.node['parent']['items'] ){
-                            if ( idDelete === this.node['parent']['items'][i]['id'] ){
-                              //this.node.$delete(this.node['parent']['items'], i);
-                              let idx = i;
-                            }
+        if ( idDelete ){
+          if ( idDelete === this.id_default ){
+            appui.error( bbn._("The main menu cannot be deleted !!") );
+            return;
+          }
+          appui.confirm(
+            bbn._('Secure to delete: "') + text + '" ?',
+            () => {
+              bbn.fn.post(
+                this.root + "actions/delete_element",
+                {
+                  id: idDelete,
+                  id_default: this.id_default,
+                  id_parent: menu ? this.id_parent : this.node.data.id_parent
+                },
+                (d) => {
+                  if ( d.success ){
+                    //If ctx is set to true then you are deleting a node and not a parent menu selected from the list then you are
+                    // doing a refresh with complete action to give the free of the updated menu.
+                    //case delete menu
+                    if ( menu ){
+                      //the computed and on this property through which computed allows me to update the menu list
+                      // in the dropdown
+                      this.list = d.listMenu.length ? d.listMenu : [];
+                      //returns to the initial state
+                      if ( this.currentMenu == idDelete ){
+                        setTimeout(() => {
+                          this.currentMenu = this.list[this.list.length-1]['id'];
+                          this.idxListMenu --;
+                        }, 100);
+                      }
+                    }
+                    //case delete node of a tree menu
+                    else{
+                      //case level at 0, modify items whitout reload
+                      /*if ( this.node.level === 0 ){
+                        for ( let i in this.node['parent']['items'] ){
+                          if ( idDelete === this.node['parent']['items'][i]['id'] ){
+                            idx = i;
                           }
+                        }
+                        if ( idx !== false ){
                           this.node['parent']['items'].splice(idx, 1);
                         }
-                        else {
-                          appui.menu.reloadTreeOfNode();
-                          let treeNode = bbn.vue.closest(this.node, "bbn-tree-node");
-                          if ( treeNode.numChildren === 1 ){
-                            treeNode.numChildren = 0;
+                      }
+                      else {
+                        appui.menu.reloadTreeOfNode();
+                        let treeNode = bbn.vue.closest(this.node, "bbn-tree-node");
+                        if ( treeNode.numChildren === 1 ){
+                          treeNode.numChildren = 0;
+                        }
+                      }*/
+                      if ( this.node !== null ){
+                        bbn.fn.each( this.node['parent']['items'], (val, i)=>{
+                          if ( idDelete === this.node['parent']['items'][i]['id'] ){
+                            this.node['parent']['items'].splice(i, 1);
+                            this.node = null;
+                            return false;
                           }
-                        }
+                        });
                       }
-                      else{
-                        //the computed and on this property through which computed allows me to update the menu list
-                        // in the dropdown
-                        this.list = d.listMenu.length ? d.listMenu : [];
-                        //returns to the initial state
-                        if ( this.currentMenu == idDelete ){
-                          setTimeout(() => {
-                            this.currentMenu = this.list[this.list.length-1]['id'];
-                            this.idxListMenu --;
-                          }, 100);
-                        }
-                      }
-                      appui.success( bbn._("Deleted correctly !!") );
                     }
-                    else{
-                      appui.error( bbn._("Error, not cleared correctly!!") );
-                    }
+                    appui.success( bbn._("Deleted correctly !!") );
                   }
-                );
-              });
-          }
-          else{
-            appui.error( bbn._("The main menu cannot be deleted !!") );
-          }
+                  else{
+                    appui.error( bbn._("Error, not cleared correctly!!") );
+                  }
+                }
+              );
+            }
+          )
         }
       },
       addTempNode(node, cfg){
@@ -551,13 +601,8 @@
       //activates when the node to be moved is released, it performs checks and, if necessary, performs the displacement action
       ctrlEndDragMenus(node, ev, destination){
         //The node shifts can do so all except the default menu that reside in the right splitter.
-
         if ( this.currentMenu !== this.id_default ){
           //acquire the id of the node that will contain that one we want to move
-
-          bbn.fn.warning("end");
-          bbn.fn.log(arguments, node, node.data,  node.data.id_parent, destination, ev);
-
           if ( node.data.code ){
             bbn.fn.post(this.root + 'actions/create_shortcut', {
               code: node.data.code,
@@ -588,76 +633,17 @@
             );
           }
         }
-      },
-      test1(){
-        bbn.fn.log("TEST FROM TREE 1", arguments[0]);
-
-      },
-      test2(){
-        bbn.fn.warning("start")
-        bbn.fn.log("TEST FROM TREE 2 START", arguments);
-      },
-      test3(){
-        bbn.fn.warning("OVER")
-        bbn.fn.log("TEST FROM TREE 2 OVER", arguments);
-      },
-    },
-    mounted(){
-      /*bbn.fn.warning("oooo");
-       console.log(this)*/
-      if ( this.$refs.menus ){
-        this.droppables.push(this.$refs.menus);
-      }
-
-
-
-
-      /*bbn.fn.post(this.root + "convert_tree",
-       {},()=>{});*/
-    },
-    computed: {
-      //Always updated list of menus visible on the dropdown
-      listMenu(){
-        let menus = [];
-        if ( this.list && this.list.length ){
-          for ( let ele of this.$data.list ){
-            if ( (ele.code !== "shortcuts")  ){
-              menus.push({
-                text: ele.text,
-                value: ele.id
-              });
-            }
-          };
-        }
-        return menus
-      },
-      showArrows(){
-        if( this.listMenu.length > 2 ){
-          return true
-        }
-        return false
-      },
-      //Current name of the selected menu from the dprodown list
-      nameMenu(){
-        let name = "";
-        if ( this.currentMenu !== "" ){
-          for ( let ele of this.listMenu ){
-            if ( ele.value === this.currentMenu ){
-              name = ele.text;
-            }
-          }
-        }
-        return name
       }
     },
     watch:{
+      /*
+       * @watch currentMenu
+       * Set props idxListMenu and emptyMenuCurrent
+       */
       currentMenu(val, old){
         for ( let i in this.list ){
-          if ( this.list[i]['id'] == val ){
+          if ( this.list[i]['id'] === val ){
             this.idxListMenu = parseInt(i);
-           /* if ( this.idxListMenu === 1){
-              i= i-1;
-            }*/
             this.emptyMenuCurrent = this.list[i]['num_children'] == 0;
           }
         }
@@ -676,6 +662,14 @@
         }
         //Being that templete does not recharge at id change then we make a tree reload so we have the right menu
       },
+    },
+    mounted(){
+      if ( this.$refs.menus ){
+        this.droppables.push(this.$refs.menus);
+      }
+    },
+    created(){
+      appui.menu = this;
     }
   }
 })();

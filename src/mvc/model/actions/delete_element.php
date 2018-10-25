@@ -9,12 +9,14 @@
 
 $res['success'] = false;
 $default = $model->inc->options->from_code('menus', 'menus', 'appui');
-if ( !empty($model->data['id']) && ($model->data['id'] !== $default) ){
-  if ( !empty($model->inc->menu->remove($model->data['id'])) ){
-    $res = [
-      'success' => true,
-      'listMenu' => $model->inc->options->full_options($model->data['id_parent'])
-    ];
-  };
+if (
+  !empty($model->data['id']) && ($model->data['id'] !== $default) &&
+  ($num = $model->inc->menu->remove($model->data['id']))
+){
+  $res = [
+    'success' => true,
+    'num' => $num,
+    'listMenu' => $model->inc->options->full_options($model->data['id_parent'])
+  ];
 }
 return $res;
