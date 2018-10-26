@@ -1,0 +1,147 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: 1\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: BBN Solutions <support@bbn.solutions>\n"
+"Language-Team: IT <IT@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2018-10-02 17:56+0200\n"
+"PO-Revision-Date: 2018-10-02 17:56+0200\n"
+"Language: it\n"
+"X-Domain: appui-menu2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/html/configurator.php:1
+msgid "Back menu"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/html/configurator.php:1
+msgid "Next menu"
+msgstr "test"
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/html/configurator.php:1
+msgid "Create menu"
+msgstr "Creare un menu"
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/html/configurator.php:1
+msgid "Create link"
+msgstr "Creare un link"
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/html/configurator.php:1
+msgid "Create section"
+msgstr "Creare una sezione"
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/html/configurator.php:1
+msgid "Delete menu"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/html/configurator.php:1
+msgid "Rename menu"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/html/configurator.php:1
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
+msgid "Copy menu"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/html/configurator.php:1
+msgid "Empty"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/html/configurator.php:1
+msgid "menu"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/html/configurator.php:1
+msgid "Icons"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
+msgid "Delete"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
+msgid "Rename"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
+msgid "Sub-section"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
+msgid "New link"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
+msgid "Create new menu"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
+msgid "Secure to delete: \""
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
+msgid "Deleted correctly !!"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
+msgid "Error, not cleared correctly!!"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
+msgid "The main menu cannot be deleted !!"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
+msgid "Select icons"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
+msgid "Successfully moved!!"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
+msgid "Error moved!!"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
+msgid "Successfully create !!"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
+msgid "Error create"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
+msgid "Successfully edit!!"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/js/configurator.js:1
+msgid "Error!"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/public/build.php:1
+msgid "Sorry, a problem occured while moving this item, and although the tree says otherwise the item has not been moved."
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/public/build.php:1
+msgid "Please refresh the tab in order to see the awful truth..."
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/public/build.php:1
+msgid "Are you sure you want to move this option? Although the configuration will remain the same, the access path will be changed."
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/public/build.php:1
+msgid "build"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/public/configurator.php:1
+msgid "Menu Configurator"
+msgstr ""
+
+#: /home/thomas/domains/apstapp2.thomas.lan/_appui/vendor/bbn/appui-menu/src/mvc/public/test_tree.php:1
+msgid "test tree"
+msgstr ""

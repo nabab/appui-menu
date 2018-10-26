@@ -125,6 +125,13 @@
               }
             }
           });
+          ctx.push({
+            icon: 'fas fa-copy',
+            text: bbn._('Copy to'),
+            command: node => {
+              this.copyTo(node);
+            }
+          });
         }
         return ctx
       },
@@ -242,6 +249,21 @@
             id_parent: id_parent
           };
           this.actionedPopUp('appui-menu-popup-copy_menu', bbn._('Copy menu'), cfg, dim);
+        }
+      },
+      copyTo(node){
+        let dim = {
+          width: 300,
+          height: 180
+        };
+        if ( this.currentMenu !== "" ){
+          let cfg = {
+            root: this.source.root,
+            name: node.data.text,
+            listMenu: this.listMenu,
+            id: node.data.id
+          };
+          this.actionedPopUp('appui-menu-popup-copy_to', bbn._('Copy to'), cfg, dim);
         }
       },
       //(true, node.data.id, node.text, false, node.icon
@@ -601,8 +623,13 @@
       //activates when the node to be moved is released, it performs checks and, if necessary, performs the displacement action
       ctrlEndDragMenus(node, ev, destination){
         //The node shifts can do so all except the default menu that reside in the right splitter.
+
         if ( this.currentMenu !== this.id_default ){
           //acquire the id of the node that will contain that one we want to move
+
+          bbn.fn.warning("end");
+          bbn.fn.log(arguments, node, node.data,  node.data.id_parent, destination, ev);
+
           if ( node.data.code ){
             bbn.fn.post(this.root + 'actions/create_shortcut', {
               code: node.data.code,
@@ -633,12 +660,26 @@
             );
           }
         }
-      }
+      },
+      test1(){
+        bbn.fn.log("TEST FROM TREE 1", arguments[0]);
+
+      },
+      test2(){
+        bbn.fn.warning("start")
+        bbn.fn.log("TEST FROM TREE 2 START", arguments);
+      },
+      test3(){
+        bbn.fn.warning("OVER")
+        bbn.fn.log("TEST FROM TREE 2 OVER", arguments);
+      },
     },
+
     watch:{
       /*
        * @watch currentMenu
-       * Set props idxListMenu and emptyMenuCurrent
+       *
+       * @set
        */
       currentMenu(val, old){
         for ( let i in this.list ){

@@ -27,13 +27,13 @@
                           title="<?=_('Create menu')?>"
                           icon='far fa-folder'
               ></bbn-button>
-              <bbn-button @click="clickCreateLink"
-                          title="<?=_('Create link')?>"
-                          icon="fas fa-link"
-              ></bbn-button>
               <bbn-button @click="clickCreateSection"
                           title="<?=_('Create section')?>"
                           icon='fas fa-thumbtack'
+              ></bbn-button>
+              <bbn-button @click="clickCreateLink"
+                          title="<?=_('Create link')?>"
+                          icon="fas fa-link"
               ></bbn-button>
               <bbn-button @click="clickDeleteMenu"
                           title="<?=_('Delete menu')?>"
