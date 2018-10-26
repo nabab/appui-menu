@@ -1,13 +1,17 @@
 (() => {
   return {
-
+    /**
+     * [data initial]
+     * @return {object}
+     */
     data(){
       return {
+        //for  orientation spitter
         orientation: 'horizontal',
         classOrientation: 'fas fa-arrows-v',
         selected: false,
-        currentMenu:'',
-        oldRootMenu:'',
+        currentMenu: '',
+        oldRootMenu: '',
         rootPermission: this.source.id_permission,
         //id options menus conteiner
         id_parent: this.source.id_parent,
@@ -18,7 +22,7 @@
         node: null,
         droppables: [],
         idxListMenu: -1,
-        nameSection: "",
+        nameSection: '',
         emptyMenuCurrent: null,
         viewButtonAlias: false,
         formData:{
@@ -28,6 +32,12 @@
       }
     },
     computed: {
+      /**
+       * this make list of all menus
+       *
+       * @computed listMenu
+       * @return {Array}
+       */
       //Always updated list of menus visible on the dropdown
       listMenu(){
         let menus = [];
@@ -43,13 +53,24 @@
         }
         return menus
       },
+      /**
+       * check if there are more menus if it returns true the arrows will appear to scroll through the list
+       *
+       * @computed listMenu
+       * @return {Boolean}
+       */
       showArrows(){
         if( this.listMenu.length > 2 ){
           return true
         }
         return false
       },
-      //Current name of the selected menu from the dprodown list
+      /*
+       * Get Current name of the selected menu from the dprodown list
+       *
+       * @computed nameMenu
+       * @return {String}
+       */
       nameMenu(){
         let name = "";
         if ( this.currentMenu !== "" ){
@@ -63,12 +84,16 @@
       }
     },
     methods: {
-      /*changePermission(){
-        bbn.fn.log(arguments);
-      },*/
-
       /** CONTEXTMENU **/
-      // Returns an array for the context menu of the menu tree (right splitter)
+      /*
+       * Returns an array for the context menu of the menu tree (right splitter)
+       *
+       * @method contextMenu
+       * @fires deleteElement
+       * @fires renameElement
+       * @fires addTempNode
+       * @fires copyTo
+       */
       contextMenu(){
         let ctx =  [
           //for delete
@@ -81,34 +106,34 @@
               this.deleteElement(node.data.id , node.text, false);
             }
           },
-          //for rename section
+          //for rename
           {
             icon: 'fas fa-pencil-alt',
             text: bbn._('Rename'),
             command: node => {
               this.node = node;
-              this.renameElement(true, node.data.id, node.text, false, node.icon);
+              this.renameElement(false, node.data.id, node.text, false, node.icon);
             }
           }
         ];
+        //case context in section menu
         if ( arguments[0].data.id_alias === null ){
-          //for create sub-section
+          //adds the possibility of create sub-section
           ctx.unshift({
               icon: 'fas fa-level-down-alt',
               text: bbn._('Sub-section'),
               command: node => {
                 this.node = node;
                 this.addTempNode(node, {
-                  text: 'New Section',
+                  text: bbn._('New Section'),
                   id_parent: node.data.id,
                   id_alias: null,
                   icon: this.iconDefault,
                   numChildren: 0
                 });
-                //this.createSection(node.data.id);
               }
             });
-          //for create a link
+          //adds the possibility of create a link
           ctx.unshift({
             icon: 'fas fa-link',
             text: bbn._('New link'),
@@ -116,7 +141,7 @@
               this.node = node;
               if ( node.data.id_alias === null){
                 let obj = {
-                  text: 'My text',
+                  text: bbn._('My text'),
                   id_parent: node.data.id,
                   id_alias: 1,
                   icon: this.iconDefault,
@@ -125,107 +150,181 @@
               }
             }
           });
+          //adds the possibility of copy the section to another menu
           ctx.push({
             icon: 'fas fa-copy',
             text: bbn._('Copy to'),
             command: node => {
-              this.copyTo(node);
+              this.copyTo({
+                text: node.data.text,
+                id: node.data.id
+              });
             }
           });
         }
         return ctx
       },
-
       /**METHODS FOR BUTTONS ACTIONS IN THE TOP SPLITER LEFT **/
-      // for change orientatio spliter
-      /*clickOrientation(){
-        if ( this.orientation == "horizontal" ){
-          console.log(this.orientation);
-          this.$nextTick(() =>{
-            this.orientation = 'vertical';
-          });
 
-          console.log(this.orientation);
-
-          this.classOrientation = 'fas fa-arrows-h';
-        }
-        if( this.$data.orientation === 'vertical' ){
-          this.$nextTick(() =>{
-            this.$data.orientation = "horizontal";
-          });
-
-          this.classOrientation = 'fas fa-arrows-v';
-        }
-      },*/
-      clickCreateMenu(){
-        this.createMenu(this.id_parent);
+      /*
+       * Create a new menu, this is operated by the top-bar button "create menu"
+       *
+       * @method createMenu
+       *
+       * @fires actionedPopUp
+       */
+      createMenu(){
+        let dim = {
+          width: 300,
+          height: 180
+        },
+          //source for create menu
+        cfg = {
+          root: this.root,
+          id_parent: this.id_parent,
+        };
+        //this method returns a popup with the component that we call in the first parameter
+        this.actionedPopUp('appui-menu-popup-new_menu', bbn._('Create new menu'), cfg, dim);
       },
-      clickCopyMenu(){
-        this.copyMenu(this.id_parent);
+      /*
+       * Copy a menu, this is operated by the top-bar button "copy menu"
+       *
+       * @method copyMenu
+       *
+       * @fires actionedPopUp
+       */
+      copyMenu(){
+        if ( this.currentMenu !== "" ){
+          let dim = {
+            width: 300,
+            height: 180
+          },
+          cfg = {
+            root: this.$data.root,
+            titleMenu: this.nameMenu,
+            id: this.currentMenu,
+            id_parent: this.id_parent
+          };
+          this.actionedPopUp('appui-menu-popup-copy_menu', bbn._('Copy menu'), cfg, dim);
+        }
       },
-      clickCreateSection(){
+      /*
+       * Temporarily adds a new section in root this is operated by the top-bar button "Copy menu"
+       *
+       * @method createSection
+       *
+       * @fires addTempNodeInRoot
+       */
+      createSection(){
+      // add temporaney node in tree
        this.addTempNodeInRoot({
-         text: 'New Section',
+         text: bbn._('New Section'),
          id_parent: this.currentMenu,
          id_alias: null,
          icon: 'fas fa-cogs',
          numChildren: 0
        });
       },
-      clickDeleteMenu(){
+      /*
+       * Delete current menu this is operated by the top-bar button "Delete menu"
+       *
+       * @method deleteMenu
+       *
+       * @fires deleteElement
+       */
+      deleteMenu(){
+        //passes the parameters of the current menu for delete
         this.deleteElement(this.currentMenu, this.nameMenu, true);
       },
-      clickRenameMenu(){
-        this.renameElement(false, this.currentMenu, this.nameMenu, this.id_parent);
+      /*
+       * Rename current menu this is operated by the top-bar button "Rename menu"
+       *
+       * @method renameMenu
+       *
+       * @fires renameElement
+       */
+      renameMenu(){
+        //passes the parameters of the current menu for rename
+        this.renameElement(true, this.currentMenu, this.nameMenu, this.id_parent);
       },
-      clickCreateLink(){
+      /*
+       * Create a new link in root of  current menu  set id_alias at 1 this is operated by the top-bar button "Create link"
+       *
+       * @method createLink
+       *
+       * @fires addTempNodeInRoot
+       */
+      createLink(){
+        // add temporaney node in tree of the root menu with id_alias at 1 for create a link
         this.addTempNodeInRoot({
-          text: 'New text',
+          text: bbn._('New text'),
           id_parent: this.currentMenu,
           id_alias: 1,
           icon: this.iconDefault,
           numChildren: 0
         });
       },
-      clickPrev(){
+      /*
+       * Copy the current menu and assign it to the root of another selected menu this is operated by the top-bar button "Copy menu to"
+       *
+       * @method copyMenuTo
+       *
+       * @fires copyto
+       */
+      copyMenuTo(){
+        //accepts as parameter an object with id of the menu to be copied and where to copy it
+        this.copyTo({
+          text:this.nameMenu,
+          id: this.currentMenu
+        });
+      },
+      /*
+       * Allows backward scrolling of the menu list one by one  this is operated by the top-bar button "back menu"
+       *
+       * @method prevMenu
+       */
+      prevMenu(){
         this.selected = false;
         this.idxListMenu--;
+        //get last of the list if click at first of the list
         if ( this.idxListMenu === -1 ){
           this.idxListMenu = this.list.length -1;
 
         }
-        /*if( this.idxListMenu === 1  ){
-          this.idxListMenu = 0;
-        }*/
         if( this.idxListMenu <= this.list.length - 1 ){
           setTimeout(() =>{
             this.currentMenu = this.list[this.idxListMenu]['id'];
           }, 100);
         }
       },
-      clickNext(){
-        //this.viewButtonAlias = false;
+      /*
+       * Allows forward scrolling of the menu list, one by one  this is operated by the top-bar button "Next menu"
+       *
+       * @method nextMenu
+       */
+      nextMenu(){
         this.selected = false;
-
         this.idxListMenu++;
         if ( this.idxListMenu > this.list.length - 1  ){
           this.idxListMenu = 0;
         }
-       /* else{
-          if( this.idxListMenu === 1 ){
-            this.idxListMenu = 2;
-          }
-        }*/
         if( this.idxListMenu <= this.list.length - 1 ){
           setTimeout(() => {
             this.currentMenu = this.list[this.idxListMenu]['id'];
           }, 100);
         }
       },
-
       /** ##ACTIONS **/
 
-      //this method is invoked when you have to open an action popup, which one is receiving the information of the requested action.
+      /*
+       * This method is invoked when you need to open an action pop-up, which receives the information to perform the requested action.
+       *
+       * @method actionedPopUp
+       * @param {String} componet name of the component to include in the popup
+       * @param {String} title  title popup
+       * @param {Object} cfg source of the component we include
+       * @param {Object} popup dimension poup ( width and height )
+       */
       actionedPopUp(component, title, cfg , popup){
         bbn.vue.closest(this, ".bbns-tab").$refs.popup[0].open({
           width: popup.width,
@@ -235,82 +334,77 @@
           source: cfg
         });
       },
-      //method that informs the actionedPopup of everything that will require the action copy including its component
-      copyMenu(id_parent){
+      /*
+       * Based on where is called, copy section or memu and  put in another root menu
+       *
+       * @method copyTo
+       * @param {Object} ele contain name and id of section or menu to be copied
+       * @fires actionedPopUp
+       */
+      copyTo(ele){
         let dim = {
           width: 300,
           height: 180
-        };
-        if ( this.currentMenu !== "" ){
-          let cfg = {
-            root: this.$data.root,
-            titleMenu: this.nameMenu,
-            id: this.currentMenu,
-            id_parent: id_parent
-          };
-          this.actionedPopUp('appui-menu-popup-copy_menu', bbn._('Copy menu'), cfg, dim);
-        }
-      },
-      copyTo(node){
-        let dim = {
-          width: 300,
-          height: 180
-        };
+        },
+        list = this.listMenu.filter( ele =>{
+          return ele.value !== this.currentMenu;
+        });
         if ( this.currentMenu !== "" ){
           let cfg = {
             root: this.source.root,
-            name: node.data.text,
-            listMenu: this.listMenu,
-            id: node.data.id
+            name: ele.text,
+            listMenu: list,
+            id: ele.id
           };
           this.actionedPopUp('appui-menu-popup-copy_to', bbn._('Copy to'), cfg, dim);
         }
       },
-      //(true, node.data.id, node.text, false, node.icon
-      renameElement(ctx, current, text, id_parent, icon= false){
-        let dim = {
-          width: 300,
-          height: 220
-        };
+      /*
+       * Based on where is called, rename node o menu
+       *
+       * @method renameElement
+       * @param {Booolean} menu true if rename menu, false if rename a node of tree
+       * @fires actionedPopUp
+       */
+      renameElement(menu, current, text, id_parent, icon= false){
         if ( this.currentMenu !== "" ){
-          let cfg = {
+          let dim = {
+            width: 300,
+            height: 220
+          },
+          cfg = {
             root: this.root,
             titleMenu: text,
             idMenu: current,
             //information to understand whether we are renaming a menu or section
-            menu: !ctx,
+            menu: menu,
             id_parent: id_parent,
             icon: icon,
-          }
-          let title = bbn._('Rename');
-          this.actionedPopUp('appui-menu-popup-rename', title, cfg, dim);
+          };
+          this.actionedPopUp('appui-menu-popup-rename', bbn._('Rename'), cfg, dim);
         }
       },
-      //method that informs the actionedPopup of everything that will require the action of creating a new menu, including its component
-      createMenu(id){
-        let dim = {
-          width: 300,
-          height: 180
-        };
-        //source for create menu
-        let cfg = {
-          root: this.$data.root,
-          id_parent: id,
-        };
-        this.actionedPopUp('appui-menu-popup-new_menu', bbn._('Create new menu'), cfg, dim);
-      },
-
-      //function that asks for confirmation of cancellation of menu or sub-menu in case of successful outcome of confirm
-      // it performs the action, the ctx parameter is used to understand if the request has occurred at the click of the context menu.
-      deleteElement(idDelete, text, menu){
+      /*
+       * Based on where is called,  delete menu or node of the a tree
+       *
+       * @method deleteElement
+       *
+       * @param {String} idDelete id menu or node to be Deleted
+       * @param {String} text name menu or node to be Deleted
+       * @param {Booolean} menu true if delete menu, false if rename a node of tree
+       *
+       * @fires reloadTreeOfNode
+       * @fires actionedPopUp
+       */
+       deleteElement(idDelete, text, menu){
         //checks if it has an id to make sure that you perform the delete action and that anyway this id is not that of the default menu
         if ( idDelete ){
           if ( idDelete === this.id_default ){
-            appui.error( bbn._("The main menu cannot be deleted !!") );
+            appui.error( bbn._("The main menu cannot be deleted") + '!!' );
             return;
           }
           appui.confirm(
-            bbn._('Secure to delete: "') + text + '" ?',
+            bbn._('Secure to delete:""') + ' ' + text + '" ?',
             () => {
               bbn.fn.post(
                 this.root + "actions/delete_element",
@@ -321,15 +415,12 @@
                 },
                 (d) => {
                   if ( d.success ){
-                    //If ctx is set to true then you are deleting a node and not a parent menu selected from the list then you are
-                    // doing a refresh with complete action to give the free of the updated menu.
-                    //case delete menu
-                    if ( menu ){
-                      //the computed and on this property through which computed allows me to update the menu list
-                      // in the dropdown
+                    //If menu is set to true then you are deleting a menu
+                  if ( menu ){
+                      //the computed and on this property through which computed allows me to update the menu list in the dropdown
                       this.list = d.listMenu.length ? d.listMenu : [];
                       //returns to the initial state
-                      if ( this.currentMenu == idDelete ){
+                      if ( this.currentMenu === idDelete ){
                         setTimeout(() => {
                           this.currentMenu = this.list[this.list.length-1]['id'];
                           this.idxListMenu --;
@@ -338,38 +429,30 @@
                     }
                     //case delete node of a tree menu
                     else{
-                      //case level at 0, modify items whitout reload
-                      /*if ( this.node.level === 0 ){
-                        for ( let i in this.node['parent']['items'] ){
-                          if ( idDelete === this.node['parent']['items'][i]['id'] ){
-                            idx = i;
-                          }
-                        }
-                        if ( idx !== false ){
-                          this.node['parent']['items'].splice(idx, 1);
-                        }
-                      }
-                      else {
-                        appui.menu.reloadTreeOfNode();
-                        let treeNode = bbn.vue.closest(this.node, "bbn-tree-node");
-                        if ( treeNode.numChildren === 1 ){
-                          treeNode.numChildren = 0;
-                        }
-                      }*/
                       if ( this.node !== null ){
-                        bbn.fn.each( this.node['parent']['items'], (val, i)=>{
-                          if ( idDelete === this.node['parent']['items'][i]['id'] ){
-                            this.node['parent']['items'].splice(i, 1);
-                            this.node = null;
-                            return false;
+                        //case level at 0, modify items whitout reload
+                        if ( this.node.level === 0 ){
+                          bbn.fn.each( this.node['parent']['items'], (val, i)=>{
+                            if ( idDelete === this.node['parent']['items'][i]['id'] ){
+                              this.node['parent']['items'].splice(i, 1);
+                              this.node = null;
+                              return false;
+                            }
+                          });
+                        }
+                        else {
+                          appui.menu.reloadTreeOfNode();
+                          let treeNode = bbn.vue.closest(this.node, "bbn-tree-node");
+                          if ( treeNode.numChildren === 1 ){
+                            treeNode.numChildren = 0;
                           }
-                        });
+                        }
                       }
                     }
-                    appui.success( bbn._("Deleted correctly !!") );
+                    appui.success( bbn._("Deleted correctly") + '!!' );
                   }
                   else{
-                    appui.error( bbn._("Error, not cleared correctly!!") );
+                    appui.error( bbn._("Error, not cleared correctly") + '!!' );
                   }
                 }
               );
@@ -377,6 +460,14 @@
           )
         }
       },
+      /*
+       * Add temporaney node
+       *
+       * @method addTempNode
+       *
+       * @param {Object} node information section where to add the temporary node
+       * @param {Object} cfg information (text, id_parent, id_alias, icon, numChildren)
+       */
       addTempNode(node, cfg){
         node.isExpanded = true;
         if ( node ){
@@ -397,6 +488,13 @@
           }, 600);
         }
       },
+      /*
+       * Add temporaney node in root menu
+       *
+       * @method addTempNodeInRoot
+       *
+       * @param {Object} cfg information for node temporaney
+       */
       addTempNodeInRoot(cfg){
         let tree = this.$refs.menus;
         if ( tree ){
@@ -411,6 +509,11 @@
         this.node = tree
       },
       //for form left
+      /*
+       * Open popup in form right which contains the icons to choose from
+       *
+       * @method openListIcons
+       */
       openListIcons(){
         appui.$refs.tabnav.activeTab.getPopup().open({
           width: '80%',
@@ -423,8 +526,13 @@
           }
         });
       },
-      // If the three-menu has been opened then it will update the component date again.
+      /*
+       * Reload tree
+       *
+       * @method reloadTreeMenu
+       */
       reloadTreeMenu(){
+        // If the three-menu has been opened then it will update the component date again.
         if ( appui.$refs.menu.hasBeenOpened ){
          //update three-menu component
           appui.$refs.menu.hasBeenOpened = false;
@@ -439,10 +547,10 @@
           id_parent: dest.data.id
         }, d => {
           if( d.success ){
-            appui.success(bbn._('Successfully moved!!'));
+            appui.success(bbn._('Successfully moved') + ' !!');
           }
           else{
-            appui.error(bbn._('Error moved!!'));
+            appui.error(bbn._('Error moved') + '!!' );
           }
           dest.$refs.tree[0].reload();
           if ( dest.$refs.tree[0] !== node.parent ){
@@ -466,14 +574,14 @@
           }, 500);
 
           if( d.create  === true ){
-            appui.success( bbn._("Successfully create !!" ));
+            appui.success( bbn._("Successfully create") + '!!');
             this.emptyMenuCurrent = false;
           }
           if( d.create === false ){
             appui.error(bbn._("Error create"));
           }
           if ( d.id ){
-            appui.success( bbn._("Successfully edit!!" ));
+            appui.success( bbn._("Successfully edit") + '!!');
           }
           /*setTimeout(()=>{
             this.$refs.menus.reload();
@@ -493,7 +601,6 @@
 
         }
         else{
-
           this.reloadTreeOfNode();
         }
       },
@@ -637,42 +744,26 @@
               destination: destination.data.id
             })
           }
-
           else if ( node.data.id !== destination.data.id ){
-
             bbn.fn.post(this.root + "actions/move_menu", {
                 id: node.data.id,
                 id_parent: destination.data.id
               }, (d) => {
                 if ( d.success ){
-
                   setTimeout( () => {
                     let tree = bbn.vue.find(destination, 'bbn-tree');
                     tree.reload();
                   }, 800);
-
-                  appui.success("It has been moved correctly");
+                  appui.success(bbn._('It has been moved correctly'));
                 }
                 else{
-                  appui.error("It has not been moved correctly");
+                  appui.error(bbn._("It has not been moved correctly"));
                 }
               }
             );
           }
         }
-      },
-      test1(){
-        bbn.fn.log("TEST FROM TREE 1", arguments[0]);
-
-      },
-      test2(){
-        bbn.fn.warning("start")
-        bbn.fn.log("TEST FROM TREE 2 START", arguments);
-      },
-      test3(){
-        bbn.fn.warning("OVER")
-        bbn.fn.log("TEST FROM TREE 2 OVER", arguments);
-      },
+      }
     },
 
     watch:{

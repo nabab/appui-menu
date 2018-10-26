@@ -9,7 +9,10 @@
     props: ['source'],
     data(){
       return{
-        destination: false
+        destination:{
+          id: this.source.id,
+          id_parent: false
+        }
       }
     },
     methods:{
@@ -20,7 +23,7 @@
         else{
           appui.error(bbn._("Error copy!"));
         }
-      }
+      },
     }
   }
 })();

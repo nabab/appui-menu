@@ -12,10 +12,10 @@
                 :source="listMenu"
                 v-model="currentMenu"
               ></bbn-dropdown>
-              <bbn-button @click="clickPrev" title="<?=_('Back menu')?>" v-if="showArrows">
+              <bbn-button @click="prevMenu" title="<?=_('Back menu')?>" v-if="showArrows">
                 <i class="fas fa-arrow-left"></i>
               </bbn-button>
-              <bbn-button @click="clickNext" title="<?=_('Next menu')?>" v-if="showArrows">
+              <bbn-button @click="nextMenu" title="<?=_('Next menu')?>" v-if="showArrows">
                 <i class="fas fa-arrow-right"></i>
               </bbn-button>
             </div>
@@ -23,29 +23,33 @@
               &nbsp;
             </div>
             <div>
-              <bbn-button @click="clickCreateMenu"
+              <bbn-button @click="createMenu"
                           title="<?=_('Create menu')?>"
                           icon='far fa-folder'
               ></bbn-button>
-              <bbn-button @click="clickCreateSection"
+              <bbn-button @click="createSection"
                           title="<?=_('Create section')?>"
                           icon='fas fa-thumbtack'
               ></bbn-button>
-              <bbn-button @click="clickCreateLink"
+              <bbn-button @click="createLink"
                           title="<?=_('Create link')?>"
                           icon="fas fa-link"
               ></bbn-button>
-              <bbn-button @click="clickDeleteMenu"
+              <bbn-button @click="deleteMenu"
                           title="<?=_('Delete menu')?>"
                           icon='far fa-trash-alt'
               ></bbn-button>
-              <bbn-button @click="clickRenameMenu"
+              <bbn-button @click="renameMenu"
                           title="<?=_('Rename menu')?>"
                           icon='far fa-edit'
               ></bbn-button>
-              <bbn-button @click="clickCopyMenu"
+              <bbn-button @click="copyMenu"
                           title="<?=_('Copy menu')?>"
                           icon='far fa-clone'
+              ></bbn-button>
+              <bbn-button @click="copyMenuTo"
+                          title="<?=_('Copy menu To')?>"
+                          icon='fas fa-copy'
               ></bbn-button>
             </div>
           </div>
@@ -137,7 +141,7 @@
     </bbn-form>
     <div v-else
          class="bbn-full-screen bbn-middle bbn-c">
-      <h1 v-html="_('Select or create<br>a menu element<br>to see the form<br>HERE')" style="line-height: 1.4em"></h1>
+      <h1 v-html="'<?=_("Select or create")?>'+'<br>'+'<?=_("a menu element")?>'+'<br>'+'<?=_("to see the form")?>'+'<br>'+'<?=_("HERE")?>'" style="line-height: 1.4em"></h1>
     </div>
   </bbn-pane>
 </bbn-splitter>
