@@ -23,6 +23,7 @@ if ( !empty($model->data['text']) &&  !empty($model->data['icon']) && !empty($mo
         //'numChildren' => 0,
         'items' => []
       ];
+
       if ( !empty($model->data['argument']) ){
         $cfg['argument'] = $model->data['argument'];
       }
@@ -63,9 +64,8 @@ if ( !empty($model->data['text']) &&  !empty($model->data['icon']) && !empty($mo
       'icon' => $model->data['icon'],
       'id_alias' => $model->data['id_alias']
     ];
-    if ( !empty($model->data['argument']) ){
-      array_push($cfg, 'value', $model->data['argument'] );
-
+    if ( !empty($model->data['argument'])  ){
+      $cfg['argument'] = $model->data['argument'];
     }
     // if ( $id_set = $model->inc->options->set($model->data['id'], $cfg) ){
     if ( $id_set = $model->inc->menu->set($model->data['id'], $cfg) ){

@@ -11,7 +11,7 @@
         classOrientation: 'fas fa-arrows-v',
         selected: false,
         currentMenu: '',
-        oldRootMenu: '',
+        oldRootMenu: null,
         rootPermission: this.source.id_permission,
         //id options menus conteiner
         id_parent: this.source.id_parent,
@@ -20,7 +20,6 @@
         root: this.source.root,
         //info node at click for context menu
         node: null,
-        droppables: [],
         idxListMenu: -1,
         nameSection: '',
         emptyMenuCurrent: null,
@@ -28,7 +27,10 @@
         formData:{
           create: false
         },
-        iconDefault: 'fas fa-cog'
+        iconDefault: 'fas fa-cog',
+        elementMove: false,
+        showOrderUp: false,
+        showOrderDown: false
       }
     },
     computed: {
@@ -56,7 +58,7 @@
       /**
        * check if there are more menus if it returns true the arrows will appear to scroll through the list
        *
-       * @computed listMenu
+       * @computed showArrows
        * @return {Boolean}
        */
       showArrows(){
@@ -84,6 +86,104 @@
       }
     },
     methods: {
+      /*
+       * function that sorts element by increasing or decreasing one position at a time
+       *
+       * @method orderEeemnt
+       *
+       * @param orderEle {String} parameter that defines whether the element must go up or down
+       */
+      orderElement(orderEle){
+        let items = bbn.vue.closest(this.elementMove,'bbn-tree').items,
+            id =  bbn.fn.search(bbn.vue.closest(this.elementMove,'bbn-tree').items, 'id', this.elementMove.data.id),
+            move = orderEle === 'up' ? id-1 : id+1,
+            order= false,
+            i = false,
+            idx = this.elementMove.data.id;
+        if ( (items[id] !== undefined) && (items[move] !== undefined) ){
+          //no root
+          if ( this.elementMove.level > 0 ){
+            //up order
+              if ( orderEle === 'up' ){
+               i = bbn.fn.search(bbn.vue.closest(this.elementMove,'bbn-tree').$children, 'data.id' , this.elementMove.data.id);
+               order = bbn.vue.closest(this.elementMove, 'bbn-tree').$children[i-1].data.order;
+              }
+            //down order
+             else{
+               i = bbn.fn.search(bbn.vue.closest(this.elementMove,'bbn-tree').$children, 'data.id' , this.elementMove.data.id);
+               order = bbn.vue.closest(this.elementMove, 'bbn-tree').$children[i+1].data.order;
+             }
+          }//root
+          else{
+            if ( orderEle === 'up' ){
+              i = bbn.fn.search(bbn.vue.closest(this.elementMove,'bbn-tree').$children[0].$children, 'data.id' , this.elementMove.data.id);
+               order = bbn.vue.closest(this.elementMove,'bbn-tree').$children[0].$children[i-1].data.order;
+            }
+           else{
+             i = bbn.fn.search(bbn.vue.closest(this.elementMove,'bbn-tree').$children[0].$children, 'data.id' , this.elementMove.data.id);
+              order = bbn.vue.closest(this.elementMove,'bbn-tree').$children[0].$children[i+1].data.order;
+            }
+          }
+          bbn.fn.post(this.root + 'actions/order', {
+            id: items[id].id,
+            id_parent: items[id].id_parent,
+            num: order === 0 ? 1 : order
+          }, d =>{
+              if( d.success ){
+                this.elementMove.parent.isLoaded = false;
+                this.$set(this.elementMove.parent, 'items', []);
+                let arr =[]
+                bbn.fn.each(d.menu , (a, i)=>{
+                  arr.push(this.mapMenu(a));
+                });
+                this.$nextTick(()=>{
+                 this.$set(this.elementMove.parent, 'items', arr);
+                   if ( this.elementMove.parent.items.length ){
+                      this.elementMove.parent.isLoaded = true;
+                      this.$nextTick(()=>{
+                        let v = -1;
+                        if ( this.elementMove.parent.isLoaded === true){
+                          if ( this.elementMove.parent.level > 0 ){
+                            setTimeout(()=>{
+                              v = bbn.fn.search(this.elementMove.parent.$children, 'data.id' ,this.elementMove.data.id);
+                              this.elementMove.parent.$children[v].isSelected = true;
+                            }, 500);
+                          }
+                          else{
+                            v = bbn.fn.search(this.elementMove.parent.$children[0].$children, 'data.id' ,idx);
+                            this.elementMove.parent.$children[0].$children[v].isSelected = true;
+                          }
+                        }
+                      });
+                    }
+                });
+
+              appui.success( bbn._("Ordered successfully") + '!!')
+            }
+            else{
+              appui.error( bbn._("Error in ordering"))
+            }
+          });
+        }
+      },
+      /*
+       * call method orderELement for move the element up one position
+       *
+       * @method moveUp
+       * @fires oredrElement
+       */
+      moveUp(){
+        this.orderElement('up');
+      },
+      /*
+       * call method orderELement for go down the item one position
+       *
+       * @method moveUp
+       * @fires oredrElement
+       */
+      moveDown(){
+        this.orderElement('down');
+      },
       /** CONTEXTMENU **/
       /*
        * Returns an array for the context menu of the menu tree (right splitter)
@@ -224,6 +324,7 @@
          icon: 'fas fa-cogs',
          numChildren: 0
        });
+
       },
       /*
        * Delete current menu this is operated by the top-bar button "Delete menu"
@@ -391,8 +492,7 @@
        *
        * @param {String} idDelete id menu or node to be Deleted
        * @param {String} text name menu or node to be Deleted
-       * @param {Booolean} menu true if delete menu, false if rename a node of tree
-       *
+       * @param {Booolean} menu true if delete menu, false if rename a node of tree       *
        * @fires reloadTreeOfNode
        * @fires actionedPopUp
        */
@@ -404,7 +504,7 @@
             return;
           }
           appui.confirm(
-            bbn._('Secure to delete:""') + ' ' + text + '" ?',
+            bbn._('Secure to delete') + ': "' + text + '" ?',
             () => {
               bbn.fn.post(
                 this.root + "actions/delete_element",
@@ -435,7 +535,6 @@
                           bbn.fn.each( this.node['parent']['items'], (val, i)=>{
                             if ( idDelete === this.node['parent']['items'][i]['id'] ){
                               this.node['parent']['items'].splice(i, 1);
-                              this.node = null;
                               return false;
                             }
                           });
@@ -447,6 +546,9 @@
                             treeNode.numChildren = 0;
                           }
                         }
+                      }
+                      if ( this.selected !== false ){
+                        this.removeSelected();
                       }
                     }
                     appui.success( bbn._("Deleted correctly") + '!!' );
@@ -470,6 +572,7 @@
        */
       addTempNode(node, cfg){
         node.isExpanded = true;
+
         if ( node ){
           if( !node.numChildren ){
             this.$nextTick(() =>{
@@ -492,7 +595,6 @@
        * Add temporaney node in root menu
        *
        * @method addTempNodeInRoot
-       *
        * @param {Object} cfg information for node temporaney
        */
       addTempNodeInRoot(cfg){
@@ -507,8 +609,8 @@
           });
         }
         this.node = tree
+
       },
-      //for form left
       /*
        * Open popup in form right which contains the icons to choose from
        *
@@ -527,53 +629,103 @@
         });
       },
       /*
-       * Reload tree
+       * Reload tree menu appui
        *
        * @method reloadTreeMenu
        */
       reloadTreeMenu(){
         // If the three-menu has been opened then it will update the component date again.
-        if ( appui.$refs.menu.hasBeenOpened ){
+        if ( appui.getRef('menu').hasBeenOpened ){
          //update three-menu component
-          appui.$refs.menu.hasBeenOpened = false;
+          appui.getRef('menu').hasBeenOpened = false;
           this.$nextTick(() =>{
-            appui.$refs.menu.$refs.tree.isLoaded = false
+            appui.getRef('menu').$refs.tree.isLoaded = false
           });
         }
       },
+      /*
+       * Method that is activated at the "drag end" of the tree has the task of moving the node
+       *
+       * @method moveNode
+       *
+       * @fires reload
+       * @fires removeSelected
+       * @param {object} e  event jquery
+       * @param {object} node node to move in the tree
+       * @param {object} dest new parent of the moved node
+       */
       moveNode(e, node, dest){
-        bbn.fn.post(this.root + 'actions/move', {
-          id: node.data.id,
-          id_parent: dest.data.id
-        }, d => {
-          if( d.success ){
-            appui.success(bbn._('Successfully moved') + ' !!');
+        if ( dest.data.id_alias === null ){
+          bbn.fn.post(this.root + 'actions/move', {
+            id: node.data.id,
+            id_parent: dest.data.id
+          }, d => {
+            if( d.success ){
+              appui.success(bbn._('Successfully moved') + ' !!');
+            }
+            else{
+              appui.error(bbn._('Error moved') + '!!' );
+            }
+
+            if ( dest.getRef('tree') === false ){
+              this.$nextTick(()=>{
+                dest.reload();
+              });
+            }
+            bbn.fn.log("nodede", dest.$refs.tree[0], node);
+            //refresh origin parent
+            if ( dest.$refs.tree[0] !== node.parent ){
+              if ( node.items.length === 0 ){
+                if ( node.parent.level === 1 ){
+                  this.$refs.menus.reload();
+                }
+                else if ( node.parent.level > 1 ){
+                  bbn.vue.closest(bbn.vue.closest(node, 'bbn-tree'), 'bbn-tree').reload();
+                }
+              }
+            }
+
+            if ( this.selected !== false ){
+              this.removeSelected();
+            }
+          });
+        }
+        else{
+          appui.error(bbn._('Error moved') + '!!' );
+          if ( this.nodeData !== this.$refs.menus.selectedNode.data ){
+            this.selected = false;
           }
-          else{
-            appui.error(bbn._('Error moved') + '!!' );
-          }
-          dest.$refs.tree[0].reload();
-          if ( dest.$refs.tree[0] !== node.parent ){
-            node.parent.reload();
-          }
-        });
+          this.$refs.menus.reload();
+        }
       },
-      //reload sub tree
+      /*
+       * Reload sub tree
+       *
+       * @method reloadTreeOfNode
+       * @fires reload
+       *
+       */
       reloadTreeOfNode(){
-        if( this.node != null ){
+        if( this.node !== null ){
           let treeOfNode = bbn.vue.closest(this.node, 'bbn-tree');
           treeOfNode.reload();
         }
       },
+      /*
+       * Method that is activated by the success of the form
+       *
+       * @method successEditionMenu
+       * @fires removeSelected
+       * @fires reloadTreeOfNode
+       * @param {Object} d response object returned from the server
+       */
       successEditionMenu(d){
         this.formData.create= false;
         if( d.success ){
-          setTimeout(()=>{
-            this.selected= false;
-            this.node.isSelected= false;
-          }, 500);
-
-          if( d.create  === true ){
+          if ( this.selected !== false ){
+            this.removeSelected();
+          }
+          if( d.create === true ){
             appui.success( bbn._("Successfully create") + '!!');
             this.emptyMenuCurrent = false;
           }
@@ -583,18 +735,13 @@
           if ( d.id ){
             appui.success( bbn._("Successfully edit") + '!!');
           }
-          /*setTimeout(()=>{
-            this.$refs.menus.reload();
-          },400);*/
         }
         else{
           appui.error(bbn._("Error!"));
         }
         //this.reloadTreeMenu();
         if ( this.node.parent.level === 0 && d.params ){
-
           let id = this.node['parent']['items'].length -1;
-
           $.each(d.params, (i, v)=>{
             this.node.$set(this.node['parent']['items'][id], i, v);
           });
@@ -604,59 +751,96 @@
           this.reloadTreeOfNode();
         }
       },
-      selectMenu(tree){
-        /*if ( tree.data.id_alias === null ){
-          this.viewButtonAlias = true;
-        }*/
-        this.node = tree;
+      /*
+       * Method that removes any selected node from the tree menu and closes the right form
+       *
+       * @method removeSelected
+       *
+       */
+      removeSelected(){
+        setTimeout(()=>{
+          this.$refs.menus.selectedNode = false;
+          this.selected = false;
+          this.node.isSelected = false;
+        }, 500);
+      },
+      /*
+       * Method that is activated on click to select the tree menu node acquiring information and activating the form
+       *
+       * @method selectMenu
+       * @fires reinit
+       * @param {Object} node info node select
+       */
+      selectMenu(node){
+        this.node = node;
         this.selected = false;
         this.$nextTick(() => {
           this.selected = {
-            level: tree.level,
-            text: tree.text,
-            icon: tree.icon,
-            num: tree.num,
-            numChildren: tree.numChildren,
-            id: tree.data.id,
-            id_parent: tree.data.id_parent,
-            id_alias: tree.data.id_alias,
-            path: tree.data.path !== undefined ? tree.data.path : [],
-            isExpanded: tree.isExpanded,
-            isActive: tree.isActive,
-            isMounted: tree.isMounted,
-            isSelected: tree.isSelected,
-            parentIsRoot: tree.parent.level === 0
+            level: node.level,
+            text: node.text,
+            icon: node.icon,
+            num: node.num,
+            numChildren: node.numChildren,
+            id: node.data.id,
+            id_parent: node.data.id_parent,
+            id_alias: node.data.id_alias,
+            path: node.data.path !== undefined ? node.data.path : [],
+            isExpanded: node.isExpanded,
+            isActive: node.isActive,
+            isMounted: node.isMounted,
+            isSelected: node.isSelected,
+            parentIsRoot: node.parent.level === 0,
+            argument: node.data.argument !== undefined ? node.data.argument : ''
           };
-          if( tree.data.argument !== undefined ){
-            this.selected.argument = tree.data.argument;
-          }
           if ( this.$refs.form ){
             this.$refs.form.reinit();
           }
+          this.elementMove = node
+          let items = bbn.vue.closest(node,'bbn-tree').items,
+              id =  bbn.fn.search(bbn.vue.closest(node,'bbn-tree').items, 'id', node.data.id);
+          this.showOrderUp = items[id-1] !== undefined;
+          this.showOrderDown = items[id+1] !== undefined;
+
         });
       },
+      /*
+       * Method that is activated selecting a pemesso from the tree of the permissions that appears in the form to the right and sets a property from the name "selected" of the object
+       *
+       * @method selectPermission
+       *
+       * @param {Object} node info node permission select
+       */
       selectPermission(node){
         this.$set(this.selected, "path", node.getPath());
         this.$set(this.selected, "id_alias", node.data.id);
       },
+      /*
+       * Method that is activated by canceling the form
+       *
+       * @method formCancel
+       * @fires reload
+       */
       formCancel(){
+        //reset some properties and make a reload of the menu
         if ( this.formData.create ){
           this.selected= false;
-
           setTimeout(()=>{
             this.$refs.menus.reload();
           },400);
-
           this.formData.create= false;
         }
         if ( this.$refs.treePermission ){
           this.$refs.treePermission.$emit('pathChange');
-
         }
-        bbn.fn.log("formCancel", this.$refs.treePermission);
       },
       /** MAPPER OF TREE **/
-      //menu tree mapper
+      /*
+       * Method that makes mappers in the menu tree
+       *
+       * @method mapMenu
+       *
+       * @param {Object} a object with info node of the server
+       */
       mapMenu(a){
         return {
           data: a,
@@ -666,10 +850,20 @@
           path: a.path || [],
           icon: a.icon,
           text: a.text,
+          order: a.num,
           argument: a.argument,
           num: a.num_children || 0
         }
       },
+      /*
+       * Method that returns the menu of the tree permission containing the link to it
+       *
+       * @method getPermissionsContext
+       *
+       * @fires getPath
+       *
+       * @param {Object} node object with info node permission
+       */
       getPermissionsContext(node){
         let res = [];
         if ( node.icon === 'fas fa-file' ){
@@ -689,44 +883,48 @@
         }
         return res;
       },
-      //Permitted tree mapper
+      /*
+       * Method that makes mappers in the permissions tree
+       *
+       * @method mapPermissions
+       *
+       * @param {Object} a object with info node of the server
+       */
       mapPermissions(a){
         a.text += ' &nbsp; <span class="bbn-grey">' +  "(" + a.code +  ")" + '</span>';
         return $.extend({selectable: a.icon === 'fas fa-file'}, a);
       },
-      /** ##DRAG & DROP  **/
-
-      /**
-       * FOR MENU SPLITER LEFT
-       */
-
-      ctrlStartDrag(){
-        bbn.fn.log("STArt DRAG", this, arguments);
-        /* let node = arguments[0],
-         event = arguments[1];
-         if( (node.items.length) && (node.numChildren > 0) || (node.icon === 'fas fa-key') ){
-         event.preventDefault();
-         }*/
-      },
-      ctrlEndDrag(){
-        bbn.fn.log("END DRAG",  arguments[0]);
-        let node = arguments[0],
-            event = arguments[1];
-        /*
-         if( (!node.items.length) && (node.numChildren === 0) && (node.icon !== 'fas fa-key') ){
-         event.preventDefault();
-         }
-         */
-      },
-      /**
-       *  FOR MENUS SPLITER RIGHT
-       */
-      ctrlStartDragMenus(node){
-        bbn.fn.warning("START");
-        bbn.fn.log(node, node.data, node.data.id_parent);
-        //acquire the id of the node we want to move
-        //this.idStartMove = node.data.id;
-      },
+      // /**
+      //  * FOR MENU SPLITER LEFT
+      //  */
+      //
+      // ctrlStartDrag(){
+      //   bbn.fn.log("STArt DRAG", this, arguments);
+      //   /* let node = arguments[0],
+      //    event = arguments[1];
+      //    if( (node.items.length) && (node.numChildren > 0) || (node.icon === 'fas fa-key') ){
+      //    event.preventDefault();
+      //    }*/
+      // },
+      // ctrlEndDrag(){
+      //   bbn.fn.log("END DRAG",  arguments[0]);
+      //   let node = arguments[0],
+      //       event = arguments[1];
+      //   /*
+      //    if( (!node.items.length) && (node.numChildren === 0) && (node.icon !== 'fas fa-key') ){
+      //    event.preventDefault();
+      //    }
+      //    */
+      // },
+      // /**
+      //  *  FOR MENUS SPLITER RIGHT
+      //  */
+      // ctrlStartDragMenus(node){
+      //   bbn.fn.warning("START");
+      //   bbn.fn.log(node, node.data, node.data.id_parent);
+      //   //acquire the id of the node we want to move
+      //   //this.idStartMove = node.data.id;
+      // },
       //activates when the node to be moved is released, it performs checks and, if necessary, performs the displacement action
       ctrlEndDragMenus(node, ev, destination){
         //The node shifts can do so all except the default menu that reside in the right splitter.
@@ -765,12 +963,10 @@
         }
       }
     },
-
     watch:{
       /*
        * @watch currentMenu
-       *
-       * @set
+       * @fires reload
        */
       currentMenu(val, old){
         for ( let i in this.list ){
@@ -781,25 +977,15 @@
         }
         //keep track of the previous root
         this.oldRootMenu = old;
-        if ( old && !val ){
-          this.droppables.pop();
-        }
-        if ( !old && val ){
-          this.$nextTick(() => {
-            this.droppables.push(this.$refs.menus);
-          });
-        }
-        else{
+        if ( old && (val !== old) ){
           this.$refs.menus.reload();
         }
-        //Being that templete does not recharge at id change then we make a tree reload so we have the right menu
       },
     },
-    mounted(){
-      if ( this.$refs.menus ){
-        this.droppables.push(this.$refs.menus);
-      }
-    },
+    /**
+     * @event craeted
+     * instantiate the property menu of the appui object
+     */
     created(){
       appui.menu = this;
     }
