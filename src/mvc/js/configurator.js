@@ -671,8 +671,7 @@
               this.$nextTick(()=>{
                 dest.reload();
               });
-            }
-            bbn.fn.log("nodede", dest.$refs.tree[0], node);
+            }            
             //refresh origin parent
             if ( dest.$refs.tree[0] !== node.parent ){
               if ( node.items.length === 0 ){

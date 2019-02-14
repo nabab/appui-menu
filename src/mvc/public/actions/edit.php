@@ -6,8 +6,6 @@
  * Time: 15.07
  */
 
-if ( !empty($ctrl->post) ){
- // die(var_dump($ctrl->get_object_model($ctrl->post)));
+if ( !empty($ctrl->post) ){ 
   $ctrl->obj = $ctrl->get_object_model($ctrl->post);
 }
-
