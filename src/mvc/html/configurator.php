@@ -2,51 +2,71 @@
               class="appui-menu-constructor-tree">
   <bbn-pane :resizable="true">
     <div class="bbn-flex-height" style="border-right: 1px dotted #CCC">
-      <div class="bbn-w-100 k-header" style="height:40px">
-        <div class="bbn-full-screen bbn-middle">
+      <div class="bbn-w-100 bbn-header">
+        <div class="bbn-middle">
           <div class="bbn-flex-width">
             <div style="padding-left: 2px">
-              <bbn-dropdown
-                style="width:200px"
-                ref="listMenus"
-                :source="listMenu"
-                v-model="currentMenu"
+              <!-- <bbn-button @click="makeDefault"
+                          title="<?=_('Make it default')?>"
+                          icon="nf nf-fa-crown"
+              ></bbn-button> -->
+              <bbn-dropdown style="width:200px"
+                            ref="listMenus"
+                            :source="list"
+                            v-model="treeMenuData.id_menu"
               ></bbn-dropdown>
-              <bbn-button @click="prevMenu" title="<?=_('Back menu')?>" v-if="showArrows">
-                <i class="fas fa-arrow-left"></i>
-              </bbn-button>
-              <bbn-button @click="nextMenu" title="<?=_('Next menu')?>" v-if="showArrows">
-                <i class="fas fa-arrow-right"></i>
-              </bbn-button>
+              <bbn-button v-if="showArrows"
+                          @click="prevMenu"
+                          title="<?=_('Back menu')?>"
+                          :notext="true"
+                          icon="nf nf-fa-arrow_left"
+              ></bbn-button>
+              <bbn-button v-if="showArrows"
+                          @click="nextMenu"
+                          title="<?=_('Next menu')?>"
+                          :notext="true"
+                          icon="nf nf-fa-arrow_right"
+              ></bbn-button>
             </div>
             <div class="bbn-flex-fill bbn-r">
               <bbn-button @click="createMenu"
                           title="<?=_('Create menu')?>"
-                          icon='zmdi zmdi-menu'
+                          icon="zmdi zmdi-menu"
+                          :notext="true"
               ></bbn-button>
               <bbn-button @click="createSection"
                           title="<?=_('Create section')?>"
-                          icon='far fa-folder'
+                          icon="nf nf-fa-folder"
+                          :disabled="disabledAction"
+                          :notext="true"
               ></bbn-button>
               <bbn-button @click="createLink"
                           title="<?=_('Create link')?>"
-                          icon="fas fa-link"
+                          icon="nf nf-fa-link"
+                          :disabled="disabledAction"
+                          :notext="true"
               ></bbn-button>
               <bbn-button @click="renameMenu"
                           title="<?=_('Rename menu')?>"
-                          icon='far fa-edit'
+                          icon="nf nf-fa-edit"
+                          :disabled="disabledAction"
+                          :notext="true"
               ></bbn-button>
               <bbn-button @click="copyMenu"
                           title="<?=_('Copy menu')?>"
-                          icon='far fa-clone'
+                          icon="nf nf-fa-clone"
+                          :notext="true"
               ></bbn-button>
               <bbn-button @click="copyMenuTo"
                           title="<?=_('Copy menu To')?>"
-                          icon='fas fa-copy'
+                          icon="nf nf-fa-copy"
+                          :notext="true"
               ></bbn-button>
-              <bbn-button @click="deleteMenu"
+              <bbn-button @click="delMenu"
                           title="<?=_('Delete menu')?>"
-                          icon='far fa-trash-alt'
+                          icon="nf nf-fa-trash_o"
+                          :disabled="disabledAction"
+                          :notext="true"
               ></bbn-button>
             </div>
           </div>
@@ -65,11 +85,10 @@
             </div>
           </div>
         </div>
-        <div class="bbn-full-screen bbn-padded" v-if="currentMenu">
+        <div class="bbn-full-screen bbn-padded" v-if="treeMenuData.id_menu.length">
           <bbn-tree :source="root + 'configurator'"
                     :map="mapMenu"
-                    uid="id"
-                    :root="currentMenu"
+                    :data="treeMenuData"
                     :menu="contextMenu"
                     @select="selectMenu"
                     ref="menus"
@@ -91,35 +110,34 @@
       <div class="bbn-full-screen bbn-hpadded">
         <div class="bbn-flex-height">
           <h1 class="bbn-c"><?=_('Édition du menu')?></h1>
-          <div class="bbn-w-100 bbn-flex-width">
-            <div class="bbn-flex-fill">
+          <div class="bbn-w-100 bbn-flex-width"><div class="bbn-w-70">
               <div class="bbn-block bbn-w-20"><?=_('Title')?></div>
               <div class="bbn-block bbn-w-80">
-                <bbn-input v-model="selected.text"></bbn-input>
+                <bbn-input class="bbn-w-80" v-model="selected.text"></bbn-input>
               </div>
               <div class="bbn-nl"> </div>
               <div class="bbn-block bbn-w-20"><?=_('Icon')?></div>
               <div class="bbn-block bbn-w-80">
-                <bbn-input v-model="selected.icon"></bbn-input>
+                <bbn-input class="bbn-w-50" v-model="selected.icon"></bbn-input>
                 <i style="margin-left: 5%; margin-right: 5%" :class="selected.icon"></i>
                 <bbn-button @click="openListIcons"><?=_('Icons')?></bbn-button>
               </div>
             </div>
-            <div class="bbn-w-20" v-if="elementMove.data.id && (showOrderDown || showOrderUp)">
-              <div class="w3-card bbn-c">
+            <div class="bbn-flex-fill bbn-c" v-if="elementMove.data.id && (showOrderDown || showOrderUp)">
+              <div class="bbn-w-80 bbn-card bbn-c">
                 <div><?=_('Order')?></div>
                 <div class="bbn-padded" v-if="showOrderUp">
-                  <bbn-button icon="fas fa-arrow-up" @click="moveUp"></bbn-button>
+                  <bbn-button icon="nf nf-fa-arrow_up" @click="moveUp"></bbn-button>
                 </div>
                 <div class="bbn-padded" v-if="showOrderDown">
-                  <bbn-button icon="fas fa-arrow-down" @click="moveDown"></bbn-button>
+                  <bbn-button icon="nf nf-fa-arrow_down" @click="moveDown"></bbn-button>
                 </div>
               </div>
             </div>
           </div>
           <div class="bbn-nl"> </div>
           <div class="bbn-w-100 bbn-flex-fill">
-            <div class="bbn-full-screen" v-if="selected.id_alias">
+            <div class="bbn-full-screen" v-if="selected.id_option">
               <div class="bbn-block bbn-h-100 bbn-w-20"><?=_('Link')?></div>
               <div class="bbn-block bbn-h-100 bbn-w-80">
                 <div class="bbn-full-screen">
@@ -139,7 +157,7 @@
             </div>
           </div>
           <div class="bbn-nl"> </div>
-          <div class="bbn-w-100" v-if="selected.id_alias">
+          <div class="bbn-w-100" v-if="selected.id_option">
             <div class="bbn-block bbn-w-20"><?=_('Argument')?></div>
             <div class="bbn-block bbn-w-80">
               <bbn-input v-model="selected.argument"></bbn-input>

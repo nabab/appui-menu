@@ -25,7 +25,7 @@
         if ( d.success ){
           appui.menu.list = d.listMenu;
           setTimeout(() => {
-            appui.menu.currentMenu = d.idNew;
+            appui.menu.treeMenuData.id_menu = d.idNew;
           }, 100);
           appui.menu.reloadTreeMenu();
           appui.success(bbn._("Successfully created new menu!"));

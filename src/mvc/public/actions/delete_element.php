@@ -6,9 +6,6 @@
  * Time: 17.19
  */
 
-if (
-  !empty($ctrl->post['id']) &&
-  !empty($ctrl->post['id_parent'])
-){
-   $ctrl->obj = $ctrl->get_object_model($ctrl->post);
+if ( !empty($ctrl->post['id']) ){
+   $ctrl->action();
 }

@@ -1,4 +1,4 @@
-<?php
+88<?php
 /**
  * Created by BBN Solutions.
  * User: Vito Fava
@@ -9,20 +9,14 @@
 
 $res['success'] = false;
 
-if ( isset($model->data['id_parent']) && isset($model->data['titleMenu']) ){
-  if ( $id = $model->inc->options->add([
-    'id_parent' => $model->data['id_parent'],
-    'text' => $model->data['titleMenu']
-  ])
-  ){
+if ( !empty($model->data['titleMenu']) &&
+ ($id = $model->inc->menu->add(['text' => $model->data['titleMenu']]))
+){
+  $res = [
+    'success' => true,
+    'listMenu' =>  $model->inc->menu->get_menus(),
+    'idNew' => $id
+  ];
 
-    $res = [
-      'success' => true,
-      'listMenu' => $model->inc->options->full_options($model->data['id_parent']),
-      'idNew' => $id
-    ];
-
-  };
 }
 return $res;
-

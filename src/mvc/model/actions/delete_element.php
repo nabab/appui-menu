@@ -8,15 +8,18 @@
 
 
 $res['success'] = false;
-$default = $model->inc->options->from_code('menus', 'menus', 'appui');
-if (
-  !empty($model->data['id']) && ($model->data['id'] !== $default) &&
-  ($num = $model->inc->menu->remove($model->data['id']))
+
+if ( !empty($model->data['public']) &&
+  (!$model->inc->user->is_admin() &&
+  !$model->inc->user->is_dev())
 ){
+  return $res;
+}
+
+if ( $num = $model->inc->menu->remove($model->data['id']) ){
   $res = [
-    'success' => true,
-    'num' => $num,
-    'listMenu' => $model->inc->options->full_options($model->data['id_parent'])
+    'success' => true,    
+    'listMenu' => $model->inc->menu->get_menus()
   ];
 }
 return $res;

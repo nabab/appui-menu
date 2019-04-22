@@ -10,12 +10,7 @@ $menu = new \bbn\appui\menus($model->inc->options,  $model->data['prepath'] ?? f
 if ( isset($model->inc->pref) ){
   return $menu->custom_tree(
     $model->data['menu'] ?: 'default',
-    $model->inc->pref,
-    $model->data['prepath'] ?? false,
-    [
-      'text' => 'title',
-      'items' => 'children'
-    ]
+    $model->data['prepath'] ?? false
   );
 }
 else{

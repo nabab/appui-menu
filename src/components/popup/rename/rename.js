@@ -9,7 +9,10 @@
   return {
     data(){
       return {
-        newTitle: '',
+        dataRename:{
+          newTitle: '',
+          public: this.source.public
+        }
       }
     },
     methods: {
@@ -51,13 +54,10 @@
       infoData(){
         let infoForm = {
           id: this.source.idMenu,
-          menu: this.source.menu,
+          menu: this.source.menu
         };
         if ( this.source.id_parent ){
           $.extend(infoForm, {id_parent: this.source.id_parent});
-        }
-        else{
-          $.extend(infoForm, {icon: this.source.icon});
         }
         return infoForm
       }

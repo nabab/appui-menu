@@ -1,5 +1,5 @@
 <bbn-form class="bbn-full-screen bbn-c"
-          :source= "$data"
+          :source= "dataRename"
           :data= "infoData"
           :action="source.root + 'actions/rename_element' "
           :validation="beforeSubmit"
@@ -9,18 +9,18 @@
     <div class="bbn-flex-fill elementForm">
       <bbn-input class="bbn-w-100"
                  v-model="source.titleMenu"
-                 required="required"
                  readonly
       >
       </bbn-input>
       <div class="bbn-w-100 bbn-c" style="margin-top: 1%">
-        <i class="fas fa-arrow-down"></i>
+        <i class="nf nf-fa-arrow_down"></i>
       </div>
       <bbn-input style="margin-top: 1%"
                  class="bbn-w-100"
-                 placeholder="new name menu"
-                 v-model="newTitle">
-      </bbn-input>
+                 placeholder="<?=_('New name')?>"
+                 v-model="dataRename.newTitle"
+                 required="required"
+      ></bbn-input>
     </div>
   </div>
 

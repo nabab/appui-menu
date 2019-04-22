@@ -6,54 +6,57 @@
      */
     data(){
       return {
+        treeMenuData:{
+          id_menu: '',
+          id_parent: null,
+          path: []
+        },
         //for  orientation spitter
         orientation: 'horizontal',
-        classOrientation: 'fas fa-arrows-v',
+        classOrientation: 'nf nf-fa-arrows_v',
         selected: false,
         currentMenu: '',
         oldRootMenu: null,
         rootPermission: this.source.id_permission,
         //id options menus conteiner
         id_parent: this.source.id_parent,
-        id_default: this.source.id_default,
+        id_default: this.source.id_menu_default,
         list: this.source.listMenu,
         root: this.source.root,
         //info node at click for context menu
         node: null,
-        idxListMenu: -1,
+        idxListMenu: 0,
         nameSection: '',
         emptyMenuCurrent: null,
         viewButtonAlias: false,
         formData:{
-          create: false
+          create: false,
+          menu_default: this.source.id_menu_default
         },
-        iconDefault: 'fas fa-cog',
+        iconDefault: 'nf nf-fa-cog',
         elementMove: false,
         showOrderUp: false,
-        showOrderDown: false
+        showOrderDown: false,
       }
     },
     computed: {
-      /**
-       * this make list of all menus
-       *
-       * @computed listMenu
-       * @return {Array}
-       */
-      //Always updated list of menus visible on the dropdown
-      listMenu(){
-        let menus = [];
-        if ( this.list && this.list.length ){
-          for ( let ele of this.$data.list ){
-            if ( (ele.code !== "shortcuts")  ){
-              menus.push({
-                text: ele.text,
-                value: ele.id
-              });
-            }
-          };
+      disabledAction(){
+        if ( ((!!this.infoMenu.public === true) &&
+          (appui.app.user.isDev || appui.app.user.isAdmin))  ||
+          (!!this.infoMenu.public === false)
+        ){
+          return false;
         }
-        return menus
+        else{
+          return true;
+        }
+      },
+      infoMenu(){
+        let id = bbn.fn.search(this.source.listMenu, 'value', this.treeMenuData.id_menu);
+        if ( id > -1 ){
+          return this.source.listMenu[id];
+        }
+        return {}
       },
       /**
        * check if there are more menus if it returns true the arrows will appear to scroll through the list
@@ -62,7 +65,7 @@
        * @return {Boolean}
        */
       showArrows(){
-        if( this.listMenu.length > 2 ){
+        if( this.source.listMenu.length > 1 ){
           return true
         }
         return false
@@ -75,17 +78,16 @@
        */
       nameMenu(){
         let name = "";
-        if ( this.currentMenu !== "" ){
-          for ( let ele of this.listMenu ){
-            if ( ele.value === this.currentMenu ){
-              name = ele.text;
-            }
-          }
+        if ( this.treeMenuData.id_menu !== "" ){
+          name = bbn.fn.get_field(this.source.listMenu, 'value', this.treeMenuData.id_menu, 'text');
         }
         return name
       }
     },
     methods: {
+      makeDefault(){
+        alert("default")
+      },
       /*
        * function that sorts element by increasing or decreasing one position at a time
        *
@@ -116,17 +118,22 @@
           }//root
           else{
             if ( orderEle === 'up' ){
-              i = bbn.fn.search(bbn.vue.closest(this.elementMove,'bbn-tree').$children[0].$children, 'data.id' , this.elementMove.data.id);
+              i = bbn.fn.search(this.elementMove.closest('bbn-tree').findAll('bbn-tree-node'), 'data.id' , this.elementMove.data.id);
                order = bbn.vue.closest(this.elementMove,'bbn-tree').$children[0].$children[i-1].data.order;
+               bbn.fn.log("MOVE UP", i, bbn.vue.closest(this.elementMove,'bbn-tree').$children[0].$children[i-1], order)
+
             }
            else{
-             i = bbn.fn.search(bbn.vue.closest(this.elementMove,'bbn-tree').$children[0].$children, 'data.id' , this.elementMove.data.id);
+             i = bbn.fn.search(this.elementMove.closest('bbn-tree').findAll('bbn-tree-node'), 'data.id' , this.elementMove.data.id);
+             bbn.fn.log("MOVE DOWN", i, bbn.vue.closest(this.elementMove,'bbn-tree').$children[0].$children[i+1])
+
               order = bbn.vue.closest(this.elementMove,'bbn-tree').$children[0].$children[i+1].data.order;
             }
           }
           bbn.fn.post(this.root + 'actions/order', {
             id: items[id].id,
             id_parent: items[id].id_parent,
+            id_menu: this.treeMenuData.id_menu,
             num: order === 0 ? 1 : order
           }, d =>{
               if( d.success ){
@@ -195,73 +202,108 @@
        * @fires copyTo
        */
       contextMenu(){
-        let ctx =  [
-          //for delete
-          {
-            icon: 'far fa-trash-alt',
-            text: bbn._('Delete'),
-            command: node => {
-              this.node = node;
-              //params: id node , text node, false for define that is not menu
-              this.deleteElement(node.data.id , node.text, false);
+        let ctx =[];
+        if ( this.disabledAction === false ){
+          ctx =  [
+            //for delete
+            {
+              icon: 'nf nf-fa-trash',
+              text: bbn._('Delete'),
+              command: node => {
+                this.node = node;
+                //params: id node , text node, false for define that is not menu
+                this.deleteElement(node.data.id , node.text, false);
+              }
+            },
+            //for rename
+            {
+              icon: 'nf nf-mdi-lead_pencil',
+              text: bbn._('Rename'),
+              command: node => {
+                this.node = node;
+                this.selectMenu(node);
+              //  this.renameNode = true;
+                //this.renameElement(false, node.data.id, node.text, false, node.icon);
+              }
             }
-          },
-          //for rename
-          {
-            icon: 'fas fa-pencil-alt',
-            text: bbn._('Rename'),
-            command: node => {
-              this.node = node;
-              this.renameElement(false, node.data.id, node.text, false, node.icon);
+          ];
+          //case context in section menu
+          if ( (arguments[0].data.id_option === null) ){
+            // if node is sectiom transform to link
+            if ( arguments[0].num === 0 ){
+              ctx.push({
+                icon: 'nf nf-custom-elm',
+                text: bbn._('Transform to link'),
+                command: node => {
+                  this.selectMenu(node);
+                  this.$nextTick(()=>{
+                    this.selected.id_option = 1
+                  });
+                }
+              });
             }
-          }
-        ];
-        //case context in section menu
-        if ( arguments[0].data.id_alias === null ){
-          //adds the possibility of create sub-section
-          ctx.unshift({
-              icon: 'fas fa-level-down-alt',
+            //adds the possibility of create sub-section
+            ctx.unshift({
+              icon: 'nf nf-fa-level_down',
               text: bbn._('Sub-section'),
               command: node => {
                 this.node = node;
                 this.addTempNode(node, {
                   text: bbn._('New Section'),
                   id_parent: node.data.id,
-                  id_alias: null,
+                  id_option: null,
                   icon: this.iconDefault,
                   numChildren: 0
                 });
               }
             });
-          //adds the possibility of create a link
-          ctx.unshift({
-            icon: 'fas fa-link',
-            text: bbn._('New link'),
-            command: node => {
-              this.node = node;
-              if ( node.data.id_alias === null){
-                let obj = {
-                  text: bbn._('My text'),
-                  id_parent: node.data.id,
-                  id_alias: 1,
-                  icon: this.iconDefault,
+            //adds the possibility of create a link
+            ctx.unshift({
+              icon: 'nf nf-fa-link',
+              text: bbn._('New link'),
+              command: node => {
+                this.node = node;
+                if ( node.data.id_option === null){
+                  let obj = {
+                    text: bbn._('My text'),
+                    id_parent: node.data.id,
+                    id_option: 1,
+                    icon: this.iconDefault,
+                  }
+                  this.addTempNode(node, obj)
                 }
-                this.addTempNode(node, obj)
               }
-            }
-          });
-          //adds the possibility of copy the section to another menu
-          ctx.push({
-            icon: 'fas fa-copy',
-            text: bbn._('Copy to'),
-            command: node => {
-              this.copyTo({
-                text: node.data.text,
-                id: node.data.id
-              });
-            }
-          });
+            });
+          }
+          else{
+            //convert the link menu in section menu
+            ctx.push({
+              icon: 'nf nf-custom-elm',
+              text: bbn._('Transform to section'),
+              command: node => {
+                this.selectMenu(node);
+                this.$nextTick(()=>{
+                  this.selected.id_option = null;
+                });
+              }
+            });
+          }
         }
+        //adds the possibility of copy the section to another menu
+        ctx.push({
+          icon: 'nf nf-fa-copy',
+          text: bbn._('Copy to'),
+          command: node => {
+            let cfg = {
+              text: node.text,
+              id: node.data.id,
+              menu_node:  node.data.id_menu,
+              ctx: true
+            };
+
+            this.copyTo(cfg);
+          }
+        });
         return ctx
       },
       /**METHODS FOR BUTTONS ACTIONS IN THE TOP SPLITER LEFT **/
@@ -294,7 +336,7 @@
        * @fires actionedPopUp
        */
       copyMenu(){
-        if ( this.currentMenu !== "" ){
+        if ( this.treeMenuData.id_menu !== "" ){
           let dim = {
             width: 300,
             height: 180
@@ -302,7 +344,7 @@
           cfg = {
             root: this.$data.root,
             titleMenu: this.nameMenu,
-            id: this.currentMenu,
+            id: this.treeMenuData.id_menu,
             id_parent: this.id_parent
           };
           this.actionedPopUp('appui-menu-popup-copy_menu', bbn._('Copy menu'), cfg, dim);
@@ -319,9 +361,9 @@
       // add temporaney node in tree
        this.addTempNodeInRoot({
          text: bbn._('New Section'),
-         id_parent: this.currentMenu,
-         id_alias: null,
-         icon: 'fas fa-cogs',
+         id_parent: null,
+         id_option: null,
+         icon: 'nf nf-fa-cogs',
          numChildren: 0
        });
 
@@ -333,9 +375,9 @@
        *
        * @fires deleteElement
        */
-      deleteMenu(){
+      delMenu(){
         //passes the parameters of the current menu for delete
-        this.deleteElement(this.currentMenu, this.nameMenu, true);
+        this.deleteElement(this.treeMenuData.id_menu, this.nameMenu, true);
       },
       /*
        * Rename current menu this is operated by the top-bar button "Rename menu"
@@ -346,7 +388,7 @@
        */
       renameMenu(){
         //passes the parameters of the current menu for rename
-        this.renameElement(true, this.currentMenu, this.nameMenu, this.id_parent);
+        this.renameElement(true, this.treeMenuData.id_menu, this.nameMenu, this.id_parent);
       },
       /*
        * Create a new link in root of  current menu  set id_alias at 1 this is operated by the top-bar button "Create link"
@@ -359,8 +401,8 @@
         // add temporaney node in tree of the root menu with id_alias at 1 for create a link
         this.addTempNodeInRoot({
           text: bbn._('New text'),
-          id_parent: this.currentMenu,
-          id_alias: 1,
+          id_parent: null,
+          id_option: 1,
           icon: this.iconDefault,
           numChildren: 0
         });
@@ -376,7 +418,7 @@
         //accepts as parameter an object with id of the menu to be copied and where to copy it
         this.copyTo({
           text:this.nameMenu,
-          id: this.currentMenu
+          id: this.treeMenuData.id_menu
         });
       },
       /*
@@ -394,7 +436,7 @@
         }
         if( this.idxListMenu <= this.list.length - 1 ){
           setTimeout(() =>{
-            this.currentMenu = this.list[this.idxListMenu]['id'];
+            this.treeMenuData.id_menu = this.list[this.idxListMenu]['value'];
           }, 100);
         }
       },
@@ -411,7 +453,7 @@
         }
         if( this.idxListMenu <= this.list.length - 1 ){
           setTimeout(() => {
-            this.currentMenu = this.list[this.idxListMenu]['id'];
+            this.treeMenuData.id_menu = this.list[this.idxListMenu]['value'];
           }, 100);
         }
       },
@@ -427,7 +469,7 @@
        * @param {Object} popup dimension poup ( width and height )
        */
       actionedPopUp(component, title, cfg , popup){
-        bbn.vue.closest(this, ".bbns-tab").$refs.popup[0].open({
+        this.closest("bbn-container").getPopup().open({
           width: popup.width,
           height: popup.height,
           title: title,
@@ -444,19 +486,22 @@
        */
       copyTo(ele){
         let dim = {
-          width: 300,
-          height: 180
-        },
-        list = this.listMenu.filter( ele =>{
-          return ele.value !== this.currentMenu;
-        });
-        if ( this.currentMenu !== "" ){
-          let cfg = {
+          width: 550,
+          height: 280
+        };
+        if ( this.treeMenuData.id_menu !== "" ){
+          let list = this.list.filter( ele =>{
+            return (ele.value !== this.treeMenuData.id_menu) && (bbn.fn.get_field(this.source.listMenu, 'value', ele.value, 'public') === false);
+          }),
+           cfg = {
             root: this.source.root,
             name: ele.text,
             listMenu: list,
-            id: ele.id
+            id: ele.id,
+            menu_node: ele.menu_node !== undefined ? ele.menu_node : false,
+            ctx: ele.ctx !== undefined ? ele.ctx : false
           };
+
           this.actionedPopUp('appui-menu-popup-copy_to', bbn._('Copy to'), cfg, dim);
         }
       },
@@ -468,7 +513,7 @@
        * @fires actionedPopUp
        */
       renameElement(menu, current, text, id_parent, icon= false){
-        if ( this.currentMenu !== "" ){
+        if ( this.treeMenuData.id_menu !== "" ){
           let dim = {
             width: 300,
             height: 220
@@ -481,6 +526,7 @@
             menu: menu,
             id_parent: id_parent,
             icon: icon,
+            public: !!this.infoMenu.public
           };
           this.actionedPopUp('appui-menu-popup-rename', bbn._('Rename'), cfg, dim);
         }
@@ -510,19 +556,19 @@
                 this.root + "actions/delete_element",
                 {
                   id: idDelete,
-                  id_default: this.id_default,
+                  public: !!this.infoMenu.public,
                   id_parent: menu ? this.id_parent : this.node.data.id_parent
                 },
                 (d) => {
                   if ( d.success ){
                     //If menu is set to true then you are deleting a menu
-                  if ( menu ){
+                    if ( menu ){
                       //the computed and on this property through which computed allows me to update the menu list in the dropdown
                       this.list = d.listMenu.length ? d.listMenu : [];
                       //returns to the initial state
-                      if ( this.currentMenu === idDelete ){
+                      if ( this.treeMenuData.id_menu === idDelete ){
                         setTimeout(() => {
-                          this.currentMenu = this.list[this.list.length-1]['id'];
+                          this.treeMenuData.id_menu = this.list[this.list.length-1]['value'];
                           this.idxListMenu --;
                         }, 100);
                       }
@@ -571,9 +617,9 @@
        * @param {Object} cfg information (text, id_parent, id_alias, icon, numChildren)
        */
       addTempNode(node, cfg){
-        node.isExpanded = true;
-
         if ( node ){
+          node.isExpanded = true;
+
           if( !node.numChildren ){
             this.$nextTick(() =>{
               node.numChildren = node.numChildren + 1;
@@ -583,12 +629,17 @@
             this.$nextTick(() => {
               node.$refs.tree[0].isLoaded= true;
             });
-            this.formData.create = true;
-            node.$refs.tree[0].items.push(cfg);
-            setTimeout(()=>{
-              node.$refs.tree[0].$children[node.$refs.tree[0].items.length - 1].isSelected = true;
-            }, 150);
+
+              node.$refs.tree[0].items.push(cfg);
+              this.formData.create = true;
+
+
+              setTimeout(()=>{
+                node.$refs.tree[0].$children[node.$refs.tree[0].items.length - 1].isSelected = true;
+              }, 150);
+
           }, 600);
+
         }
       },
       /*
@@ -655,7 +706,7 @@
        * @param {object} dest new parent of the moved node
        */
       moveNode(e, node, dest){
-        if ( dest.data.id_alias === null ){
+        if ( dest.data.id_option === null ){
           bbn.fn.post(this.root + 'actions/move', {
             id: node.data.id,
             id_parent: dest.data.id
@@ -667,21 +718,23 @@
               appui.error(bbn._('Error moved') + '!!' );
             }
 
+            bbn.fn.log(dest, dest.getRef('tree'), node.parent, dest.$refs.tree[0], node)
+            //alert();
             if ( dest.getRef('tree') === false ){
               this.$nextTick(()=>{
                 dest.reload();
               });
-            }            
-            //refresh origin parent
+            }
             if ( dest.$refs.tree[0] !== node.parent ){
-              if ( node.items.length === 0 ){
+            //refresh origin parent
+            //  if ( node.items.length === 0 ){
                 if ( node.parent.level === 1 ){
                   this.$refs.menus.reload();
                 }
                 else if ( node.parent.level > 1 ){
                   bbn.vue.closest(bbn.vue.closest(node, 'bbn-tree'), 'bbn-tree').reload();
                 }
-              }
+      //        }
             }
 
             if ( this.selected !== false ){
@@ -731,7 +784,7 @@
           if( d.create === false ){
             appui.error(bbn._("Error create"));
           }
-          if ( d.id ){
+          if ( d.edit === true ){
             appui.success( bbn._("Successfully edit") + '!!');
           }
         }
@@ -778,7 +831,7 @@
             level: node.level,
             text: node.text,
             icon: node.icon,
-            num: node.num,
+            num: (node.data.order === undefined) ?  node.closest('bbn-tree').items.length : node.data.order,
             numChildren: node.numChildren,
             id: node.data.id,
             id_parent: node.data.id_parent,
@@ -788,8 +841,10 @@
             isActive: node.isActive,
             isMounted: node.isMounted,
             isSelected: node.isSelected,
+            id_option: node.data.id_option,
             parentIsRoot: node.parent.level === 0,
-            argument: node.data.argument !== undefined ? node.data.argument : ''
+            argument: node.data.argument !== undefined ? node.data.argument : '',
+            menu: this.infoMenu
           };
           if ( this.$refs.form ){
             this.$refs.form.reinit();
@@ -799,7 +854,6 @@
               id =  bbn.fn.search(bbn.vue.closest(node,'bbn-tree').items, 'id', node.data.id);
           this.showOrderUp = items[id-1] !== undefined;
           this.showOrderDown = items[id+1] !== undefined;
-
         });
       },
       /*
@@ -811,7 +865,7 @@
        */
       selectPermission(node){
         this.$set(this.selected, "path", node.getPath());
-        this.$set(this.selected, "id_alias", node.data.id);
+        this.$set(this.selected, "id_option", node.data.id);
       },
       /*
        * Method that is activated by canceling the form
@@ -821,8 +875,8 @@
        */
       formCancel(){
         //reset some properties and make a reload of the menu
+        this.selected= false;
         if ( this.formData.create ){
-          this.selected= false;
           setTimeout(()=>{
             this.$refs.menus.reload();
           },400);
@@ -843,6 +897,7 @@
       mapMenu(a){
         return {
           data: a,
+          id_menu: this.treeMenuData.id_menu,
           id: a.id,
           id_parent: a.id_parent,
           id_alias: a.id_alias,
@@ -851,7 +906,8 @@
           text: a.text,
           order: a.num,
           argument: a.argument,
-          num: a.num_children || 0
+          num: a.num_children || 0,
+          id_option: a.id_option,
         }
       },
       /*
@@ -865,10 +921,10 @@
        */
       getPermissionsContext(node){
         let res = [];
-        if ( node.icon === 'fas fa-file' ){
+        if ( node.icon === 'nf nf-fa-file' ){
           res.push({
             text: 'Go',
-            icon: 'far fa-hand-right',
+            icon: 'nf nf-fa-hand_o_right',
             command(node){
               let path = node.getPath();
               bbn.fn.post('options/permissions', {
@@ -891,7 +947,7 @@
        */
       mapPermissions(a){
         a.text += ' &nbsp; <span class="bbn-grey">' +  "(" + a.code +  ")" + '</span>';
-        return $.extend({selectable: a.icon === 'fas fa-file'}, a);
+        return $.extend({selectable: a.icon === 'nf nf-fa-file'}, a);
       },
       // /**
       //  * FOR MENU SPLITER LEFT
@@ -901,7 +957,7 @@
       //   bbn.fn.log("STArt DRAG", this, arguments);
       //   /* let node = arguments[0],
       //    event = arguments[1];
-      //    if( (node.items.length) && (node.numChildren > 0) || (node.icon === 'fas fa-key') ){
+      //    if( (node.items.length) && (node.numChildren > 0) || (node.icon === 'nf nf-fa-key') ){
       //    event.preventDefault();
       //    }*/
       // },
@@ -910,7 +966,7 @@
       //   let node = arguments[0],
       //       event = arguments[1];
       //   /*
-      //    if( (!node.items.length) && (node.numChildren === 0) && (node.icon !== 'fas fa-key') ){
+      //    if( (!node.items.length) && (node.numChildren === 0) && (node.icon !== 'nf nf-fa-key') ){
       //    event.preventDefault();
       //    }
       //    */
@@ -928,7 +984,7 @@
       ctrlEndDragMenus(node, ev, destination){
         //The node shifts can do so all except the default menu that reside in the right splitter.
 
-        if ( this.currentMenu !== this.id_default ){
+        if ( this.treeMenuData.id_menu !== this.id_default ){
           //acquire the id of the node that will contain that one we want to move
 
           bbn.fn.warning("end");
@@ -964,10 +1020,10 @@
     },
     watch:{
       /*
-       * @watch currentMenu
+       * @watch treeMenuData.id_menu
        * @fires reload
        */
-      currentMenu(val, old){
+      'treeMenuData.id_menu'(val, old){
         for ( let i in this.list ){
           if ( this.list[i]['id'] === val ){
             this.idxListMenu = parseInt(i);
@@ -976,6 +1032,7 @@
         }
         //keep track of the previous root
         this.oldRootMenu = old;
+        this.selected = false;
         if ( old && (val !== old) ){
           this.$refs.menus.reload();
         }

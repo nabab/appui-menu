@@ -6,77 +6,67 @@
  * Time: 15.07
  */
 
-$res['success'] = false;
 
-if ( !empty($model->data['text']) &&  !empty($model->data['icon']) && !empty($model->data['id_parent']) ){
+if ( !empty($model->data['menu']['value']) &&
+  isset($model->data['menu']['public']) &&
+  !empty($model->data['text'])
+){
 
+  if ( !empty($model->data['menu']['public']) &&
+    (!$model->inc->user->is_admin() &&
+    !$model->inc->user->is_dev())
+  ){
+    return [
+      'success' => false
+    ];
+  }
 
-  if(  !empty($model->data['create']) && ($model->data['id_alias'] !== 1) ){
+  $cfg = [
+    'text' => $model->data['text'],
+    'icon' => $model->data['icon'],
+    'id_parent' => \bbn\str::is_uid($model->data['id_parent']) ? $model->data['id_parent'] : NULL,
+    'id_option' => \bbn\str::is_uid($model->data['id_option']) ? $model->data['id_option'] : NULL,
+    'num' =>  $model->data['num'] ?? NULL
+  ];
 
-    if( $model->data['id_alias'] !== null ){
-      $cfg=[
-        'id_parent' => $model->data['id_parent'],
-        'text' => $model->data['text'],
-        'icon' => $model->data['icon'],
-        'id_alias' => $model->data['id_alias'],
-        //'path' => $model->data['path'],
-        //'numChildren' => 0,
-        'items' => []
-      ];
+  if( !empty($model->data['id_option']) &&
+   \bbn\str::is_uid($model->data['id_option']) &&
+   !empty($model->data['argument'])
+  ){
+    $cfg['argument'] = $model->data['argument'];
+  }
 
-      if ( !empty($model->data['argument']) ){
-        $cfg['argument'] = $model->data['argument'];
-      }
-    }
-    if( $model->data['id_alias'] === null ){
-
-      $cfg=[
-        'id_parent' => $model->data['id_parent'],
-        'text' => $model->data['text'],
-        'icon' => $model->data['icon'],
-        'id_alias' => $model->data['id_alias'],
-        //'numChildren' => 0,
-        'items' => []
-      ];
-    }
-
-    if ( $id = $model->inc->menu->add($model->data['id_parent'], $cfg) ){
-      $cfg['id'] = $id;
-      $cfg['path'] = $model->data['path'];
-      $res = [
+  // case add
+  if ( !empty($model->data['create']) ){
+    if ( !empty($model->inc->menu->add($model->data['menu']['value'], $cfg)) ){
+      return [
         'success' => true,
-        'create' => true,
-        'params' => $cfg
+        'create' => true
       ];
-     // die(var_dump($res));
     }
     else{
-      $res = [
+      return [
         'success' => false,
-        'create' => false,
+        'create' => false
       ];
     }
   }
-  else if( !empty($model->data['id']) ){
-    $cfg= [
-      'id_parent' => $model->data['id_parent'],
-      'text' => $model->data['text'],
-      'icon' => $model->data['icon'],
-      'id_alias' => $model->data['id_alias']
-    ];
-    if ( !empty($model->data['argument'])  ){
-      $cfg['argument'] = $model->data['argument'];
-    }
-    // if ( $id_set = $model->inc->options->set($model->data['id'], $cfg) ){
-    if ( $id_set = $model->inc->menu->set($model->data['id'], $cfg) ){
-      $cfg['id'] = $id_set;
-      $res = [
+  else{
+    if ( !empty($model->inc->menu->set($model->data['id'], $cfg)) ){
+      return [
         'success' => true,
-        'id' => $id_set,
-        'params' => $cfg
+        'edit' => true
       ];
-
-    };
+    }
+    else{
+      return [
+        'success' => false,
+        'edit' => false
+      ];
+    }
   }
 }
-return $res;
+
+return [
+  'success' => false
+];

@@ -13,18 +13,11 @@
       }
     },
     methods: {
-      beforeSubmit(){
-
-      },
       onSuccess(d){
         if ( d.success ){
-          //let i = d.listMenu.length -1;
-
-          appui.menu.list = d.listMenu;
-          setTimeout(() => {
-            //appui.menu.currentMenu = d.listMenu[i]['id'];
-            //appui.menu.clickNext();
-          }, 500);
+          if ( (d.listMenu !== undefined) && (d.listMenu.length) ){
+            appui.menu.list = d.listMenu;
+          }
           appui.menu.reloadTreeMenu();
           appui.success(bbn._("Successfully copied menu!"));
         }
@@ -38,11 +31,7 @@
         }
 
         bbn.vue.closest(this, ".bbn-popup").close();
-      },
-      /*onFailure(){
-
-        bbn.vue.closest(this, ".bbn-popup").close();
-      }*/
+      }
     },
     computed: {
       formCopy(){
