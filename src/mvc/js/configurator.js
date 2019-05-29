@@ -7,7 +7,7 @@
     data(){
       return {
         treeMenuData:{
-          id_menu: '',
+          id_menu: '',          
           id_parent: null,
           path: []
         },

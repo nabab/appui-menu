@@ -1,4 +1,4 @@
-<bbn-form class="bbn-full-screen bbn-c"
+<bbn-form class="bbn-c"
           :source="$data"
           :action="source.root + 'actions/create_menu' "
           @success="onSuccess"

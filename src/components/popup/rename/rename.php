@@ -1,4 +1,4 @@
-<bbn-form class="bbn-full-screen bbn-c"
+<bbn-form class="bbn-c"
           :source= "dataRename"
           :data= "infoData"
           :action="source.root + 'actions/rename_element' "

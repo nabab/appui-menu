@@ -105,67 +105,65 @@
               :data="formData"
               ref="form"
               :action="source.root + 'actions/edit' "
-              @success="successEditionMenu"
-              @cancel="formCancel">
-      <div class="bbn-full-screen bbn-hpadded">
-        <div class="bbn-flex-height">
-          <h1 class="bbn-c"><?=_('Édition du menu')?></h1>
-          <div class="bbn-w-100 bbn-flex-width"><div class="bbn-w-70">
-              <div class="bbn-block bbn-w-20"><?=_('Title')?></div>
-              <div class="bbn-block bbn-w-80">
-                <bbn-input class="bbn-w-80" v-model="selected.text"></bbn-input>
-              </div>
-              <div class="bbn-nl"> </div>
-              <div class="bbn-block bbn-w-20"><?=_('Icon')?></div>
-              <div class="bbn-block bbn-w-80">
-                <bbn-input class="bbn-w-50" v-model="selected.icon"></bbn-input>
-                <i style="margin-left: 5%; margin-right: 5%" :class="selected.icon"></i>
-                <bbn-button @click="openListIcons"><?=_('Icons')?></bbn-button>
-              </div>
-            </div>
-            <div class="bbn-flex-fill bbn-c" v-if="elementMove.data.id && (showOrderDown || showOrderUp)">
-              <div class="bbn-w-80 bbn-card bbn-c">
-                <div><?=_('Order')?></div>
-                <div class="bbn-padded" v-if="showOrderUp">
-                  <bbn-button icon="nf nf-fa-arrow_up" @click="moveUp"></bbn-button>
-                </div>
-                <div class="bbn-padded" v-if="showOrderDown">
-                  <bbn-button icon="nf nf-fa-arrow_down" @click="moveDown"></bbn-button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="bbn-nl"> </div>
-          <div class="bbn-w-100 bbn-flex-fill">
-            <div class="bbn-full-screen" v-if="selected.id_option">
-              <div class="bbn-block bbn-h-100 bbn-w-20"><?=_('Link')?></div>
-              <div class="bbn-block bbn-h-100 bbn-w-80">
-                <div class="bbn-full-screen">
-                  <div class="bbn-100" style="border: 1px dotted grey">
-                    <bbn-tree source="options/permissions"
-                              :map="mapPermissions"
-                              uid="id"
-                              :root="rootPermission"
-                              @select="selectPermission"
-                              ref="treePermission"
-                              :path="selected.path"
-                              :menu="getPermissionsContext"
-                    ></bbn-tree>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="bbn-nl"> </div>
-          <div class="bbn-w-100" v-if="selected.id_option">
-            <div class="bbn-block bbn-w-20"><?=_('Argument')?></div>
+              @success="successEditionMenu"              
+              @cancel="formCancel"
+              :scrollable="true"
+    >
+      <div class="bbn-overlay bbn-flex-height bbn-padded">
+        <h1 class="bbn-c"><?=_('Édition du menu')?></h1>
+        <div class="bbn-w-100 bbn-flex-width"><div class="bbn-w-70">
+            <div class="bbn-block bbn-w-20"><?=_('Title')?></div>
             <div class="bbn-block bbn-w-80">
-              <bbn-input v-model="selected.argument"></bbn-input>
+              <bbn-input class="bbn-w-80" v-model="selected.text"></bbn-input>
+            </div>
+            <div class="bbn-nl"></div>
+            <div class="bbn-block bbn-w-20"><?=_('Icon')?></div>
+            <div class="bbn-block bbn-w-80">
+              <bbn-input class="bbn-w-50" v-model="selected.icon"></bbn-input>
+              <i style="margin-left: 5%; margin-right: 5%" :class="selected.icon"></i>
+              <bbn-button @click="openListIcons"><?=_('Icons')?></bbn-button>
             </div>
           </div>
-          <div class="bbn-nl"> </div>
+          <div class="bbn-flex-fill bbn-c" v-if="elementMove.data.id && (showOrderDown || showOrderUp)">
+            <div class="bbn-w-80 bbn-card bbn-c">
+              <div><?=_('Order')?></div>
+              <div class="bbn-padded" v-if="showOrderUp">
+                <bbn-button icon="nf nf-fa-arrow_up" @click="moveUp"></bbn-button>
+              </div>
+              <div class="bbn-padded" v-if="showOrderDown">
+                <bbn-button icon="nf nf-fa-arrow_down" @click="moveDown"></bbn-button>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+        <div class="bbn-nl"></div>
+        <div class="bbn-w-100 bbn-flex-fill" v-if="selected.id_option">
+          <div class="bbn-block bbn-h-100 bbn-w-20"><?=_('Link')?></div>
+          <div class="bbn-block bbn-h-100 bbn-w-80">
+            <div class="bbn-overlay bbn-padded">
+              <div class="bbn-h-100" style="border: 1px dotted grey">              
+                <bbn-tree source="options/permissions"
+                          :map="mapPermissions"
+                          uid="id"
+                          :root="rootPermission"
+                          @select="selectPermission"
+                          ref="treePermission"
+                          :path="selected.path"
+                          :menu="getPermissionsContext"
+                ></bbn-tree>
+              </div>                
+            </div>                
+          </div>            
+        </div>
+        <div class="bbn-nl"> </div>
+        <div class="bbn-w-100 bbn-padded" v-if="selected.id_option">
+          <div class="bbn-block bbn-w-20"><?=_('Argument')?></div>
+          <div class="bbn-block bbn-w-80">
+            <bbn-input v-model="selected.argument"></bbn-input>
+          </div>
+        </div>
+        <div class="bbn-nl"></div>
+      </div>      
     </bbn-form>
     <div v-else
          class="bbn-full-screen bbn-middle bbn-c">

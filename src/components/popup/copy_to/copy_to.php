@@ -1,4 +1,4 @@
-<bbn-form class="bbn-full-screen bbn-c"
+<bbn-form class="bbn-c"
           :source="infoCopy"
           :data="menuInfo"
           :action="source.root + 'actions/copy_menu_to'"
