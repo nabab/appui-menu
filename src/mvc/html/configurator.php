@@ -85,7 +85,7 @@
             </div>
           </div>
         </div>
-        <div class="bbn-full-screen bbn-padded" v-if="treeMenuData.id_menu.length">
+        <div class="bbn-overlay bbn-padded" v-if="treeMenuData.id_menu.length">
           <bbn-tree :source="root + 'configurator'"
                     :map="mapMenu"
                     :data="treeMenuData"
@@ -166,7 +166,7 @@
       </div>      
     </bbn-form>
     <div v-else
-         class="bbn-full-screen bbn-middle bbn-c">
+         class="bbn-overlay bbn-middle bbn-c">
       <h1 v-html="'<?=_("Select or create")?>'+'<br>'+'<?=_("a menu element")?>'+'<br>'+'<?=_("to see the form")?>'+'<br>'+'<?=_("HERE")?>'" style="line-height: 1.4em"></h1>
     </div>
   </bbn-pane>
