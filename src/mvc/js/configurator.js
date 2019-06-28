@@ -794,7 +794,7 @@
         //this.reloadTreeMenu();
         if ( this.node.parent.level === 0 && d.params ){
           let id = this.node['parent']['items'].length -1;
-          $.each(d.params, (i, v)=>{
+          bbn.fn.each(d.params, ( v, i ) => {
             this.node.$set(this.node['parent']['items'][id], i, v);
           });
 
@@ -947,7 +947,7 @@
        */
       mapPermissions(a){
         a.text += ' &nbsp; <span class="bbn-grey">' +  "(" + a.code +  ")" + '</span>';
-        return $.extend({selectable: a.icon === 'nf nf-fa-file'}, a);
+        return bbn.fn.extend({selectable: a.icon === 'nf nf-fa-file'}, a);
       },
       // /**
       //  * FOR MENU SPLITER LEFT

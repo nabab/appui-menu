@@ -57,7 +57,7 @@
           menu: this.source.menu
         };
         if ( this.source.id_parent ){
-          $.extend(infoForm, {id_parent: this.source.id_parent});
+          bbn.fn.extend(infoForm, {id_parent: this.source.id_parent});
         }
         return infoForm
       }
