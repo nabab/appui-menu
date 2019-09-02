@@ -10,10 +10,11 @@
                           title="<?=_('Make it default')?>"
                           icon="nf nf-fa-crown"
               ></bbn-button> -->
-              <bbn-dropdown style="width:200px"
+              <bbn-dropdown v-if="list.length"
+                            style="width:200px"
                             ref="listMenus"
                             :source="list"
-                            v-model="treeMenuData.id_menu"
+                            v-model="treeMenuData.id_menu"                            
               ></bbn-dropdown>
               <bbn-button v-if="showArrows"
                           @click="prevMenu"
@@ -31,7 +32,7 @@
             <div class="bbn-flex-fill bbn-r">
               <bbn-button @click="createMenu"
                           title="<?=_('Create menu')?>"
-                          icon="zmdi zmdi-menu"
+                          icon="nf nf-mdi-menu"
                           :notext="true"
               ></bbn-button>
               <bbn-button @click="createSection"

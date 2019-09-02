@@ -7,7 +7,7 @@
     data(){
       return {
         treeMenuData:{
-          id_menu: '',          
+          id_menu: this.source.listMenu[0]['value'],          
           id_parent: null,
           path: []
         },
