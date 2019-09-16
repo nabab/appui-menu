@@ -130,7 +130,7 @@
               order = bbn.vue.closest(this.elementMove,'bbn-tree').$children[0].$children[i+1].data.order;
             }
           }
-          bbn.fn.post(this.root + 'actions/order', {
+          this.post(this.root + 'actions/order', {
             id: items[id].id,
             id_parent: items[id].id_parent,
             id_menu: this.treeMenuData.id_menu,
@@ -552,7 +552,7 @@
           appui.confirm(
             bbn._('Secure to delete') + ': "' + text + '" ?',
             () => {
-              bbn.fn.post(
+              this.post(
                 this.root + "actions/delete_element",
                 {
                   id: idDelete,
@@ -707,7 +707,7 @@
        */
       moveNode(e, node, dest){
         if ( dest.data.id_option === null ){
-          bbn.fn.post(this.root + 'actions/move', {
+          this.post(this.root + 'actions/move', {
             id: node.data.id,
             id_parent: dest.data.id
           }, d => {
@@ -927,7 +927,7 @@
             icon: 'nf nf-fa-hand_o_right',
             command(node){
               let path = node.getPath();
-              bbn.fn.post('options/permissions', {
+              this.post('options/permissions', {
                 id: node.data.id,
                 full: 1
               }, (d) =>{
@@ -991,14 +991,14 @@
           bbn.fn.log(arguments, node, node.data,  node.data.id_parent, destination, ev);
 
           if ( node.data.code ){
-            bbn.fn.post(this.root + 'actions/create_shortcut', {
+            this.post(this.root + 'actions/create_shortcut', {
               code: node.data.code,
               source: node.data.id,
               destination: destination.data.id
             })
           }
           else if ( node.data.id !== destination.data.id ){
-            bbn.fn.post(this.root + "actions/move_menu", {
+            this.post(this.root + "actions/move_menu", {
                 id: node.data.id,
                 id_parent: destination.data.id
               }, (d) => {
