@@ -111,7 +111,7 @@
               :scrollable="true"
     >
       <div class="bbn-overlay bbn-flex-height bbn-padded">
-        <h1 class="bbn-c"><?=_('Édition du menu')?></h1>
+        <h1 class="bbn-c"><?=_('Menu editor')?></h1>
         <div class="bbn-w-100 bbn-flex-width"><div class="bbn-w-70">
             <div class="bbn-block bbn-w-20"><?=_('Title')?></div>
             <div class="bbn-block bbn-w-80">
