@@ -209,7 +209,7 @@
             {
               icon: 'nf nf-fa-trash',
               text: bbn._('Delete'),
-              command: node => {
+              action: node => {
                 this.node = node;
                 //params: id node , text node, false for define that is not menu
                 this.deleteElement(node.data.id , node.text, false);
@@ -219,7 +219,7 @@
             {
               icon: 'nf nf-mdi-lead_pencil',
               text: bbn._('Rename'),
-              command: node => {
+              action: node => {
                 this.node = node;
                 this.selectMenu(node);
               //  this.renameNode = true;
@@ -234,7 +234,7 @@
               ctx.push({
                 icon: 'nf nf-custom-elm',
                 text: bbn._('Transform to link'),
-                command: node => {
+                action: node => {
                   this.selectMenu(node);
                   this.$nextTick(()=>{
                     this.selected.id_option = 1
@@ -246,7 +246,7 @@
             ctx.unshift({
               icon: 'nf nf-fa-level_down',
               text: bbn._('Sub-section'),
-              command: node => {
+              action: node => {
                 this.node = node;
                 this.addTempNode(node, {
                   text: bbn._('New Section'),
@@ -261,7 +261,7 @@
             ctx.unshift({
               icon: 'nf nf-fa-link',
               text: bbn._('New link'),
-              command: node => {
+              action: node => {
                 this.node = node;
                 if ( node.data.id_option === null){
                   let obj = {
@@ -280,7 +280,7 @@
             ctx.push({
               icon: 'nf nf-custom-elm',
               text: bbn._('Transform to section'),
-              command: node => {
+              action: node => {
                 this.selectMenu(node);
                 this.$nextTick(()=>{
                   this.selected.id_option = null;
@@ -293,7 +293,7 @@
         ctx.push({
           icon: 'nf nf-fa-copy',
           text: bbn._('Copy to'),
-          command: node => {
+          action: node => {
             let cfg = {
               text: node.text,
               id: node.data.id,
@@ -925,7 +925,7 @@
           res.push({
             text: 'Go',
             icon: 'nf nf-fa-hand_o_right',
-            command(node){
+            action(node){
               let path = node.getPath();
               this.post('options/permissions', {
                 id: node.data.id,
