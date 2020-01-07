@@ -106,7 +106,7 @@
               :data="formData"
               ref="form"
               :action="source.root + 'actions/edit' "
-              @success="successEditionMenu"              
+              @success="successEditionMenu"
               @cancel="formCancel"
               :scrollable="true"
     >
@@ -139,10 +139,12 @@
         </div>
         <div class="bbn-nl"></div>
         <div class="bbn-w-100 bbn-flex-fill" v-if="selected.id_option">
-          <div class="bbn-block bbn-h-100 bbn-w-20"><?=_('Link')?></div>
+          <div class="bbn-block bbn-h-100 bbn-w-20">
+            <?=_('Link')?>
+          </div>
           <div class="bbn-block bbn-h-100 bbn-w-80">
             <div class="bbn-overlay bbn-padded">
-              <div class="bbn-h-100" style="border: 1px dotted grey">              
+              <div class="bbn-h-100" style="border: 1px dotted grey">
                 <bbn-tree source="options/permissions"
                           :map="mapPermissions"
                           uid="id"
@@ -152,9 +154,9 @@
                           :path="selected.path"
                           :menu="getPermissionsContext"
                 ></bbn-tree>
-              </div>                
-            </div>                
-          </div>            
+              </div>
+            </div>
+          </div>
         </div>
         <div class="bbn-nl"> </div>
         <div class="bbn-w-100 bbn-padded" v-if="selected.id_option">
@@ -164,7 +166,7 @@
           </div>
         </div>
         <div class="bbn-nl"></div>
-      </div>      
+      </div>
     </bbn-form>
     <div v-else
          class="bbn-overlay bbn-middle bbn-c">

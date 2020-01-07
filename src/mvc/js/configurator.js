@@ -538,7 +538,7 @@
        *
        * @param {String} idDelete id menu or node to be Deleted
        * @param {String} text name menu or node to be Deleted
-       * @param {Booolean} menu true if delete menu, false if rename a node of tree       *
+       * @param {Booolean} menu true if delete menu, false if rename a node of tree
        * @fires reloadTreeOfNode
        * @fires actionedPopUp
        */
