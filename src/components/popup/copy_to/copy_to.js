@@ -51,7 +51,7 @@
         }
       },
       listIcon(){
-        appui.$refs.tabnav.activeTab.getPopup().open({
+        appui.getRef('nav').activeContainer.getPopup().open({
           width: '80%',
           height: '80%',
           title: bbn._('Select icons'),
