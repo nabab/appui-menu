@@ -29,7 +29,7 @@
               "notext": null,
               "noparent": null,
               "i18n": "en",
-              "inherit_from": "0c768efe025011e8beb3005056014c9f",
+              "inherit_from": "menus, appui",
               "frozen": 1
           }
       },
@@ -47,7 +47,7 @@
               "notext": null,
               "noparent": null,
               "i18n": "en",
-              "inherit_from": "0c768efe025011e8beb3005056014c9f",
+              "inherit_from": "menus, appui",
               "frozen": 1
           }
       },
@@ -65,7 +65,7 @@
               "notext": null,
               "noparent": null,
               "i18n": "en",
-              "inherit_from": "0c768efe025011e8beb3005056014c9f",
+              "inherit_from": "menus, appui",
               "frozen": 1
           }
       }
