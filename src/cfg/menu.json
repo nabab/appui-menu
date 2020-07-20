@@ -1,0 +1,9 @@
+{
+  "text": "Menu",
+  "icon": "nf nf-mdi-menu",
+  "items": [{
+    "text": "Configurator",
+    "icon": "nf nf-fa-cogs",
+    "link": "configurator"
+  }]
+}
