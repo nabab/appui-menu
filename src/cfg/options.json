@@ -29,7 +29,7 @@
               "notext": null,
               "noparent": null,
               "i18n": "en",
-              "inherit_from": "menus, appui",
+              "inherit_from": ["___appui-plugin-url___","appui"],
               "frozen": 1
           }
       },
@@ -48,7 +48,7 @@
               "notext": null,
               "noparent": null,
               "i18n": "en",
-              "inherit_from": "menus, appui",
+              "inherit_from": ["___appui-plugin-url___","appui"],
               "frozen": 1
           }
       },
@@ -67,7 +67,7 @@
               "notext": null,
               "noparent": null,
               "i18n": "en",
-              "inherit_from": "menus, appui",
+              "inherit_from": ["___appui-plugin-url___","appui"],
               "frozen": 1
           }
       }
