@@ -18,7 +18,7 @@
           "num": 1,
           "text": "Main menu",
           "code": "default",
-          "icon": "list",
+          "icon": "nf nf-mdi-asterisk",
           "cfg": {
               "show_value": 1,
               "show_code": 1,
@@ -37,6 +37,7 @@
           "num": 2,
           "text": "Shortcuts",
           "code": "shortcuts",
+          "icon": "nf nf-mdi-link_variant",
           "cfg": {
               "show_code": 1,
               "show_value": 1,
@@ -55,6 +56,7 @@
           "num": 7,
           "text": "Menus",
           "code": "menus",
+          "icon": "nf nf-fa-th_list",
           "cfg": {
               "show_code": 1,
               "show_value": 1,
