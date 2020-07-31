@@ -1,8 +1,10 @@
-{
-  "text": "Menus",
-  "code": "menus",
-  "icon": "nf nf-mdi-menu",
-  "cfg": {
+[
+  {
+    "text": "Menus",
+    "code": "menus",
+    "id_parent": "appui",
+    "icon": "nf nf-mdi-menu",
+    "cfg": {
       "show_code": 1,
       "show_value": 1,
       "show_alias": 1,
@@ -12,64 +14,65 @@
       "notext": null,
       "noparent": null,
       "i18n": "en"
-  },
-  "items": [
+    },
+    "items": [
       {
-          "num": 1,
-          "text": "Main menu",
-          "code": "default",
-          "icon": "nf nf-mdi-asterisk",
-          "cfg": {
-              "show_value": 1,
-              "show_code": 1,
-              "allow_children": 1,
-              "inheritance": "cascade",
-              "sortable": 1,
-              "show_alias": 1,
-              "notext": null,
-              "noparent": null,
-              "i18n": "en",
-              "inherit_from": ["___appui-plugin-url___","appui"],
-              "frozen": 1
-          }
+        "num": 1,
+        "text": "Main menu",
+        "code": "default",
+        "icon": "nf nf-mdi-asterisk",
+        "cfg": {
+          "show_value": 1,
+          "show_code": 1,
+          "allow_children": 1,
+          "inheritance": "cascade",
+          "sortable": 1,
+          "show_alias": 1,
+          "notext": null,
+          "noparent": null,
+          "i18n": "en",
+          "inherit_from": ["|*appui-menu*|","appui"],
+          "frozen": 1
+        }
       },
       {
-          "num": 2,
-          "text": "Shortcuts",
-          "code": "shortcuts",
-          "icon": "nf nf-mdi-link_variant",
-          "cfg": {
-              "show_code": 1,
-              "show_value": 1,
-              "show_alias": 1,
-              "allow_children": 1,
-              "inheritance": "cascade",
-              "sortable": 1,
-              "notext": null,
-              "noparent": null,
-              "i18n": "en",
-              "inherit_from": ["___appui-plugin-url___","appui"],
-              "frozen": 1
-          }
+        "num": 2,
+        "text": "Shortcuts",
+        "code": "shortcuts",
+        "icon": "nf nf-mdi-link_variant",
+        "cfg": {
+          "show_code": 1,
+          "show_value": 1,
+          "show_alias": 1,
+          "allow_children": 1,
+          "inheritance": "cascade",
+          "sortable": 1,
+          "notext": null,
+          "noparent": null,
+          "i18n": "en",
+          "inherit_from": ["|*appui-menu*|","appui"],
+          "frozen": 1
+        }
       },
       {
-          "num": 7,
-          "text": "Menus",
-          "code": "menus",
-          "icon": "nf nf-fa-th_list",
-          "cfg": {
-              "show_code": 1,
-              "show_value": 1,
-              "show_alias": 1,
-              "allow_children": 1,
-              "inheritance": "cascade",
-              "sortable": 1,
-              "notext": null,
-              "noparent": null,
-              "i18n": "en",
-              "inherit_from": ["___appui-plugin-url___","appui"],
-              "frozen": 1
-          }
+        "num": 7,
+        "text": "Menus",
+        "code": "menus",
+        "icon": "nf nf-fa-th_list",
+        "cfg": {
+          "show_code": 1,
+          "show_value": 1,
+          "show_alias": 1,
+          "allow_children": 1,
+          "inheritance": "cascade",
+          "sortable": 1,
+          "notext": null,
+          "noparent": null,
+          "i18n": "en",
+          "inherit_from": ["|*appui-menu*|","appui"],
+          "frozen": 1
+        }
       }
-  ]
-}
+    ]
+  }
+]
