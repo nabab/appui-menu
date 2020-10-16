@@ -328,18 +328,20 @@
             appui.error(bbn._("The main menu cannot be deleted"));
             return;
           }
-          this.confirm(bbn._('Are you sure you wanto to delete the') + ': "' + text + '" ' + bbn._('menu') +'?', () => {
-            this.post(this.root + "actions/menu/delete", {id: this.currentID}, d => {
-                if ( d.success ){
-                  this.currentID = '';
-                  this.$set(this.source, 'menus', d.menus || []);
-                  appui.success(bbn._("Deleted"));
+          this.confirm(
+            bbn._('Are you sure you want to delete the menu') + ': "' + text + '?',
+            () => {
+              this.post(this.root + "actions/menu/delete", {id: this.currentID}, d => {
+                  if ( d.success ){
+                    this.currentID = '';
+                    this.$set(this.source, 'menus', d.menus || []);
+                    appui.success(bbn._("Deleted"));
+                  }
+                  else{
+                    appui.error();
+                  }
                 }
-                else{
-                  appui.error();
-                }
-              }
-            );
+              );
             }
           )
         }
@@ -595,7 +597,7 @@
        * @param {Object} node info node select
        */
       selectItem(node){
-        this.$set(this, 'selected', node);
+        this.selected = node;
         //this.selected.parentIsRoot =  node.parent.level === 0;
         this.$nextTick(() => {
           let form = this.getRef('form');

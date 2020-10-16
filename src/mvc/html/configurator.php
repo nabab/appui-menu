@@ -1,16 +1,19 @@
 <bbn-splitter class="appui-menu-configurator"
+              orientation="horizontal"
               :resizable="true"
               :resizer-size="10"
 >
   <bbn-pane>
     <div class="bbn-flex-height">
-      <div class="bbn-w-100 bbn-header bbn-xspadded bbn-vmiddle appui-menu-configurato-toolbar">
+      <div class="bbn-w-100 bbn-header bbn-xspadded bbn-vmiddle appui-menu-configurator-toolbar">
         <div class="bbn-flex-width">
           <div>
-            <!-- <bbn-button @click="makeDefault"
+            <bbn-button @click="makeDefault"
+                        :disabled="!currentID || (currentID === source.defaultMenu)"
                         title="<?=_('Make it default')?>"
+                        :notext="true"
                         icon="nf nf-fa-crown"
-            ></bbn-button> -->
+            ></bbn-button>
             <bbn-dropdown v-if="source.menus && source.menus.length"
                           style="width:200px"
                           ref="listMenus"
@@ -53,9 +56,10 @@
                         :notext="true"
             ></bbn-button>
             <bbn-button @click="renameMenu"
+                        v-if="selected"
                         title="<?=_('Rename menu')?>"
                         icon="nf nf-fa-edit"
-                        :disabled="disabledAction"
+                        :disabled="!currentMenu"
                         :notext="true"
             ></bbn-button>
             <bbn-button @click="copyMenu"
@@ -73,7 +77,7 @@
             <bbn-button @click="fixOrder"
                         title="<?=_('Fix menu order')?>"
                         icon="nf nf-mdi-sort_alphabetical"
-                        :disabled="disabledAction"
+                        :disabled="selected && selected.data.numChildren ? false : true"
                         :notext="true"
             ></bbn-button>
             <bbn-button @click="deleteMenu"
@@ -94,6 +98,7 @@
                     :sortable="true"
                     :menu="contextMenu"
                     @select="selectItem"
+                    @unselect="selected = false"
                     ref="menuTree"
                     :draggable="true"
                     @move="moveNode"
@@ -110,7 +115,21 @@
   </bbn-pane>
   <bbn-pane>
     <div class="bbn-flex-height">
-      <div class="bbn-header bbn-xspadded bbn-middle appui-menu-configurator-header"><strong><?=_('MENU EDITOR')?></strong></div>
+      <div class="bbn-header bbn-xspadded bbn-middle appui-menu-configurator-header">
+        <div class="bbn-flex-width">
+          <div>
+            <strong><?=_('MENU EDITOR')?></strong>
+          </div>
+          <div class="bbn-flex-fill bbn-r">
+            <bbn-button @click="deleteItem(selected)"
+                        title="<?=_('Delete menu')?>"
+                        icon="nf nf-fa-trash_o"
+                        v-if="selected"
+                        :notext="true"
+            ></bbn-button>
+          </div>
+        </div>
+      </div>
       <div class="bbn-flex-fill">
         <bbn-form v-if="selected"
                   :source="selected.data"
