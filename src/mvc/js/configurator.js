@@ -129,8 +129,7 @@
        * @param {Number} newNum
        * @param {Event} ev
        */
-      order(newNum, node, ev){
-        bbn.fn.log('order', newNum, node);
+      order(oldNum, newNum, node, ev){
         if ( ev ){
           ev.preventDefault();
         }
@@ -142,9 +141,13 @@
           }, d => {
             if ( d.success ){
               if ( this.selected === node ){
-                this.getRef('menuTree').path.push(node.getPath());
+                let menuTree = this.getRef('menuTree');
+                if (menuTree) {
+                  //menuTree.reload();
+                }
               }
-              node.parent.reload();
+              //node.parent.reload();
+              node.reorder(oldNum, newNum, true);
               appui.success('Ordered');
             }
             else {
@@ -160,7 +163,7 @@
        */
       moveUp(){
         if ( this.selected && (this.selected.source.num > 1) ){
-          this.order(this.selected.source.num - 1, this.selected);
+          this.order(this.selected.source.num, this.selected.source.num - 1, this.selected);
         }
       },
       /**
@@ -170,7 +173,7 @@
        */
       moveDown(){
         if ( this.selected && (this.selected.source.num < this.selected.parent.currentData.length) ){
-          this.order(this.selected.source.num + 1, this.selected);
+          this.order(this.selected.source.num, this.selected.source.num + 1, this.selected);
         }
       },
       /** CONTEXTMENU **/
