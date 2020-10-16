@@ -129,18 +129,16 @@
        * @param {Number} newNum
        * @param {Event} ev
        */
-      order(oldNum, newNum, node, ev){
+      order(newNum, node, ev){
+        bbn.fn.log('order', newNum, node);
         if ( ev ){
           ev.preventDefault();
         }
-        let maxNum = node.parent.filteredData.length,
-            data = bbn.fn.getField(node.parent.filteredData, 'data', {num: newNum > maxNum ? maxNum : newNum}),
-            num = data ? data.num : false;
-        if ( num && data.id && this.currentID ){
+        if ( newNum && node.data.id && this.currentID ){
           this.post(this.root + 'actions/item/order', {
             id: node.data.id,
             id_menu: this.currentID,
-            num: num
+            num: newNum
           }, d => {
             if ( d.success ){
               if ( this.selected === node ){
@@ -162,7 +160,7 @@
        */
       moveUp(){
         if ( this.selected && (this.selected.source.num > 1) ){
-          this.order(this.selected.source.num, this.selected.source.num - 1, this.selected);
+          this.order(this.selected.source.num - 1, this.selected);
         }
       },
       /**
@@ -172,7 +170,7 @@
        */
       moveDown(){
         if ( this.selected && (this.selected.source.num < this.selected.parent.currentData.length) ){
-          this.order(this.selected.source.num, this.selected.source.num + 1, this.selected);
+          this.order(this.selected.source.num + 1, this.selected);
         }
       },
       /** CONTEXTMENU **/
