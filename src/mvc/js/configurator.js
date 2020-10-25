@@ -70,6 +70,7 @@
               else {
                 this.getRef('menuTree').reload();
               }
+              this.updateTreeMenu();
             }
           }
           else {
@@ -122,6 +123,12 @@
           })
         }
       },
+      updateTreeMenu(){
+        let treeMenu = appui.find('bbn-treemenu');
+        if (treeMenu && (treeMenu.currentMenu === this.currentID)) {
+          treeMenu.reset();
+        }
+      },
       /**
        * Moves the selected element from the given old position to the given new one.
        * @method order
@@ -140,13 +147,7 @@
             num: newNum
           }, d => {
             if ( d.success ){
-              if ( this.selected === node ){
-                let menuTree = this.getRef('menuTree');
-                if (menuTree) {
-                  //menuTree.reload();
-                }
-              }
-              //node.parent.reload();
+              this.updateTreeMenu();
               node.reorder(oldNum, newNum, true);
               appui.success('Ordered');
             }
@@ -473,6 +474,7 @@
                 this.$nextTick(() => {
                   node.parent.reload();
                 })
+                this.updateTreeMenu();
                 appui.success(bbn._("Deleted"));
               }
               else{
@@ -506,14 +508,14 @@
                 });
               }
               else {
-                  tree.$once('dataloaded', () => {
-                    cfg = tree.addNode(cfg);
-                    this.$nextTick(() =>{
-                      let n = bbn.fn.getRow(tree.nodes, {idx: cfg.index});
-                      n.$set(n, 'isSelected', true);
-                    });
+                tree.$once('dataloaded', () => {
+                  cfg = tree.addNode(cfg);
+                  this.$nextTick(() =>{
+                    let n = bbn.fn.getRow(tree.nodes, {idx: cfg.index});
+                    n.$set(n, 'isSelected', true);
                   });
-                  node.isExpanded = true;
+                });
+                node.isExpanded = true;
               }
             })
           }
@@ -566,6 +568,7 @@
             if ( d.success ){
               this.selected = false;
               this.getRef('menuTree').move(node, dest, true);
+              this.updateTreeMenu();
               appui.success(bbn._('Moved'));
             }
             else {
@@ -585,6 +588,7 @@
           appui.success(this.selected.data.id ? bbn._('Edited') : bbn._('Inserted'));
           this.selected.parent.reload();
           this.selected = false;
+          this.updateTreeMenu();
         }
         else {
           appui.error();
