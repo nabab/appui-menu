@@ -12,7 +12,7 @@
                         :disabled="!currentID || (currentID === source.defaultMenu)"
                         title="<?=_('Make it default')?>"
                         :notext="true"
-                        icon="nf nf-fa-crown"
+                        icon="nf nf-mdi-crown"
             ></bbn-button>
             <bbn-dropdown v-if="source.menus && source.menus.length"
                           style="width:200px"
@@ -83,6 +83,12 @@
             <bbn-button @click="deleteMenu"
                         title="<?=_('Delete menu')?>"
                         icon="nf nf-fa-trash_o"
+                        :disabled="disabledAction"
+                        :notext="true"
+            ></bbn-button>
+            <bbn-button @click="exportMenu"
+                        title="<?=_('Export menu')?>"
+                        icon="nf nf-fae-file_export"
                         :disabled="disabledAction"
                         :notext="true"
             ></bbn-button>

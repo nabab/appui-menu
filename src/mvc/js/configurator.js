@@ -684,6 +684,65 @@
         a.text += ' &nbsp; <span class="bbn-grey">' +  "(" + a.code +  ")" + '</span>';
         a.selectable = a.icon === 'nf nf-fa-file';
         return a;
+      },
+      async exportMenu(){
+        let cp = this;
+        let res = [];
+        let tree = this.getRef('menuTree');
+        let p = async function(o, node) {
+          let tree = node.find('bbn-tree');
+          if (!node.isExpanded) {
+            await tree.updateData();
+            node.parent.currentData[node.source.index].expanded = true;
+          }
+          await new Promise((resolve, reject) => setTimeout(resolve, 500));
+          o.items = await fn(tree, []);
+          return new Promise((resolve, reject) => {
+            resolve(o);
+          })
+        };
+
+        let fn = async function(tree, r) {
+          let tmp;
+          for (let i = 0; i < tree.currentData.length; i++) {
+            let a = tree.currentData[i];
+            let node = tree.getNodeByIdx(i);
+            let o = {
+              text: node.data.text,
+              num: i+1
+            };
+            if (node.data.icon) {
+              o.icon = node.data.icon;
+            }
+            if (node.data.link) {
+              o.link = node.data.link;
+            }
+            if (a.numChildren) {
+              tmp = await p(o, node);
+            }
+            else {
+              tmp = o;
+            }
+            r.push(tmp);
+          }
+          return new Promise((resolve, reject) => {
+            resolve(r);
+          });
+        };
+        
+        let result = null;
+        if (tree) {
+          let result = await fn(tree, res);
+          cp.getPopup({
+            title: "Export",
+            content: '<div class="bbn-padded"><pre>' + JSON.stringify(result, null, 2) + '</pre></div>',
+            width: '100%',
+            height: '100%'
+          });
+        }
+        return new Promise((resolve, reject) => {
+          resolve(result);
+        });
       }
     },
     /**

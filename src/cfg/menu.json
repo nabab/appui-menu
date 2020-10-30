@@ -1,9 +1,13 @@
 {
   "text": "Menu",
+  "num": 14,
   "icon": "nf nf-mdi-menu",
-  "items": [{
-    "text": "Configurator",
-    "icon": "nf nf-fa-cogs",
-    "link": "configurator"
-  }]
+  "items": [
+    {
+      "text": "Configurator",
+      "num": 1,
+      "icon": "nf nf-fa-cogs",
+      "link": "configurator"
+    }
+  ]
 }
