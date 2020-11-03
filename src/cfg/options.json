@@ -6,10 +6,8 @@
     "icon": "nf nf-mdi-menu",
     "cfg": {
       "show_code": 1,
-      "show_value": 1,
       "show_alias": 1,
       "allow_children": 1,
-      "inheritance": "cascade",
       "sortable": 1,
       "notext": null,
       "noparent": null,
@@ -18,20 +16,10 @@
     "items": [
       {
         "num": 1,
-        "text": "Main menu",
+        "text": "Default menu",
         "code": "default",
         "icon": "nf nf-mdi-asterisk",
         "cfg": {
-          "show_value": 1,
-          "show_code": 1,
-          "allow_children": 1,
-          "inheritance": "cascade",
-          "sortable": 1,
-          "show_alias": 1,
-          "notext": null,
-          "noparent": null,
-          "i18n": "en",
-          "inherit_from": ["|*appui-menu*|","appui"],
           "frozen": 1
         }
       },
@@ -41,35 +29,15 @@
         "code": "shortcuts",
         "icon": "nf nf-mdi-link_variant",
         "cfg": {
-          "show_code": 1,
-          "show_value": 1,
-          "show_alias": 1,
-          "allow_children": 1,
-          "inheritance": "cascade",
-          "sortable": 1,
-          "notext": null,
-          "noparent": null,
-          "i18n": "en",
-          "inherit_from": ["|*appui-menu*|","appui"],
           "frozen": 1
         }
       },
       {
-        "num": 7,
+        "num": 3,
         "text": "Menus",
         "code": "menus",
         "icon": "nf nf-fa-th_list",
         "cfg": {
-          "show_code": 1,
-          "show_value": 1,
-          "show_alias": 1,
-          "allow_children": 1,
-          "inheritance": "cascade",
-          "sortable": 1,
-          "notext": null,
-          "noparent": null,
-          "i18n": "en",
-          "inherit_from": ["|*appui-menu*|","appui"],
           "frozen": 1
         }
       }

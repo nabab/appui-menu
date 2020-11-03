@@ -12,7 +12,7 @@ if (!empty($model->data['id_menu'])) {
   $menus       = new bbn\appui\menus();
   $res['data'] = $model->inc->pref->get_bits(
     $model->data['id_menu'],
-    $model->data['id'] ?? null
+    $model->data['id'] ?: null
   );
 
   if (\is_array($res['data']) && !empty($res['data'])) {
