@@ -537,7 +537,7 @@
        * @method openListIcons
        */
       openListIcons(){
-        appui.getRef('nav').activeContainer.getPopup().open({
+        appui.getRef('router').activeContainer.getPopup().open({
           width: '80%',
           height: '80%',
           title: bbn._('Select icons'),
