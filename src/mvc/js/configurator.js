@@ -5,7 +5,8 @@
         selected: false,
         currentID: this.source.menus && this.source.menus.length ? this.source.menus[0].id : '',
         root: appui.plugins['appui-menu'] + '/',
-        defaultIcon: 'nf nf-fa-cog'
+        defaultIcon: 'nf nf-fa-cog',
+        optionsPath: appui.plugins['appui-options'] + '/',
       }
     },
     computed: {

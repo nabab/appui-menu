@@ -1,7 +1,7 @@
 [
   {
-    "text": "Menus",
-    "code": "menus",
+    "text": "Menus and shortcut management",
+    "code": "menu",
     "id_parent": "appui",
     "icon": "nf nf-mdi-menu",
     "cfg": {

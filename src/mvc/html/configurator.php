@@ -170,7 +170,7 @@
               <label><?=_('Link')?></label>
               <div class="bbn-rel appui-menu-configurator-permissions">
                 <div class="bbn-overlay bbn-box bbn-spadded">
-                  <bbn-tree source="options/permissions"
+                  <bbn-tree :source="optionsPath + 'permissions'"
                             :map="mapPermissions"
                             uid="id"
                             :root="source.rootPermission"
