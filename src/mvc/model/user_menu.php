@@ -5,7 +5,7 @@
  **/
 
 /** @var $model \bbn\mvc\model*/
-$menu = new \bbn\appui\menus($model->inc->options,  $model->data['prepath'] ?? false);
+$menu = new \bbn\appui\menu($model->inc->options,  $model->data['prepath'] ?? false);
 
 if ( isset($model->inc->pref) ){
   return $menu->custom_tree(

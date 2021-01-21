@@ -1,7 +1,7 @@
 <?php
 $ctrl
   ->combo(_("Menu Configurator"), [
-    'rootPermission' => $ctrl->inc->options->from_code('page', 'permissions', 'appui'),
+    'rootPermission' => $ctrl->inc->options->from_code('page', 'permission', 'appui'),
     'defaultMenu' => $ctrl->inc->menu->get_default(),
     'menus' => $ctrl->inc->menu->get_menus('name', 'id')
   ])

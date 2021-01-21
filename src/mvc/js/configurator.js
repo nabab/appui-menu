@@ -6,7 +6,7 @@
         currentID: this.source.menus && this.source.menus.length ? this.source.menus[0].id : '',
         root: appui.plugins['appui-menu'] + '/',
         defaultIcon: 'nf nf-fa-cog',
-        optionsPath: appui.plugins['appui-options'] + '/',
+        optionsPath: appui.plugins['appui-option'] + '/',
       }
     },
     computed: {
@@ -663,12 +663,16 @@
             text: 'Go',
             icon: 'nf nf-fa-hand_o_right',
             action: (node) => {
-              this.post('options/permissions', {
-                id: node.data.id,
-                full: 1
-              }, (d) =>{
-                bbn.fn.link(d.data.path);
-              });
+              this.post(
+                appui.plugins['appui-option'] + '/permissions',
+                {
+                  id: node.data.id,
+                  full: 1
+                },
+                (d) =>{
+                  bbn.fn.link(d.data.path);
+                }
+              );
             }
           });
         }
