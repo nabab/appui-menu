@@ -10,8 +10,8 @@
 $res['success'] = false;
 
 if ( isset($model->data['id']) && isset($model->data['destination']) ){
-  //$ele = $model->inc->options->from_code($model->data['source']);
-  $ele1 = $model->inc->options->full_options( $model->data['source'] );
+  //$ele = $model->inc->options->fromCode($model->data['source']);
+  $ele1 = $model->inc->options->fullOptions( $model->data['source'] );
 
   die(var_dump($ele1));
 

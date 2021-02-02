@@ -1,14 +1,14 @@
 <?php
 
 /**
- * @var bbn\mvc\model $model
+ * @var bbn\Mvc\Model $model
  **/
-if ($model->has_data(['id_menu', 'id', 'num'], true)
+if ($model->hasData(['id_menu', 'id', 'num'], true)
     && ($menu = $model->inc->pref->get($model->data['id_menu']))
 ) {
   if (!empty($menu['public'])
-      && !$model->inc->user->is_admin()
-      && !$model->inc->user->is_dev()
+      && !$model->inc->user->isAdmin()
+      && !$model->inc->user->isDev()
   ) {
     return ['success' => false];
   }

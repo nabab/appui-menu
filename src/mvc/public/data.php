@@ -6,4 +6,4 @@
  * Time: 16:05
  */
 
-$ctrl->obj->data = $ctrl->get_model('./user_menu', $ctrl->post['data']);
+$ctrl->obj->data = $ctrl->getModel('./user_menu', $ctrl->post['data']);

@@ -8,8 +8,8 @@ if (
 ){
   if (
     !empty($to['public']) &&
-    !$model->inc->user->is_admin() &&
-    !$model->inc->user->is_dev()
+    !$model->inc->user->isAdmin() &&
+    !$model->inc->user->isDev()
   ){
     return ['success' => false];
   }

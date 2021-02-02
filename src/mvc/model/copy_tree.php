@@ -1,18 +1,18 @@
 <?php
-/** @var $model \bbn\mvc\model*/
+/** @var $model \bbn\Mvc\Model*/
 $res = [
   'success' => false,
   'data' => []
 ];
 
 if ( !empty($model->data['id']) ){
-  $tree = $model->inc->options->full_options($model->data['id']);
+  $tree = $model->inc->options->fullOptions($model->data['id']);
   if ( \is_array($tree) ){
     foreach ( $tree as $k => $d ){
       if( $d['id_alias'] === null ){
         $d['num'] = 0;
         $d['num_children'] = 0;
-        $items = $model->inc->options->full_options($d['id']);
+        $items = $model->inc->options->fullOptions($d['id']);
         if ( \is_array($items) ){
           foreach ( $items as $item ){
             if( $item['id_alias'] === null ){

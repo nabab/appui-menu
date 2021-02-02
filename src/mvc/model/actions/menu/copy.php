@@ -12,7 +12,7 @@ if (
 ){
   return [
     'success' => true,
-    'menus' => $model->inc->menu->get_menus('name', 'id'),
+    'menus' => $model->inc->menu->getMenus('name', 'id'),
     'id' => $id
   ];
 }

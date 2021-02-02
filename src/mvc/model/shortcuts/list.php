@@ -4,8 +4,8 @@
  *
  **/
 
-/** @var $model \bbn\mvc\model*/
-$menu = new \bbn\appui\menu();
+/** @var $model \bbn\Mvc\Model*/
+$menu = new \bbn\Appui\Menu();
 $shortcuts = $menu->shortcuts();
 if ( !empty($model->data['prepath']) ){
   $prepath = $model->data['prepath'];

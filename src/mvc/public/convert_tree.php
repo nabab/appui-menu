@@ -6,11 +6,11 @@
  * Time: 17.54
  */
 
-//$ctrl->obj = $ctrl->get_object_model($ctrl->post);
-$menus = $ctrl->inc->options->full_tree('ce4a81f1bff511e7b7d5000c29703ca2');
-die(\bbn\x::dump($menus));
-$user = \bbn\user::get_user();
-$id_alias = $ctrl->db->get_one("SELECT id_alias FROM bbn_options WHERE $ctrl->post['id']");
+//$ctrl->obj = $ctrl->getObjectModel($ctrl->post);
+$menus = $ctrl->inc->options->fullTree('ce4a81f1bff511e7b7d5000c29703ca2');
+die(\bbn\X::dump($menus));
+$user = \bbn\User::getUser();
+$id_alias = $ctrl->db->getOne("SELECT id_alias FROM bbn_options WHERE $ctrl->post['id']");
 die(var_dump($user));
 /*
 $insert = $ctrl->db->insert('bbn_users_options', [

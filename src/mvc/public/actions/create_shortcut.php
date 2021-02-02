@@ -10,5 +10,5 @@ if ( isset($ctrl->post) &&
   isset($ctrl->post['source']) &&
   isset($ctrl->post['destination'])
 ){
-  $ctrl->obj = $ctrl->get_object_model($ctrl->post);
+  $ctrl->obj = $ctrl->getObjectModel($ctrl->post);
 }

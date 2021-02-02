@@ -1,9 +1,9 @@
 <?php
 $ctrl
   ->combo(_("Menu Configurator"), [
-    'rootPermission' => $ctrl->inc->options->from_code('page', 'permission', 'appui'),
-    'defaultMenu' => $ctrl->inc->menu->get_default(),
-    'menus' => $ctrl->inc->menu->get_menus('name', 'id')
+    'rootPermission' => $ctrl->inc->options->fromCode('page', 'permission', 'appui'),
+    'defaultMenu' => $ctrl->inc->menu->getDefault(),
+    'menus' => $ctrl->inc->menu->getMenus('name', 'id')
   ])
-  ->set_color('#54aedb', '#FFF')
-  ->set_icon('nf nf-fa-bars');
+  ->setColor('#54aedb', '#FFF')
+  ->setIcon('nf nf-fa-bars');

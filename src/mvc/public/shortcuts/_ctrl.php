@@ -4,6 +4,6 @@
  *
  **/
 
-/** @var $ctrl \bbn\mvc\controller */
+/** @var $ctrl \bbn\Mvc\Controller */
 
-$ctrl->add_inc('menu', new \bbn\appui\menu($ctrl->inc->options));
+$ctrl->addInc('menu', new \bbn\Appui\Menu($ctrl->inc->options));

@@ -4,9 +4,9 @@
  *
  **/
 
-/** @var $this \bbn\mvc\model*/
+/** @var $this \bbn\Mvc\Model*/
 $res = ['success' => false];
 if ( isset($model->data['id']) ){
-  $res['success'] = $model->inc->menu->remove_shortcut($model->data['id'], $model->inc->pref);
+  $res['success'] = $model->inc->menu->removeShortcut($model->data['id'], $model->inc->pref);
 }
 return $res;

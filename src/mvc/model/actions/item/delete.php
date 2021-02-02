@@ -1,13 +1,13 @@
 <?php
 if (
   !empty($model->data['id']) &&
-  \bbn\str::is_uid($model->data['id']) &&
-  ($menu = $model->inc->pref->get($model->inc->menu->get_id_menu($model->data['id'])))
+  \bbn\Str::isUid($model->data['id']) &&
+  ($menu = $model->inc->pref->get($model->inc->menu->getIdMenu($model->data['id'])))
 ){
   if (
     !empty($menu['public']) &&
-    !$model->inc->user->is_admin() &&
-    !$model->inc->user->is_dev()
+    !$model->inc->user->isAdmin() &&
+    !$model->inc->user->isDev()
   ){
     return ['success' => false];
   }

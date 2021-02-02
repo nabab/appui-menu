@@ -1,7 +1,7 @@
 <?php
 if (
   !empty($model->data['id']) &&
-  ($bit = $model->inc->pref->get_bit($model->data['id'])) &&
+  ($bit = $model->inc->pref->getBit($model->data['id'])) &&
   !empty($model->data['to']) &&
   ($to = $model->inc->pref->get($model->data['to'])) &&
   !empty($model->data['id_user_option']) &&
@@ -10,12 +10,12 @@ if (
 ){
   if (
     !empty($to['public']) &&
-    !$model->inc->user->is_admin() &&
-    !$model->inc->user->is_dev()
+    !$model->inc->user->isAdmin() &&
+    !$model->inc->user->isDev()
   ){
     return ['success' => false];
   }
-  if ( $model->inc->menu->copy_to($model->data['id'], $model->data['to'], [
+  if ( $model->inc->menu->copyTo($model->data['id'], $model->data['to'], [
     'text' => $model->data['text'],
     'icon' => $model->data['icon'] ?: 'nf nf-fa-cogs'
   ]) ){

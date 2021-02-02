@@ -4,11 +4,11 @@
  *
  **/
 
-/** @var $model \bbn\mvc\model*/
-$menu = new \bbn\appui\menu($model->inc->options,  $model->data['prepath'] ?? false);
+/** @var $model \bbn\Mvc\Model*/
+$menu = new \bbn\Appui\Menu($model->inc->options,  $model->data['prepath'] ?? false);
 
 if ( isset($model->inc->pref) ){
-  return $menu->custom_tree(
+  return $menu->customTree(
     $model->data['menu'] ?: 'default',
     $model->data['prepath'] ?? false
   );

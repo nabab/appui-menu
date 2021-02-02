@@ -1,5 +1,5 @@
 <?php
-/** @var $model \bbn\mvc\model*/
+/** @var $model \bbn\Mvc\Model*/
 $res = [
   'success' => false,
   'data' => []
@@ -11,7 +11,7 @@ if (isset($model->data['data'])) {
 }
 
 if (!empty($model->data['id_menu'])) {
-  $menu        = new bbn\appui\menu();
+  $menu        = new bbn\Appui\Menu();
   $res['data'] = $menu->get($model->data['id_menu']);
   if (\is_array($res['data']) && !empty($res['data'])) {
     $res['success'] = true;

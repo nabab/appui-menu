@@ -1,7 +1,7 @@
 <?php
-/** @var $ctrl \bbn\mvc\controller */
-$ctrl->add_inc('menu', new \bbn\appui\menu());
+/** @var $ctrl \bbn\Mvc\Controller */
+$ctrl->addInc('menu', new \bbn\Appui\Menu());
 if ( !defined('APPUI_MENU_ROOT') ){
-  define('APPUI_MENU_ROOT', $ctrl->plugin_url('appui-menu').'/');
+  define('APPUI_MENU_ROOT', $ctrl->pluginUrl('appui-menu').'/');
 }
 $ctrl->data['root'] = APPUI_MENU_ROOT;
