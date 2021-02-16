@@ -1,1 +1,42 @@
-{"":{"Copied":"","Select icons":"","Created":"","Renamed":"","Copy menu":"","items fixed":"","Warning":"","Do you want to order in depth":"","Yes":"","No":"","Cancel":"","Delete":"","Transform to link":"","Fix order":"","New sub-section":"","New link":"","Transform to section":"","Copy to":"","New menu":"","Untitled Section":"","The main menu cannot be deleted":"","Are you sure you want to delete the menu":"","Deleted":"","Rename":"","Untitled Link":"","Are you sure you want to delete this item?":"","Moved":"","Edited":"","Inserted":""}}
+{
+    "components\/popup\/copy_to\/copy_to": {
+        "Copied": ""
+    },
+    "components\/popup\/menu\/copy\/copy": {
+        "Copied": ""
+    },
+    "mvc\/configurator": {
+        "Select icons": "",
+        "Copy menu": "",
+        "items fixed": "",
+        "Warning": "",
+        "Do you want to order in depth": "",
+        "Yes": "",
+        "No": "",
+        "Cancel": "",
+        "Delete": "",
+        "Transform to link": "",
+        "Fix order": "",
+        "New sub-section": "",
+        "New link": "",
+        "Transform to section": "",
+        "Copy to": "",
+        "New menu": "",
+        "Untitled Section": "",
+        "The main menu cannot be deleted": "",
+        "Are you sure you want to delete the menu": "",
+        "Deleted": "",
+        "Rename": "",
+        "Untitled Link": "",
+        "Are you sure you want to delete this item?": "",
+        "Moved": "",
+        "Edited": "",
+        "Inserted": ""
+    },
+    "components\/popup\/menu\/new\/new": {
+        "Created": ""
+    },
+    "components\/popup\/menu\/rename\/rename": {
+        "Renamed": ""
+    }
+}

@@ -1,1 +1,42 @@
-{"":{"Copied":"","Select icons":"S\u00e9lectionner une ic\u00f4ne","Created":"Cr\u00e9\u00e9","Renamed":"","Copy menu":"Copier le menu","items fixed":"","Warning":"","Do you want to order in depth":"","Yes":"Oui","No":"Non","Cancel":"Annuler","Delete":"Supprimer","Transform to link":"Transformer en lien","Fix order":"Arranger l'ordre","New sub-section":"","New link":"Nouveau lien","Transform to section":"Transformer en section","Copy to":"Copier vers","New menu":"","Untitled Section":"","The main menu cannot be deleted":"Le menu principal ne peut \u00eatre supprim\u00e9","Are you sure you want to delete the menu":"","Deleted":"Supprim\u00e9","Rename":"Renommer","Untitled Link":"","Are you sure you want to delete this item?":"\u00cates-vous s\u00fbr de vouloir supprimer cet \u00e9l\u00e9ment?","Moved":"","Edited":"Modifi\u00e9","Inserted":"Ajout\u00e9"}}
+{
+    "components\/popup\/copy_to\/copy_to": {
+        "Copied": ""
+    },
+    "components\/popup\/menu\/copy\/copy": {
+        "Copied": ""
+    },
+    "mvc\/configurator": {
+        "Select icons": "S\u00e9lectionner une ic\u00f4ne",
+        "Copy menu": "Copier le menu",
+        "items fixed": "",
+        "Warning": "",
+        "Do you want to order in depth": "",
+        "Yes": "Oui",
+        "No": "Non",
+        "Cancel": "Annuler",
+        "Delete": "Supprimer",
+        "Transform to link": "Transformer en lien",
+        "Fix order": "Arranger l'ordre",
+        "New sub-section": "",
+        "New link": "Nouveau lien",
+        "Transform to section": "Transformer en section",
+        "Copy to": "Copier vers",
+        "New menu": "",
+        "Untitled Section": "",
+        "The main menu cannot be deleted": "Le menu principal ne peut \u00eatre supprim\u00e9",
+        "Are you sure you want to delete the menu": "",
+        "Deleted": "Supprim\u00e9",
+        "Rename": "Renommer",
+        "Untitled Link": "",
+        "Are you sure you want to delete this item?": "\u00cates-vous s\u00fbr de vouloir supprimer cet \u00e9l\u00e9ment?",
+        "Moved": "",
+        "Edited": "Modifi\u00e9",
+        "Inserted": "Ajout\u00e9"
+    },
+    "components\/popup\/menu\/new\/new": {
+        "Created": "Cr\u00e9\u00e9"
+    },
+    "components\/popup\/menu\/rename\/rename": {
+        "Renamed": ""
+    }
+}

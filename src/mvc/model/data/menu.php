@@ -12,7 +12,7 @@ if (isset($model->data['data'])) {
 
 if (!empty($model->data['id_menu'])) {
   $menu        = new bbn\Appui\Menu();
-  $res['data'] = $menu->get($model->data['id_menu']);
+  $res['data'] = $menu->get($model->data['id_menu'], $model->hasData('id', true) ? $model->data['id'] : null);
   if (\is_array($res['data']) && !empty($res['data'])) {
     $res['success'] = true;
   }
