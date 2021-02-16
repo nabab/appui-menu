@@ -1,8 +1,9 @@
 {
-    "components\/popup\/copy_to\/copy_to": {
-        "Copied": ""
+    "components\/popup\/copy_to": {
+        "Copied": "",
+        "Select icons": ""
     },
-    "components\/popup\/menu\/copy\/copy": {
+    "components\/popup\/menu\/copy": {
         "Copied": ""
     },
     "mvc\/configurator": {
@@ -33,10 +34,10 @@
         "Edited": "",
         "Inserted": ""
     },
-    "components\/popup\/menu\/new\/new": {
+    "components\/popup\/menu\/new": {
         "Created": ""
     },
-    "components\/popup\/menu\/rename\/rename": {
+    "components\/popup\/menu\/rename": {
         "Renamed": ""
     }
 }
