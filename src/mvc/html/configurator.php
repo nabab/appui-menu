@@ -17,6 +17,8 @@
             <bbn-dropdown v-if="source.menus && source.menus.length"
                           style="width:200px"
                           ref="listMenus"
+                          :storage="true"
+                          storage-full-name="appui-menu-configurator-picker"
                           :source="source.menus"
                           v-model="currentID"
                           source-text="name"
@@ -177,9 +179,7 @@
                             :root="source.rootPermission"
                             @select="selectPermission"
                             ref="permissionsTree"
-                            :path="selected.data.path"
                             :menu="getPermissionsContext"
-                            @pathChange="permissionsTreeOpenPath"
                   ></bbn-tree>
                 </div>
               </div>

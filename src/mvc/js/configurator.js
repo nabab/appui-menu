@@ -327,7 +327,9 @@
        * @fires deleteElement
        */
       deleteMenu(){
+        bbn.fn.log("currentID ??");
         if ( this.currentID ){
+          bbn.fn.log("currentID OK");
           if ( this.isCurrentDefault ){
             appui.error(bbn._("The main menu cannot be deleted"));
             return;
@@ -626,6 +628,7 @@
        * @param {Object} node
        */
       selectPermission(node){
+        bbn.fn.log("PERMI??", node);
         this.$set(this.selected.data, "path", node.getPath());
         this.$set(this.selected.data, "id_option", node.data.id);
       },
@@ -774,11 +777,6 @@
           this.isCurrentIdChanging = false;
         }, 250);
         this.selected = false;
-        this.$nextTick(() => {
-          if ( val && (val !== old) ){
-            this.getRef('menuTree').reload();
-          }
-        })
       }
     }
   }
