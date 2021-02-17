@@ -99,6 +99,7 @@
         <div class="bbn-overlay" v-if="currentID">
           <bbn-tree :source="root + 'data/menu'"
                     :map="mapMenu"
+                    v-if="!isCurrentIdChanging"
                     :data="{id_menu: currentID}"
                     uid="id"
                     :sortable="true"

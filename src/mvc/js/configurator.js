@@ -7,6 +7,7 @@
         root: appui.plugins['appui-menu'] + '/',
         defaultIcon: 'nf nf-fa-cog',
         optionsPath: appui.plugins['appui-option'] + '/',
+        isCurrentIdChanging: false
       }
     },
     computed: {
@@ -15,7 +16,7 @@
       },
       currentMenu(){
         if ( this.source.menus && this.currentID ){
-          return bbn.fn.getRow(this.source.menus, {id: this.currentID}) || false;
+          return bbn.fn.getRow(this.source.menus, {id: this.currentID});
         }
         return false;
       },
@@ -764,7 +765,14 @@
       /**
        * @watch currentID
        */
-      'currentID'(val, old){
+      currentID(val, old){
+        if (this._currentIdChanger) {
+          clearTimeout(this._currentIdChanger);
+        }
+        this.isCurrentIdChanging = true;
+        this._currentIdChanger = setTimeout(() => {
+          this.isCurrentIdChanging = false;
+        }, 250);
         this.selected = false;
         this.$nextTick(() => {
           if ( val && (val !== old) ){
