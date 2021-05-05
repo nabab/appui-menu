@@ -7,7 +7,8 @@
         root: appui.plugins['appui-menu'] + '/',
         defaultIcon: 'nf nf-fa-cog',
         optionsPath: appui.plugins['appui-option'] + '/',
-        isCurrentIdChanging: false
+        isCurrentIdChanging: false,
+        editMode: false
       }
     },
     computed: {
@@ -185,7 +186,7 @@
        *
        * @method contextMenu
        * @fires deleteItem
-       * @fires addTempNode
+       * @fires iu
        * @fires copyTo
        */
       contextMenu(node){
@@ -396,128 +397,19 @@
        * @method createLink
        * @fires addTempNode
        */
-      createLink(node){
-        this.getPopup({
-          width: 500,
-          height: 500,
-          component: {
-            template: `
-<div class="bbn-overlay">
-  <bbn-multipart :source="data"
-                 @success="success">
-	  <bbn-container url="1">
-      <div class="bbn-overlay bbn-middle">
-        <div class="bbn-block">
-          <div class="bbn-block bbn-vmiddle"
-               style="display: block">
-            <h4 v-text="_('Title')"/>
-            <bbn-input v-model="data.title"
-                       :required="true"/>
-          </div>
-        </div>
-      </div>
-    </bbn-container>
-	  <bbn-container url="2">
-      <div class="bbn-overlay bbn-middle">
-        <div class="bbn-block">
-          <div class="bbn-block bbn-vmiddle"
-               style="display: block">
-            <h4 v-text="_('Icon')"/>
-            <div class="bbn-block bbn-nowrap">
-              <bbn-input v-model="data.icon"
-                         :readonly="true"/>
-              <i v-if="data.icon"
-                 :class="[data.icon, 'bbn-hsmargin', 'bbn-box', 'bbn-xspadded', 'bbn-m']"/>
-              <bbn-button @click="cf.openListIcons"
-                          icon="nf nf-oct-search"
-                          :text="_('Icons')"/>
-            </div>
-          </div>
-        </div>
-      </div>
-    </bbn-container>
-	  <bbn-container url="3">
-      <div class="bbn-overlay bbn-middle">
-        <div class="bbn-block">
-          <div class="bbn-block bbn-vmiddle"
-               style="display: block">
-            <h4 v-text="_('Location')"/>
-            <bbn-dropdown v-model="data.location"
-            							:source="cf.source.sources"
-                          source-value="rootAccess"
-                          :required="true"/>
-          </div>
-        </div>
-      </div>
-    </bbn-container>
-	  <bbn-container url="4">
-      <div class="bbn-overlay" v-if="data.location">
-        <bbn-tree :source="root + 'tree'"
-                  uid="id"
-                  :data="{mode: 'access'}"
-                  :root="data.location"
-                  :map="treeMapper"
-                  @select="permissionSelect"
-                  ref="tree"
-                  class="bbn-permissions-list"/>
-      </div>
-    </bbn-container>
-  </bbn-multipart>
-</div>`,
-            data(){
-              return {
-                root: appui.plugins['appui-menu'] + '/',
-                cf: null,
-                data: {
-                  title: '',
-                  icon: '',
-                  location: '',
-                  link: '',
-                  argument: ''
-                }
-              }
-            },
-            methods: {
-              permissionSelect(){
-                bbn.fn.log('permissionSelect', arguments)
-              },
-              success(){
-                bbn.fn.log("SUCCESS")
-              },
-              /**
-               * Open popup in form right which contains the icons to choose from
-               *
-               * @method openListIcons
-               */
-              openListIcons(){
-                cf.getPopup({
-                  width: '80%',
-                  height: '80%',
-                  title: bbn._('Select icons'),
-                  component: 'appui-core-popup-iconpicker',
-                  source: {
-                    obj: this.data,
-                    field: 'icon'
-                  }
-                });
-              },
-            },
-            beforeMount(){
-              this.cf = this.closest('bbn-container').getComponent()
-            }
-          }
-        })
-        /*
-        this.addTempNode({
-          text: bbn._('Untitled Link'),
-          id_parent: bbn.fn.isVue(node) && node.data ? node.data.id : null,
-          id_option: '',
-          id_user_option: this.currentMenu.id,
-          icon: this.defaultIcon,
-          num: this.getNextNum(bbn.fn.isVue(node) ? node.parent : false),
-          numChildren: 0
-        }, bbn.fn.isVue(node) ? node : false);
-        */
+      editLink(node, src){
+        if (!node) {
+          this.addTempNode({
+            text: bbn._('Untitled Link'),
+            id_parent: bbn.fn.isVue(node) && node.data ? node.data.id : null,
+            id_option: '',
+            id_user_option: this.currentMenu.id,
+            icon: this.defaultIcon,
+            num: this.getNextNum(bbn.fn.isVue(node) ? node.parent : false),
+            numChildren: 0
+          }, bbn.fn.isVue(node) ? node : false);
+        }
+        this.editMode = 'link';
       },
       /**
        * Copy the current menu and assign it to the root of another selected menu this is operated by the top-bar button "Copy menu to"
