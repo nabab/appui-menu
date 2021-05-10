@@ -174,7 +174,15 @@
 
                   <template v-if="selected.data.id_option !== null">
                     <label class="bbn-b"><?=_('Link')?></label>
-                    <div class="bbn-rel appui-menu-configurator-permissions"/>
+                    <div class="bbn-flex-height appui-menu-configurator-permissions">
+                       <div class="bbn-rel">
+                        <appui-option-input-location v-model="currentLocation"/>
+                       </div>
+                       <div class="bbn-flex-fill">
+                        <appui-option-input-access :root="currentLocation"
+                                                   v-model="selected.data.id_option"/>
+                       </div>
+                    </div>
                     <label><?=_('Argument')?></label>
                     <bbn-input v-model="selected.data.argument"/>
                   </template>
@@ -189,12 +197,6 @@
           </div>
         </bbn-pane>
       </bbn-splitter>
-      <bbn-floater v-if="editMode === 'link'"
-                   :width="500"
-                   :height="500"
-                   title="<?=_("Link editor")?>"
-                   component="appui-menu-popup-link"/>
-
     </div>
   </div>
 </div>
