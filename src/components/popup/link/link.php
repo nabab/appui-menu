@@ -2,5 +2,6 @@
 
 <div class="bbn-overlay">
   <bbn-multipart :source="items"
-                 @success="success"/>
+                 @success="success"
+                 :closable="true"/>
 </div>

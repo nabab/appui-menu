@@ -20,10 +20,11 @@
       }
 
       return {
-        items: [
+        items: [[
           {
             name: "title",
-            title: bbn._("Title")
+            title: bbn._("Title"),
+            required: true
           }, {
             name: "icon",
             title: bbn._("Icon"),
@@ -44,13 +45,14 @@
               }
             },
             centered: false,
-            required: true
+            required: true,
+            style: 'height: 100%; min-height: 15em'
           }, {
             name: "argument",
             title: bbn._("Argument"),
             required: false
           }
-        ],
+        ]],
         root: appui.plugins['appui-menu'] + '/',
         cf: null,
         data: data,

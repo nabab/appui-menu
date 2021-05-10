@@ -8,7 +8,7 @@
         defaultIcon: 'nf nf-fa-cog',
         optionsPath: appui.plugins['appui-option'] + '/',
         isCurrentIdChanging: false,
-        editMode: false
+        currentLocation: ''
       }
     },
     computed: {
@@ -237,7 +237,7 @@
               text: bbn._('New link'),
               action: n => {
                 if ( bbn.fn.isNull(n.data.id_option) ){
-                  this.createLink(n);
+                  this.editLink(n);
                 }
               }
             });
@@ -398,18 +398,15 @@
        * @fires addTempNode
        */
       editLink(node, src){
-        if (!node) {
-          this.addTempNode({
-            text: bbn._('Untitled Link'),
-            id_parent: bbn.fn.isVue(node) && node.data ? node.data.id : null,
-            id_option: '',
-            id_user_option: this.currentMenu.id,
-            icon: this.defaultIcon,
-            num: this.getNextNum(bbn.fn.isVue(node) ? node.parent : false),
-            numChildren: 0
-          }, bbn.fn.isVue(node) ? node : false);
-        }
-        this.editMode = 'link';
+        this.addTempNode({
+          text: bbn._('Untitled Link'),
+          id_parent: bbn.fn.isVue(node) && node.data ? node.data.id : null,
+          id_option: '',
+          id_user_option: this.currentMenu.id,
+          icon: this.defaultIcon,
+          num: this.getNextNum(bbn.fn.isVue(node) ? node.parent : false),
+          numChildren: 0
+        }, bbn.fn.isVue(node) ? node : false);
       },
       /**
        * Copy the current menu and assign it to the root of another selected menu this is operated by the top-bar button "Copy menu to"
