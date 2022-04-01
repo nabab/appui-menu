@@ -125,7 +125,7 @@
           <div class="bbn-flex-height">
             <div class="bbn-header bbn-xspadded bbn-middle appui-menu-configurator-header">
               <div class="bbn-flex-width">
-                <div>
+                <div class="bbn-upper bbn-vmiddle">
                   <strong><?=_('MENU EDITOR')?></strong>
                 </div>
                 <div class="bbn-flex-fill bbn-r">
@@ -147,7 +147,7 @@
                         @cancel="formCancel"
                         :scrollable="true"
               >
-                <div class="bbn-padded bbn-grid-fields bbn-overlay" :style="formStyle">
+                <div class="bbn-padded bbn-grid-fields">
                   <label class="bbn-b"
                          v-if="selected.data.id">
                     <?=_('Order')?>
@@ -174,14 +174,18 @@
 
                   <template v-if="selected.data.id_option !== null">
                     <label class="bbn-b"><?=_('Link')?></label>
-                    <div class="bbn-flex-height appui-menu-configurator-permissions">
-                       <div class="bbn-rel">
-                        <appui-option-input-location v-model="currentLocation"/>
-                       </div>
-                       <div class="bbn-flex-fill">
+                    <div class="bbn-iflex-height appui-menu-configurator-permissions">
+                      <div class="bbn-rel">
+                        <appui-option-input-location v-model="currentLocation"
+                                                     @code="c => currentLocationCode = c"/>
+                      </div>
+                      <div class="bbn-flex-fill">
                         <appui-option-input-access :root="currentLocation"
-                                                   v-model="selected.data.id_option"/>
-                       </div>
+                                                   :root-code="currentLocationCode"
+                                                   v-model="selected.data.id_option"
+                                                   :permission="selected.data.link"
+                                                   :path="selected.data.path"/>
+                      </div>
                     </div>
                     <label><?=_('Argument')?></label>
                     <bbn-input v-model="selected.data.argument"/>
