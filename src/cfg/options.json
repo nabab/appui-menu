@@ -1,62 +1,33 @@
 {
-  "text": "Menus and shortcut management",
-  "code": "menu",
-  "id_parent": "appui",
-  "icon": "nf nf-mdi-menu",
   "cfg": {
     "show_code": 1,
-    "show_alias": 1,
-    "allow_children": 1,
-    "sortable": 1,
-    "notext": null,
-    "noparent": null,
-    "i18n": "en"
+    "i18n": "en",
+    "show_icon": 1
   },
+  "id_parent": ["appui"],
+  "text": "Menus",
+  "code": "menu",
+  "id_alias": ["plugin", "list", "templates", "option", "appui"],
+  "icon": "nf nf-mdi-menu",
+  "plugin": true,
   "items": [
     {
       "num": 1,
       "text": "Default menu",
       "code": "default",
-      "icon": "nf nf-mdi-asterisk",
-      "cfg": {
-        "frozen": 1
-      }
+      "icon": "nf nf-fa-bars"
     },
     {
       "num": 2,
       "text": "Shortcuts",
       "code": "shortcuts",
-      "icon": "nf nf-mdi-link_variant",
-      "cfg": {
-        "frozen": 1
-      }
+      "icon": "nf nf-oct-file_symlink_file"
     },
     {
       "num": 3,
       "text": "Menus",
       "code": "menus",
-      "icon": "nf nf-fa-th_list",
-      "cfg": {
-        "frozen": 1
-      }
-    }, {
-      "text": "Permissions",
-      "code": "permissions",
-      "cfg": {
-        "allow_children": 1
-      },
-      "items": [
-        {
-          "text": "Access",
-          "code": "access"
-        }, {
-          "text": "Options",
-          "code": "options"
-        }, {
-          "text": "Plugins",
-          "code": "plugins"
-        }
-      ]
+      "icon": "nf nf-oct-tasklist"
     }
   ]
 }
