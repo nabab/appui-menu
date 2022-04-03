@@ -8,7 +8,8 @@
         defaultIcon: 'nf nf-fa-cog',
         optionsPath: appui.plugins['appui-option'] + '/',
         isCurrentIdChanging: false,
-        currentLocation: ''
+        currentLocation: '',
+        currentLocationCode: ''
       }
     },
     computed: {
@@ -37,21 +38,6 @@
        */
       showArrows(){
         return this.source.menus && (this.source.menus.length > 1);
-      },
-      formStyle(){
-        let r = {
-          'grid-template-rows': 'max-content max-content'
-        };
-        if ( this.selected ){
-          if ( this.selected.data.id ){
-            r['grid-template-rows'] += ' max-content';
-          }
-          r['grid-template-rows'] += ' auto';
-          if ( this.selected.data.id_option ){
-            r['grid-template-rows'] += ' max-content';
-          }
-        }
-        return r;
       }
     },
     methods: {
@@ -599,6 +585,7 @@
        */
       selectItem(node){
         this.selected = node;
+        this.currentLocation = this.selected.data.rootAccess;
         //this.selected.parentIsRoot =  node.parent.level === 0;
         this.$nextTick(() => {
           let form = this.getRef('form');
