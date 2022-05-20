@@ -21,7 +21,7 @@
       },
       // Taken from permissions
       openListIcons(){
-        appui.getRef('router').activeContainer.getPopup().open({
+        this.closest('bbn-container').getPopup({
           width: '80%',
           height: '80%',
           title: bbn._('Select icons'),
