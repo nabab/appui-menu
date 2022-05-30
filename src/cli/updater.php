@@ -8,5 +8,5 @@ $appui = new \bbn\Appui();
 $pref = new \bbn\User\Preferences($appui->getDb());
 $perm = new \bbn\User\Permissions();
 if ($res = $appui->updateMenus()) {
-  echo $res . _('menus changed');
+  echo $res . ' ' . _('menus changed') . PHP_EOL;
 }
