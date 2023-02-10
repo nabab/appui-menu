@@ -3,263 +3,263 @@ msgstr ""
 "Project-Id-Version: 1\n"
 "Report-Msgid-Bugs-To: info@bbn.so\n"
 "last-Translator: BBN Solutions <support@bbn.solutions>\n"
-"Language-Team: IT <IT@li.org>\n"
+"Language-Team: ES <ES@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-02-09 12:42+0100\n"
-"POT-Revision-Date: 2023-02-09 12:42+0100\n"
-"Language: it\n"
-"X-Domain: appui-menu47\n"
+"POT-Creation-Date: 2023-02-10 18:49+0100\n"
+"POT-Revision-Date: 2023-02-10 18:49+0100\n"
+"Language: es\n"
+"X-Domain: appui-menu48\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/cli/updater.php
 msgid "menus changed"
-msgstr "Menù cambiati"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/copy_to/copy_to.js
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/menu/copy/copy.js
 msgid "Copied"
-msgstr "Copiato"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/copy_to/copy_to.js
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/link copy/link.js
 msgid "Select icons"
-msgstr "Seleziona icone"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/copy_to/copy_to.php
 msgid "Menu"
-msgstr "menù"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/copy_to/copy_to.php
 msgid "Choose"
-msgstr "Scegli"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/copy_to/copy_to.php
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/link/link.js
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/link copy/link.php
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "Title"
-msgstr "Titolo"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/copy_to/copy_to.php
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/link/link.js
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/link copy/link.php
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "Icon"
-msgstr "Icona"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/copy_to/copy_to.php
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/link copy/link.php
 msgid "Icons"
-msgstr "Icone"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/link/link.js
 msgid "Location"
-msgstr "Posizione"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/link/link.js
 msgid "Path"
-msgstr "Percorso"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/link/link.js
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "Argument"
-msgstr "Argomento"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/menu/new/new.js
 msgid "Created"
-msgstr "Creata"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/menu/new/new.php
 msgid "Insert the title"
-msgstr "Inserisci il titolo"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/components/popup/menu/rename/rename.js
 msgid "Renamed"
-msgstr "Rinominato"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "Make it default"
-msgstr "Rendi predefinito"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "Back menu"
-msgstr "Torna al menù"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "Next menu"
-msgstr "Menù seguente"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "Create menu"
-msgstr "Crea menù"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "Create section"
-msgstr "Crea sezione"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "Create link"
-msgstr "Crea collegamento"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "Rename menu"
-msgstr "Rinomina menù"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Copy menu"
-msgstr "Copia menù"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "Copy menu To"
-msgstr "Copia menù a"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "Fix menu order"
-msgstr "Ripara ordine menù"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "Delete menu"
-msgstr "Elimina menù"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "Export menu"
-msgstr "Esporta menù"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "Empty"
-msgstr "Vuoto"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "menu"
-msgstr "menù"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "MENU EDITOR"
-msgstr "Editore del menù"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "Order"
-msgstr "Ordine"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "Link"
-msgstr "Collegamento"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "Select or create"
-msgstr "Seleziona o crea"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "a menu element"
-msgstr "un elemento del menù"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "to see the form"
-msgstr "per vedere il formulario"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/html/configurator.php
 msgid "HERE"
-msgstr "QUI"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "items fixed"
-msgstr "elementi riparati"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Warning"
-msgstr "Attenzione"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Do you want to order in depth"
-msgstr "Vuoi ordinare in profondità"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Yes"
-msgstr "Si"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "No"
-msgstr "No"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Cancel"
-msgstr "Annulla"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Delete"
-msgstr "Elimina"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Transform to link"
-msgstr "Trasforma in collegamento"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Fix order"
-msgstr "Riparare ordine"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "New sub-section"
-msgstr "Nuova sottosezione"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "New link"
-msgstr "Nuovo collegamento"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Transform to section"
-msgstr "Trasforma in sezione"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Copy to"
-msgstr "Copia a"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "New menu"
-msgstr "Nuovo menù"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Untitled Section"
-msgstr "Sezione senza titolo"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "The main menu cannot be deleted"
-msgstr "Il menù principale non può essere eliminato"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Are you sure you want to delete the menu"
-msgstr "Sei sicuro di voler eliminare il menù"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Deleted"
-msgstr "Eliminato"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Rename"
-msgstr "Rinomina"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Untitled Link"
-msgstr "Collegamento senza titolo"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Are you sure you want to delete this item?"
-msgstr "Sei sicuro di voler eliminare questo elemento?"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Moved"
-msgstr "Spostato"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Edited"
-msgstr "Modificato"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/js/configurator.js
 msgid "Inserted"
-msgstr "Inserito"
+msgstr ""
 
 #: /home/okrim/_COMPOSER/dev/vendor/bbn/appui-menu/src/mvc/public/configurator.php
 msgid "Menu Configurator"
-msgstr "Configuratore del menù"
+msgstr ""
