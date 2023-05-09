@@ -7,9 +7,9 @@
         'bbn-right-sspace': isMobile
       }">
   <div tabindex="0"
-        @keydown.enter="toggleMenu"
-        @keydown.space="toggleMenu"
-        @click.prevent.stop="toggleMenu"
+        @keydown.enter="toggle"
+        @keydown.space="toggle"
+        @click.prevent.stop="toggle"
         class="bbn-c bbn-p bbn-hpadded">
     <i ref="icon"
         class="nf nf-mdi-menu bbn-xxxl"/>
