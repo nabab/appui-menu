@@ -119,7 +119,8 @@
           </div>
         </bbn-pane>
         <bbn-pane>
-          <div class="bbn-flex-height">
+          <div class="bbn-flex-height"
+               v-if="isReady">
             <div class="bbn-header bbn-xspadded bbn-middle appui-menu-configurator-header">
               <div class="bbn-flex-width">
                 <div class="bbn-upper bbn-vmiddle">
@@ -191,6 +192,7 @@
               </div>
             </div>
           </div>
+          <bbn-loader v-else/>
         </bbn-pane>
       </bbn-splitter>
     </div>
