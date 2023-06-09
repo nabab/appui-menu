@@ -96,9 +96,8 @@
       <bbn-splitter class="appui-menu-configurator bbn-100"
                     orientation="horizontal"
                     :resizable="true"
-                    :resizer-size="10"
-      >
-        <bbn-pane>
+                    :resizer-size="10">
+        <bbn-pane size="50%">
           <div class="bbn-overlay" v-if="currentID">
             <bbn-tree :source="root + 'data/menu'"
                       :map="mapMenu"
@@ -112,12 +111,10 @@
                       ref="menuTree"
                       :draggable="true"
                       @move="moveNode"
-                      @beforeOrder="order"
-            ></bbn-tree>
+                      @beforeOrder="order"/>
           </div>
           <div v-if="!currentMenu.hasItems"
-               class="bbn-overlay bbn-middle bbn-c bbn-background"
-          >
+               class="bbn-overlay bbn-middle bbn-c bbn-background">
             <h1 class="bbn-c"><?=_("Empty")?><br><?=_("menu")?></h1>
           </div>
         </bbn-pane>
@@ -133,8 +130,7 @@
                               title="<?=_('Delete menu')?>"
                               icon="nf nf-fa-trash_o"
                               v-if="selected"
-                              :notext="true"
-                  ></bbn-button>
+                              :notext="true"/>
                 </div>
               </div>
             </div>
@@ -145,8 +141,7 @@
                         :action="root + 'actions/item/' + (selected.data.id ? 'edit' : 'insert')"
                         @success="formSuccess"
                         @cancel="formCancel"
-                        :scrollable="true"
-              >
+                        :scrollable="true">
                 <div class="bbn-padded bbn-grid-fields">
                   <label class="bbn-b"
                          v-if="selected.data.id">
@@ -160,14 +155,12 @@
                     <i @click="moveDown"
                        :class="['nf', 'nf-fa-caret_down', 'bbn-p', 'bbn-large', {
                          'bbn-disabled-text': selected.source.num === selected.parent.currentData.length
-                       }]"
-                    ></i>
+                       }]"/>
                   </div>
 
                   <label class="bbn-b"><?=_('Title')?></label>
                   <bbn-input v-model="selected.data.text"
-                             :required="true">
-                  </bbn-input>
+                             :required="true"/>
 
                   <label class="bbn-b"><?=_('Icon')?></label>
                   <appui-core-input-icon v-model="selected.data.icon"/>
@@ -193,9 +186,8 @@
                 </div>
               </bbn-form>
               <div v-else
-                   class="bbn-overlay bbn-middle bbn-c"
-              >
-                <h1 v-html="'<?=_("Select or create")?>'+'<br>'+'<?=_("a menu element")?>'+'<br>'+'<?=_("to see the form")?>'+'<br>'+'<?=_("HERE")?>'" style="line-height: 1.4em"></h1>
+                   class="bbn-overlay bbn-middle bbn-c">
+                <h1 v-html="'<?=_("Select or create")?>'+'<br>'+'<?=_("a menu element")?>'+'<br>'+'<?=_("to see the form")?>'+'<br>'+'<?=_("HERE")?>'" style="line-height: 1.4em"/>
               </div>
             </div>
           </div>
