@@ -10,7 +10,7 @@
         isCurrentIdChanging: false,
         currentLocation: '',
         currentLocationCode: '',
-        isReady: false
+        isReady: true
       }
     },
     computed: {

@@ -192,7 +192,9 @@
               </div>
             </div>
           </div>
-          <bbn-loader v-else/>
+          <div class="bbn-overlay bbn-middle" v-else>
+            <h3><?= _("Building UI") ?></h3>
+          </div>
         </bbn-pane>
       </bbn-splitter>
     </div>
