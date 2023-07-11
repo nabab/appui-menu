@@ -9,8 +9,7 @@
         optionsPath: appui.plugins['appui-option'] + '/',
         isCurrentIdChanging: false,
         currentLocation: '',
-        currentLocationCode: '',
-        isReady: true
+        currentLocationCode: ''
       }
     },
     computed: {
@@ -757,14 +756,6 @@
           this.isCurrentIdChanging = false;
         }, 250);
         this.selected = false;
-      },
-      selected(val, old) {
-        if (val !== false) {
-          this.isReady = false;
-          setTimeout(() => {
-            this.isReady = true;
-          }, 100);
-        }
       }
     }
   }

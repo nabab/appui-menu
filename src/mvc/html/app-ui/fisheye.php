@@ -1,0 +1,9 @@
+<bbn-fisheye class="bbn-appui-fisheye bbn-block bbn-large"
+             :removable="true"
+             @remove="removeShortcut"
+             ref="fisheye"
+             :source="shortcuts"
+             :fixed-left="leftShortcuts || []"
+             :fixed-right="rightShortcuts || []"
+             :mobile="isMobile"
+             :z-index="6"/>

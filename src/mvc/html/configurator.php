@@ -24,14 +24,14 @@
                       title="<?=_('Back menu')?>"
                       :notext="true"
                       icon="nf nf-fa-arrow_left"
-                      :disabled="!this.source.menus.length || (currentIdx < 1)"
+                      :disabled="!source.menus.length || (currentIdx < 1)"
                       ></bbn-button>
           <bbn-button v-if="showArrows"
                       @click="nextMenu"
                       title="<?=_('Next menu')?>"
                       :notext="true"
                       icon="nf nf-fa-arrow_right"
-                      :disabled="!this.source.menus.length || (currentIdx == (this.source.menus.length - 1))"
+                      :disabled="!source.menus.length || (currentIdx == (source.menus.length - 1))"
                       ></bbn-button>
         </div>
         <div class="bbn-flex-fill bbn-r">
@@ -96,8 +96,9 @@
       <bbn-splitter class="appui-menu-configurator bbn-100"
                     orientation="horizontal"
                     :resizable="true"
-                    :resizer-size="10">
-        <bbn-pane size="50%">
+                    :resizer-size="10"
+      >
+        <bbn-pane>
           <div class="bbn-overlay" v-if="currentID">
             <bbn-tree :source="root + 'data/menu'"
                       :map="mapMenu"
@@ -111,16 +112,17 @@
                       ref="menuTree"
                       :draggable="true"
                       @move="moveNode"
-                      @beforeOrder="order"/>
+                      @beforeOrder="order"
+            ></bbn-tree>
           </div>
           <div v-if="!currentMenu.hasItems"
-               class="bbn-overlay bbn-middle bbn-c bbn-background">
+               class="bbn-overlay bbn-middle bbn-c bbn-background"
+          >
             <h1 class="bbn-c"><?=_("Empty")?><br><?=_("menu")?></h1>
           </div>
         </bbn-pane>
         <bbn-pane>
-          <div class="bbn-flex-height"
-               v-if="isReady">
+          <div class="bbn-flex-height">
             <div class="bbn-header bbn-xspadded bbn-middle appui-menu-configurator-header">
               <div class="bbn-flex-width">
                 <div class="bbn-upper bbn-vmiddle">
@@ -131,7 +133,8 @@
                               title="<?=_('Delete menu')?>"
                               icon="nf nf-fa-trash_o"
                               v-if="selected"
-                              :notext="true"/>
+                              :notext="true"
+                  ></bbn-button>
                 </div>
               </div>
             </div>
@@ -142,7 +145,8 @@
                         :action="root + 'actions/item/' + (selected.data.id ? 'edit' : 'insert')"
                         @success="formSuccess"
                         @cancel="formCancel"
-                        :scrollable="true">
+                        :scrollable="true"
+              >
                 <div class="bbn-padded bbn-grid-fields">
                   <label class="bbn-b"
                          v-if="selected.data.id">
@@ -156,12 +160,14 @@
                     <i @click="moveDown"
                        :class="['nf', 'nf-fa-caret_down', 'bbn-p', 'bbn-large', {
                          'bbn-disabled-text': selected.source.num === selected.parent.currentData.length
-                       }]"/>
+                       }]"
+                    ></i>
                   </div>
 
                   <label class="bbn-b"><?=_('Title')?></label>
                   <bbn-input v-model="selected.data.text"
-                             :required="true"/>
+                             :required="true">
+                  </bbn-input>
 
                   <label class="bbn-b"><?=_('Icon')?></label>
                   <appui-core-input-icon v-model="selected.data.icon"/>
@@ -187,13 +193,11 @@
                 </div>
               </bbn-form>
               <div v-else
-                   class="bbn-overlay bbn-middle bbn-c">
-                <h1 v-html="'<?=_("Select or create")?>'+'<br>'+'<?=_("a menu element")?>'+'<br>'+'<?=_("to see the form")?>'+'<br>'+'<?=_("HERE")?>'" style="line-height: 1.4em"/>
+                   class="bbn-overlay bbn-middle bbn-c"
+              >
+                <h1 v-html="'<?=_("Select or create")?>'+'<br>'+'<?=_("a menu element")?>'+'<br>'+'<?=_("to see the form")?>'+'<br>'+'<?=_("HERE")?>'" style="line-height: 1.4em"></h1>
               </div>
             </div>
-          </div>
-          <div class="bbn-overlay bbn-middle" v-else>
-            <h3><?= _("Building UI") ?></h3>
           </div>
         </bbn-pane>
       </bbn-splitter>
