@@ -10,7 +10,7 @@
         <div class="bbn-block">
           <div class="bbn-block bbn-vmiddle"
                style="display: block">
-            <h4><?=_('Title')?></h4>
+            <h4><?= _('Title') ?></h4>
             <bbn-input v-model="data.title"
                        :required="true"/>
           </div>
@@ -23,7 +23,7 @@
         <div class="bbn-block">
           <div class="bbn-block bbn-vmiddle"
                style="display: block">
-            <h4><?=_('Icon')?></h4>
+            <h4><?= _('Icon') ?></h4>
             <div class="bbn-block bbn-nowrap">
               <bbn-input v-model="data.icon"
                          :readonly="true"/>
@@ -31,7 +31,7 @@
                  :class="[data.icon, 'bbn-hsmargin', 'bbn-box', 'bbn-xspadded', 'bbn-m']"/>
               <bbn-button @click="openListIcons"
                           icon="nf nf-oct-search">
-                <?=_('Icons')?>
+                <?= _('Icons') ?>
               </bbn-button>
             </div>
           </div>

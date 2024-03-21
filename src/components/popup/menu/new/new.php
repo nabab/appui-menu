@@ -4,7 +4,7 @@
 >
   <div class="bbn-padded bbn-w-100">
     <bbn-input class="bbn-w-100"
-               placeholder="<?=_('Insert the title')?>"
+               placeholder="<?= _('Insert the title') ?>"
                v-model="formSource.title"
                required="required"
     ></bbn-input>

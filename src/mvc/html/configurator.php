@@ -5,7 +5,7 @@
         <div>
           <bbn-button @click="makeDefault"
                       :disabled="!currentID || (currentID === source.defaultMenu)"
-                      title="<?=_('Make it default')?>"
+                      title="<?= _('Make it default') ?>"
                       :notext="true"
                       icon="nf nf-mdi-crown"
                       ></bbn-button>
@@ -21,14 +21,14 @@
                         ></bbn-dropdown>
           <bbn-button v-if="showArrows"
                       @click="prevMenu"
-                      title="<?=_('Back menu')?>"
+                      title="<?= _('Back menu') ?>"
                       :notext="true"
                       icon="nf nf-fa-arrow_left"
                       :disabled="!source.menus.length || (currentIdx < 1)"
                       ></bbn-button>
           <bbn-button v-if="showArrows"
                       @click="nextMenu"
-                      title="<?=_('Next menu')?>"
+                      title="<?= _('Next menu') ?>"
                       :notext="true"
                       icon="nf nf-fa-arrow_right"
                       :disabled="!source.menus.length || (currentIdx == (source.menus.length - 1))"
@@ -36,55 +36,55 @@
         </div>
         <div class="bbn-flex-fill bbn-r">
           <bbn-button @click="createMenu"
-                      title="<?=_('Create menu')?>"
+                      title="<?= _('Create menu') ?>"
                       icon="nf nf-mdi-playlist_plus"
                       :notext="true"
                       ></bbn-button>
           <bbn-button @click="createSection"
-                      title="<?=_('Create section')?>"
+                      title="<?= _('Create section') ?>"
                       icon="nf nf-mdi-folder_plus"
                       :disabled="disabledAction"
                       :notext="true"
                       ></bbn-button>
           <bbn-button @click="editLink"
-                      title="<?=_('Create link')?>"
+                      title="<?= _('Create link') ?>"
                       icon="nf nf-fa-link"
                       :disabled="disabledAction"
                       :notext="true"
                       ></bbn-button>
           <bbn-button @click="renameMenu"
                       v-if="selected"
-                      title="<?=_('Rename menu')?>"
+                      title="<?= _('Rename menu') ?>"
                       icon="nf nf-fa-edit"
                       :disabled="!currentMenu"
                       :notext="true"
                       ></bbn-button>
           <bbn-button @click="copyMenu"
-                      title="<?=_('Copy menu')?>"
+                      title="<?= _('Copy menu') ?>"
                       icon="nf nf-fa-clone"
                       :notext="true"
                       :disabled="!currentMenu"
                       ></bbn-button>
           <bbn-button @click="copyMenuTo"
-                      title="<?=_('Copy menu To')?>"
+                      title="<?= _('Copy menu To') ?>"
                       icon="nf nf-fa-copy"
                       :notext="true"
                       :disabled="!currentMenu"
                       ></bbn-button>
           <bbn-button @click="fixOrder"
-                      title="<?=_('Fix menu order')?>"
+                      title="<?= _('Fix menu order') ?>"
                       icon="nf nf-mdi-sort_alphabetical"
                       :disabled="selected && selected.data.numChildren ? false : true"
                       :notext="true"
                       ></bbn-button>
           <bbn-button @click="deleteMenu"
-                      title="<?=_('Delete menu')?>"
+                      title="<?= _('Delete menu') ?>"
                       icon="nf nf-fa-trash_o"
                       :disabled="disabledAction"
                       :notext="true"
                       ></bbn-button>
           <bbn-button @click="exportMenu"
-                      title="<?=_('Export menu')?>"
+                      title="<?= _('Export menu') ?>"
                       icon="nf nf-fae-file_export"
                       :disabled="disabledAction"
                       :notext="true"
@@ -118,7 +118,7 @@
           <div v-if="!currentMenu.hasItems"
                class="bbn-overlay bbn-middle bbn-c bbn-background"
           >
-            <h1 class="bbn-c"><?=_("Empty")?><br><?=_("menu")?></h1>
+            <h1 class="bbn-c"><?= _("Empty")?><br><?=_("menu") ?></h1>
           </div>
         </bbn-pane>
         <bbn-pane>
@@ -126,11 +126,11 @@
             <div class="bbn-header bbn-xspadded bbn-middle appui-menu-configurator-header">
               <div class="bbn-flex-width">
                 <div class="bbn-upper bbn-vmiddle">
-                  <strong><?=_('MENU EDITOR')?></strong>
+                  <strong><?= _('MENU EDITOR') ?></strong>
                 </div>
                 <div class="bbn-flex-fill bbn-r">
                   <bbn-button @click="deleteItem(selected)"
-                              title="<?=_('Delete menu')?>"
+                              title="<?= _('Delete menu') ?>"
                               icon="nf nf-fa-trash_o"
                               v-if="selected"
                               :notext="true"
@@ -150,7 +150,7 @@
                 <div class="bbn-padded bbn-grid-fields">
                   <label class="bbn-b"
                          v-if="selected.data.id">
-                    <?=_('Order')?>
+                    <?= _('Order') ?>
                   </label>
                   <div v-if="selected.data.id" class="bbn-vmiddle">
                     <i @click="moveUp"
@@ -164,16 +164,16 @@
                     ></i>
                   </div>
 
-                  <label class="bbn-b"><?=_('Title')?></label>
+                  <label class="bbn-b"><?= _('Title') ?></label>
                   <bbn-input v-model="selected.data.text"
                              :required="true">
                   </bbn-input>
 
-                  <label class="bbn-b"><?=_('Icon')?></label>
+                  <label class="bbn-b"><?= _('Icon') ?></label>
                   <appui-core-input-icon v-model="selected.data.icon"/>
 
                   <template v-if="selected.data.id_option !== null">
-                    <label class="bbn-b"><?=_('Link')?></label>
+                    <label class="bbn-b"><?= _('Link') ?></label>
                     <div class="bbn-iflex-height appui-menu-configurator-permissions">
                       <div class="bbn-rel">
                         <appui-option-input-location v-model="currentLocation"
@@ -187,7 +187,7 @@
                                                    :path="selected.data.path"/>
                       </div>
                     </div>
-                    <label><?=_('Argument')?></label>
+                    <label><?= _('Argument') ?></label>
                     <bbn-input v-model="selected.data.argument"/>
                   </template>
                 </div>
@@ -195,7 +195,7 @@
               <div v-else
                    class="bbn-overlay bbn-middle bbn-c"
               >
-                <h1 v-html="'<?=_("Select or create")?>'+'<br>'+'<?=_("a menu element")?>'+'<br>'+'<?=_("to see the form")?>'+'<br>'+'<?=_("HERE")?>'" style="line-height: 1.4em"></h1>
+                <h1 v-html="'<?= _("Select or create")?>'+'<br>'+'<?=_("a menu element")?>'+'<br>'+'<?=_("to see the form")?>'+'<br>'+'<?=_("HERE") ?>'" style="line-height: 1.4em"></h1>
               </div>
             </div>
           </div>
