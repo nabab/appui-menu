@@ -14,7 +14,7 @@
     },
     computed: {
       disabledAction(){
-        return !this.currentMenu || (!this.currentMenu.public && ((!appui.app.user.isDev || !appui.app.user.isAdmin)));
+        return !this.currentMenu || (!this.currentMenu.public && ((!appui.user.isDev || !appui.user.isAdmin)));
       },
       currentMenu(){
         if ( this.source.menus && this.currentID ){
