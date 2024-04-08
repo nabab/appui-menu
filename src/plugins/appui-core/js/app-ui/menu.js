@@ -3,6 +3,9 @@
     created() {
       appui.register('menu', this);
     },
+    beforeDestroy() {
+      appui.unregister('menu');
+    },
     data() {
       return {
         isMobile: bbn.fn.isMobileDevice(),
