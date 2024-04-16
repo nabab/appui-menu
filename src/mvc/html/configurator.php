@@ -112,7 +112,7 @@
                       ref="menuTree"
                       :draggable="true"
                       @move="moveNode"
-                      @beforeOrder="order"
+                      @beforeorder="order"
             ></bbn-tree>
           </div>
           <div v-if="!currentMenu.hasItems"
