@@ -52,7 +52,7 @@
     },
     methods: {
       addShortcut(data){
-        if (this.plugins['appui-menu']) {
+        if (appui.plugins['appui-menu']) {
           let ok = !!(data.id || data.url);
           if (data.id) {
             let idx = bbn.fn.search(this.shortcuts, {id: data.id});
@@ -62,15 +62,15 @@
           }
 
           if (ok) {
-            this.post(this.plugins['appui-menu'] + '/shortcuts/insert', data, d => {
+            bbn.fn.post(appui.plugins['appui-menu'] + '/shortcuts/insert', data, d => {
               if ( d.success ){
                 this.shortcuts.push(data);
               }
             });
           }
         }
-        else if ( this.plugins['appui-menu'] && data.url ){
-          this.post(this.plugins['appui-menu'] + '/shortcuts/insert', data, d => {
+        else if ( appui.plugins['appui-menu'] && data.url ){
+          bbn.fn.post(appui.plugins['appui-menu'] + '/shortcuts/insert', data, d => {
             if ( d.success ){
               this.shortcuts.push(data);
             }
@@ -78,13 +78,17 @@
         }
       },
       removeShortcut(data){
-        if ( this.plugins['appui-menu'] && data.id ){
-          this.post(this.plugins['appui-menu'] + '/shortcuts/delete', data, d => {
+        if ( appui.plugins['appui-menu'] && data.id ){
+          bbn.fn.post(appui.plugins['appui-menu'] + '/shortcuts/delete', data, d => {
             if ( d.success ){
               let idx = bbn.fn.search(this.shortcuts, {id: data.id});
               if ( idx > -1 ){
                 this.shortcuts.splice(idx, 1);
               }
+              appui.success();
+            }
+            else {
+              appui.error(bbn._("Error while deleting the shortcut"));
             }
           });
         }
