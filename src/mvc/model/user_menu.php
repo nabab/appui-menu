@@ -4,7 +4,7 @@
  *
  **/
 
-/** @var $model \bbn\Mvc\Model*/
+/** @var bbn\Mvc\Model $model */
 $menu = new \bbn\Appui\Menu($model->inc->options,  $model->data['prepath'] ?? false);
 if ( isset($model->inc->pref) ){
   return $menu->customTree(
