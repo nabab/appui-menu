@@ -10,7 +10,7 @@
         @keydown.enter="toggle"
         @keydown.space="toggle"
         @click.prevent.stop="toggle"
-        class="bbn-c bbn-p bbn-hpadded">
+        class="bbn-c bbn-p bbn-hpadding">
     <i ref="icon"
         class="nf nf-mdi-menu bbn-xxxl"/>
   </div>

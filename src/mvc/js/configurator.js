@@ -77,7 +77,7 @@
         ){
           this.getPopup().open({
             title: bbn._('Warning'),
-            content: '<div class="bbn-lpadded bbn-medium">' + bbn._('Do you want to order in depth') + '?</div>',
+            content: '<div class="bbn-lpadding bbn-medium">' + bbn._('Do you want to order in depth') + '?</div>',
             resizable: false,
             maximizable: false,
             closable: false,
@@ -723,7 +723,7 @@
           let result = await fn(tree, res);
           cp.getPopup({
             title: "Export",
-            content: '<div class="bbn-padded"><pre>' + JSON.stringify(result, null, 2) + '</pre></div>',
+            content: '<div class="bbn-padding"><pre>' + JSON.stringify(result, null, 2) + '</pre></div>',
             width: '100%',
             height: '100%'
           });

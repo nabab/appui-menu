@@ -28,7 +28,7 @@
               <bbn-input v-model="data.icon"
                          :readonly="true"/>
               <i v-if="data.icon"
-                 :class="[data.icon, 'bbn-hsmargin', 'bbn-box', 'bbn-xspadded', 'bbn-m']"/>
+                 :class="[data.icon, 'bbn-hsmargin', 'bbn-box', 'bbn-xspadding', 'bbn-m']"/>
               <bbn-button @click="openListIcons"
                           icon="nf nf-oct-search">
                 <?= _('Icons') ?>

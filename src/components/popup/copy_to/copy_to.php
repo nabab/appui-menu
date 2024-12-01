@@ -3,7 +3,7 @@
           :action="root + 'actions/' + (formSource.id ? 'item' : 'menu') + '/copy_to'"
           @success="onSuccess"
 >
-  <div class="bbn-grid-fields bbn-padded">
+  <div class="bbn-grid-fields bbn-padding">
     <label><?= _("Menu") ?></label>
     <bbn-dropdown :source="menus"
                   v-model="formSource.to"
@@ -21,7 +21,7 @@
       <bbn-input v-model="formSource.icon"
                  class="bbn-flex-fill"
       ></bbn-input>
-      <i :class="[formSource.icon, 'bbn-hsmargin', 'bbn-box', 'bbn-xspadded', 'bbn-m']"></i>
+      <i :class="[formSource.icon, 'bbn-hsmargin', 'bbn-box', 'bbn-xspadding', 'bbn-m']"></i>
       <bbn-button @click="listIcon" icon="nf nf-oct-search"><?= _('Icons') ?></bbn-button>
     </div>
   </div>

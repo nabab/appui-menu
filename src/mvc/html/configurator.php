@@ -1,6 +1,6 @@
 <div class="bbn-overlay">
   <div class="bbn-flex-height">
-    <div class="bbn-w-100 bbn-header bbn-xspadded bbn-vmiddle appui-menu-configurator-toolbar">
+    <div class="bbn-w-100 bbn-header bbn-xspadding bbn-vmiddle appui-menu-configurator-toolbar">
       <div class="bbn-flex-width">
         <div>
           <bbn-button @click="makeDefault"
@@ -123,7 +123,7 @@
         </bbn-pane>
         <bbn-pane>
           <div class="bbn-flex-height">
-            <div class="bbn-header bbn-xspadded bbn-middle appui-menu-configurator-header">
+            <div class="bbn-header bbn-xspadding bbn-middle appui-menu-configurator-header">
               <div class="bbn-flex-width">
                 <div class="bbn-upper bbn-vmiddle">
                   <strong><?= _('MENU EDITOR') ?></strong>
@@ -147,7 +147,7 @@
                         @cancel="formCancel"
                         :scrollable="true"
               >
-                <div class="bbn-padded bbn-grid-fields">
+                <div class="bbn-padding bbn-grid-fields">
                   <label class="bbn-b"
                          v-if="selected.data.id">
                     <?= _('Order') ?>

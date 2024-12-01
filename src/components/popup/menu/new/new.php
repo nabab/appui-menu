@@ -2,7 +2,7 @@
           :action="root + 'actions/menu/create'"
           @success="onSuccess"
 >
-  <div class="bbn-padded bbn-w-100">
+  <div class="bbn-padding bbn-w-100">
     <bbn-input class="bbn-w-100"
                placeholder="<?= _('Insert the title') ?>"
                v-model="formSource.title"

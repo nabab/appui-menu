@@ -3,7 +3,7 @@
           :action="root + 'actions/menu/copy'"
           @success="onSuccess"
 >
-  <div class="bbn-padded bbn-w-100">
+  <div class="bbn-padding bbn-w-100">
     <bbn-input class="bbn-w-100"
                v-model="formSource.title"
                required="required"

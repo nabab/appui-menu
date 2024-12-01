@@ -19,6 +19,6 @@
                   :shortcuts="true"
                   @shortcut="addShortcut"
                   @ready="menuMounted = true"
-                  class="bbn-top-spadded bbn-no-border"/>
+                  class="bbn-top-spadding bbn-no-border"/>
   </div>
 </bbn-slider>
