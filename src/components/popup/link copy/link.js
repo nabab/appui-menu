@@ -24,7 +24,7 @@
         this.closest('bbn-container').getPopup({
           width: '80%',
           height: '80%',
-          title: bbn._('Select icons'),
+          label: bbn._('Select icons'),
           component: 'appui-core-popup-iconpicker',
           source: {
             obj: this.selected,

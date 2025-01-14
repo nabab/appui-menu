@@ -75,8 +75,8 @@
           (bbn.fn.isVue(node) && !!node.numChildren) ||
           (!bbn.fn.isVue(node) && this.getRef('menuTree').currentData.length)
         ){
-          this.getPopup().open({
-            title: bbn._('Warning'),
+          this.getPopup({
+            label: bbn._('Warning'),
             content: '<div class="bbn-lpadding bbn-medium">' + bbn._('Do you want to order in depth') + '?</div>',
             resizable: false,
             maximizable: false,
@@ -265,9 +265,9 @@
        * @fires getPopup
        */
       createMenu(){
-        this.getPopup().open({
+        this.getPopup({
           width: 300,
-          title: bbn._('New menu'),
+          label: bbn._('New menu'),
           component: 'appui-menu-popup-menu-new'
         });
       },
@@ -278,9 +278,9 @@
        */
       copyMenu(){
         if ( this.currentID ){
-          this.getPopup().open({
+          this.getPopup({
             width: 300,
-            title: bbn._('Copy menu'),
+            label: bbn._('Copy menu'),
             component: 'appui-menu-popup-menu-copy',
             source: {
               id: this.currentID
@@ -345,8 +345,8 @@
        * @method renameMenu
        */
       renameMenu(){
-        this.getPopup().open({
-          title: bbn._('Rename'),
+        this.getPopup({
+          label: bbn._('Rename'),
           component: 'appui-menu-popup-menu-rename',
           source: {
             id: this.currentMenu.id,
@@ -446,8 +446,8 @@
        * @param {Object} src
        */
       copyTo(src){
-        this.getPopup().open({
-          title: bbn._('Copy to'),
+        this.getPopup({
+          label: bbn._('Copy to'),
           width: 350,
           component: 'appui-menu-popup-copy_to',
           source: src
@@ -722,7 +722,7 @@
         if (tree) {
           let result = await fn(tree, res);
           cp.getPopup({
-            title: "Export",
+            label: "Export",
             content: '<div class="bbn-padding"><pre>' + JSON.stringify(result, null, 2) + '</pre></div>',
             width: '100%',
             height: '100%'
