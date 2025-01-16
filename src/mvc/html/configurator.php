@@ -7,7 +7,7 @@
                       :disabled="!currentID || (currentID === source.defaultMenu)"
                       title="<?= _('Make it default') ?>"
                       :notext="true"
-                      icon="nf nf-mdi-crown"
+                      icon="nf nf-md-crown"
                       ></bbn-button>
           <bbn-dropdown v-if="source.menus && source.menus.length"
                         style="width:200px"
@@ -37,12 +37,12 @@
         <div class="bbn-flex-fill bbn-r">
           <bbn-button @click="createMenu"
                       title="<?= _('Create menu') ?>"
-                      icon="nf nf-mdi-playlist_plus"
+                      icon="nf nf-md-playlist_plus"
                       :notext="true"
                       ></bbn-button>
           <bbn-button @click="createSection"
                       title="<?= _('Create section') ?>"
-                      icon="nf nf-mdi-folder_plus"
+                      icon="nf nf-md-folder_plus"
                       :disabled="disabledAction"
                       :notext="true"
                       ></bbn-button>
@@ -73,7 +73,7 @@
                       ></bbn-button>
           <bbn-button @click="fixOrder"
                       title="<?= _('Fix menu order') ?>"
-                      icon="nf nf-mdi-sort_alphabetical"
+                      icon="nf nf-md-sort_alphabetical"
                       :disabled="selected && selected.data.numChildren ? false : true"
                       :notext="true"
                       ></bbn-button>

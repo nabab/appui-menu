@@ -202,7 +202,7 @@
             }
             else {
               ctx.push({
-                icon: 'nf nf-mdi-sort_alphabetical',
+                icon: 'nf nf-md-sort_alphabetical',
                 text: bbn._('Fix order'),
                 action: n => {
                   this.fixOrder(n);
