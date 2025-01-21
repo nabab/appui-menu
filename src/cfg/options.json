@@ -1,33 +1,20 @@
-{
-  "cfg": {
-    "show_code": 1,
-    "i18n": "en",
-    "show_icon": 1
-  },
-  "id_parent": ["appui"],
-  "text": "Menus",
-  "code": "menu",
-  "id_alias": ["plugin", "list", "templates", "option", "appui"],
-  "icon": "nf nf-mdi-menu",
-  "plugin": true,
-  "items": [
+[
     {
-      "num": 1,
-      "text": "Default menu",
-      "code": "default",
-      "icon": "nf nf-fa-bars"
+        "num": 1,
+        "text": "Default menu",
+        "code": "default",
+        "icon": "nf nf-fa-bars"
     },
     {
-      "num": 2,
-      "text": "Shortcuts",
-      "code": "shortcuts",
-      "icon": "nf nf-oct-file_symlink_file"
+        "num": 2,
+        "text": "Shortcuts",
+        "code": "shortcuts",
+        "icon": "nf nf-oct-file_symlink_file"
     },
     {
-      "num": 3,
-      "text": "Menus",
-      "code": "menus",
-      "icon": "nf nf-oct-tasklist"
+        "num": 3,
+        "text": "Menus",
+        "code": "menus",
+        "icon": "nf nf-oct-tasklist"
     }
-  ]
-}
+]
