@@ -110,7 +110,7 @@
                       @select="selectItem"
                       @unselect="selected = false"
                       ref="menuTree"
-                      :draggable="true"
+                      :drag="true"
                       @move="moveNode"
                       @beforeorder="order"
             ></bbn-tree>
