@@ -1,7 +1,7 @@
 {
   "text": "Menu",
   "num": 14,
-  "icon": "nf nf-mdi-menu",
+  "icon": "nf nf-md-menu",
   "items": [
     {
       "text": "Configurator",
