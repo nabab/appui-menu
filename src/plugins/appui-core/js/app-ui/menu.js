@@ -10,7 +10,6 @@
       return {
         isMobile: bbn.fn.isMobileDevice(),
         isTablet: bbn.fn.isTabletDevice(),
-        menuMounted: false,
         root: appui.plugins['appui-menu'] + '/'
       };
     },
