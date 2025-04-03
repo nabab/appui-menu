@@ -585,14 +585,16 @@
        */
       selectItem(node){
         this.selected = node;
-        this.currentLocation = this.selected.data.rootAccess;
-        //this.selected.parentIsRoot =  node.parent.level === 0;
-        this.$nextTick(() => {
-          let form = this.getRef('form');
-          if ( form ){
-            form.reinit();
-          }
-        });
+        if (node) {
+          this.currentLocation = this.selected.data.rootAccess;
+          //this.selected.parentIsRoot =  node.parent.level === 0;
+          this.$nextTick(() => {
+            let form = this.getRef('form');
+            if ( form?.$el && form.reinit){
+              form.reinit();
+            }
+          });
+        }
       },
       permissionsTreeOpenPath(){
         let tree = this.getRef('permissionsTree');
