@@ -12,6 +12,6 @@
         @click.prevent.stop="toggle"
         class="bbn-c bbn-p bbn-hpadding">
     <i ref="icon"
-        class="nf nf-md-menu bbn-xxxl"/>
+        :class="'nf nf-md-menu ' + (isMobile ? 'bbn-xl' : 'bbn-xxxl')"/>
   </div>
 </div>

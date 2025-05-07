@@ -3,7 +3,8 @@
             ref="slider"
             :style="{
               zIndex: 100,
-              maxWidth: '100%'
+              maxWidth: '100%',
+              width: isMobile && !isTablet ? '100%' : 'auto'
             }"
             @show="focusSearchMenu"
             close-button="top-right">

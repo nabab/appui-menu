@@ -1,5 +1,5 @@
-<div class="bbn-w-100">
-  <bbn-fisheye class="bbn-appui-fisheye bbn-large"
+<div class="bbn-w-100 bbn-c">
+  <bbn-fisheye class="bbn-appui-fisheye bbn-large bbn-iblock"
                :removable="true"
                @remove="removeShortcut"
                ref="fisheye"
