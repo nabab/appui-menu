@@ -63,7 +63,7 @@
                       :disabled="!currentMenu"/>
           <bbn-button @click="fixOrder"
                       title="<?= _('Fix menu order') ?>"
-                      icon="nf nf-md-sort_alphabetical"
+                      icon="nf nf-md-sort_alphabetical_variant"
                       :disabled="selected && selected.data.numChildren ? false : true"
                       :notext="true"/>
           <bbn-button @click="deleteMenu"
