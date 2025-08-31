@@ -1,11 +1,7 @@
 <?php
-/*
- * Describe what it does!
- *
- **/
 
 use bbn\X;
-/** @var $this \bbn\Mvc\Model*/
+/** @var bbn\Mvc\Model $model */
 $res = ['success' => false];
 if (!isset($model->data['id']) && $model->hasData(['url', 'text', 'icon'], true)) {
   if ($res['id'] = $model->inc->menu->addShortcutByUrl($model->data['url'], $model->data['text'], $model->data['icon'])) {
