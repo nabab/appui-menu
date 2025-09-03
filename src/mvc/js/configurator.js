@@ -72,8 +72,8 @@
       },
       fixOrder(node){
         if (
-          (bbn.fn.isVue(node) && !!node.numChildren) ||
-          (!bbn.fn.isVue(node) && this.getRef('menuTree').currentData.length)
+          (bbn.cp.isComponent(node) && !!node.numChildren) ||
+          (!bbn.cp.isComponent(node) && this.getRef('menuTree').currentData.length)
         ){
           this.getPopup({
             label: bbn._('Warning'),
@@ -89,7 +89,7 @@
               action: ($ev, btn) => {
                 btn.closest('bbn-floater').close();
                 setTimeout(() => {
-                  this._fixOrder(true, bbn.fn.isVue(node) ? node : false);
+                  this._fixOrder(true, bbn.cp.isComponent(node) ? node : false);
                 }, 0)
               }
             }, {
@@ -99,7 +99,7 @@
               action: ($ev, btn) => {
                 btn.closest('bbn-floater').close();
                 setTimeout(() => {
-                  this._fixOrder(false, bbn.fn.isVue(node) ? node : false);
+                  this._fixOrder(false, bbn.cp.isComponent(node) ? node : false);
                 }, 0)
               }
             }, {
@@ -298,13 +298,13 @@
       createSection(node){
        this.addTempNode({
          text: bbn._('Untitled Section'),
-         id_parent: bbn.fn.isVue(node) && node.data ? node.data.id : null,
+         id_parent: bbn.cp.isComponent(node) && node.data ? node.data.id : null,
          id_option: null,
          id_user_option: this.currentMenu.id,
          icon: this.defaultIcon,
-         num: this.getNextNum(bbn.fn.isVue(node) ? node.parent : false),
+         num: this.getNextNum(bbn.cp.isComponent(node) ? node.parent : false),
          numChildren: 0
-       }, bbn.fn.isVue(node) ? node : false);
+       }, bbn.cp.isComponent(node) ? node : false);
 
       },
       /**
@@ -386,13 +386,13 @@
       editLink(node, src){
         this.addTempNode({
           text: bbn._('Untitled Link'),
-          id_parent: bbn.fn.isVue(node) && node.data ? node.data.id : null,
+          id_parent: bbn.cp.isComponent(node) && node.data ? node.data.id : null,
           id_option: '',
           id_user_option: this.currentMenu.id,
           icon: this.defaultIcon,
-          num: this.getNextNum(bbn.fn.isVue(node) ? node.parent : false),
+          num: this.getNextNum(bbn.cp.isComponent(node) ? node.parent : false),
           numChildren: 0
-        }, bbn.fn.isVue(node) ? node : false);
+        }, bbn.cp.isComponent(node) ? node : false);
       },
       /**
        * Copy the current menu and assign it to the root of another selected menu this is operated by the top-bar button "Copy menu to"
