@@ -19,6 +19,7 @@
                   storage-name="appui-menu-main"
                   :shortcuts="true"
                   @shortcut="addShortcut"
+                  uid="id"
                   class="bbn-top-spadding bbn-no-border"/>
   </div>
 </bbn-slider>
