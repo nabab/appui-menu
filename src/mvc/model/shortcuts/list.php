@@ -1,8 +1,5 @@
 <?php
-/*
- * Describe what it does or you're a pussy
- *
- **/
+
 use bbn\Str;
 
 /** @var bbn\Mvc\Model $model */
