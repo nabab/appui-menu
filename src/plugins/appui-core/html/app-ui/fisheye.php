@@ -3,6 +3,7 @@
                :removable="true"
                @remove="removeShortcut"
                ref="fisheye"
+               :menu="d => appui.getLinkMenu(d.url, d.text)"
                :source="shortcuts"
                :fixed-left="leftShortcuts || []"
                :fixed-right="rightShortcuts || []"
